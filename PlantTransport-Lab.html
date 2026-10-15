@@ -1,0 +1,1465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plant Transport Lab</title>
+<meta name="description" content="Plant transport and nutrition lab for first year biology majors: a whole plant water and sugar bench with soil water, humidity, light, wind, temperature and ABA controls, xylem tension, stomata, a live transpiration graph and phloem flow to a chosen sink; a randomized trainer for water potential, solute potential, water movement and potometer transpiration rates with animated worked solutions; a match-up game for transport routes, nutrients, deficiencies, xylem and phloem and stomatal signals; and real world scenarios on drought, fertilizer runoff, potometer data and aphid stylet studies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="bio2-kit.js"></script>
+<style>
+:root{
+  --ground:#E3E7EA;--panel:#F7F9FA;--panel-2:#EDF1F3;--sunk:#D5DBDF;
+  --ink:#10161A;--ink-soft:#57666F;--ink-faint:#566570;--rule:#C4CDD3;--rule-soft:#D9E0E4;
+  --accent:#4F6B12;--accent-ink:#3E550B;--accent-wash:#E8EFD8;
+  --warn:#A36A10;--warn-wash:#F6ECD6;--bad:#A9372F;--bad-wash:#F7DFDC;--good:#2F6F4F;--good-wash:#DEEDE4;--on-accent:#fff;--warn-ink:#7A4E08;
+  --act1:#A07A10;--act2:#B0405E;--act3:#5E7183;--act4:#2F7FC1;--act5:#2E8A7A;--act6:#B8561A;--act7:#7B5CC9;--act8:#4F6B12;
+  --gold:#C9A227;--gold-wash:#F6EFD3;--gold-ink:#7A6000;
+  --ecf:#EEF2F5;--grid:#D5DAE6;--paper:#FFFDF7;--cyto:#F3EEE4;--cyto-edge:#B9A27A;
+  --dna:#2F6FC1;--rna:#D9771E;--prot:#C0455A;--prot-ink:#9B2C40;--prot2:#D9798A;
+  --lipid:#D9A520;--lipid-ink:#6E5200;--tail:#E9D9A6;--tail-edge:#B39A52;--chol:#A86A2A;
+  --carb:#E08A1E;--carb-ink:#8A4F00;--atp:#E8C21E;--atp-ink:#6E5800;--elec:#1FA6C8;
+  --water:#4F9FE0;--water-ink:#1D5C93;--water-fill:#D6E9F8;
+  --plant:#3E8A3A;--plant-ink:#2A6B37;--wall:#8AA84A;--vac:#DCEBF6;--chloro:#4FA34A;
+  --na:#7B5CC9;--na-ink:#5B3FA8;--k:#C0459A;--k-ink:#922F72;--cl:#2E9B4F;--hplus:#E36A1E;--hplus-ink:#9A4108;
+  --o2:#D0453A;--co2:#4E5A63;--sucrose:#C27A10;
+  --rbc:#D24A44;--rbc-edge:#8E2A26;--blood:#C8453F;--skin:#E3B994;--skin-edge:#9A6A4C;--shirt:#4F7FA8;
+  --bact:#7A8F2A;--clath:#5E7183;--lyso:#8A5CC0;--ldl:#E3BD2A;
+  --heat:#C8452B;--cold:#2F7FC1;--metal:#9AA6AF;--glass:#E3EDF2;--glass-edge:#7F99A6;
+  --soil:#8A6A4A;--soil-d:#5E452E;--soil-fill:#E2D3BD;--clay:#B07A5A;--sand:#E3CC8F;--leaf:#4E9A3A;--leaf-d:#2F6B25;--stem:#6E8A3A;--wood:#8A6A4A;
+  --xylem:#2F7FC1;--phloem:#C27A10;--phloem-ink:#8A4F00;--casp:#8A3A2A;--myco:#8C6A3F;--nod:#C0455A;--n2:#5E7183;--nh4:#7B5CC9;--no3:#2E8A7A;--aba:#A04E8C;--aba-ink:#7E3A6E;
+  --sky:#D7E8F3;--sun:#E8B520;--fruit:#D0453A;--air:#EEF4F8;--vapor:#7FB3DE;--bug:#4E6A2A;--algae:#5E9B2A;
+  --shadow:0 1px 2px rgba(16,22,26,.08),0 6px 18px -8px rgba(16,22,26,.18);
+  --r:6px;--sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;--serif:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0E1519;--panel:#172026;--panel-2:#1D282F;--sunk:#0A1014;
+  --ink:#E8EEF1;--ink-soft:#A3B2BA;--ink-faint:#8D9EA7;--rule:#2C3A42;--rule-soft:#24313A;
+  --accent:#B9D66A;--accent-ink:#CDE48E;--accent-wash:#262F14;
+  --warn:#E0B04E;--warn-wash:#352A12;--bad:#E07067;--bad-wash:#3B1E1B;--good:#6BC293;--good-wash:#17301F;--on-accent:#0B1A20;--warn-ink:#E8BE62;
+  --act1:#E0BE48;--act2:#EE7A9A;--act3:#A9B7C2;--act4:#5AA9E6;--act5:#5CC4B0;--act6:#F0985A;--act7:#A98BEF;--act8:#B9D66A;
+  --gold:#E0BE48;--gold-wash:#352E14;--gold-ink:#E0BE48;
+  --ecf:#131A22;--grid:#26303D;--paper:#1E262B;--cyto:#221F1A;--cyto-edge:#9A8460;
+  --dna:#6FA8EE;--rna:#F2A057;--prot:#EE7A8C;--prot-ink:#F49AA8;--prot2:#B85A6C;
+  --lipid:#E8C24A;--lipid-ink:#F2D677;--tail:#5E5333;--tail-edge:#A8925A;--chol:#D89A5A;
+  --carb:#F2A24A;--carb-ink:#F5B66A;--atp:#F2D857;--atp-ink:#F5E08A;--elec:#5AD0EC;
+  --water:#7DB9EE;--water-ink:#9CCBF4;--water-fill:#1A3346;
+  --plant:#6CCB7C;--plant-ink:#8AD898;--wall:#8FB05A;--vac:#1C3040;--chloro:#5EA85A;
+  --na:#A98BEF;--na-ink:#C3AEF6;--k:#E07AC0;--k-ink:#EEA0D6;--cl:#6CCB7C;--hplus:#F59A5A;--hplus-ink:#F8B888;
+  --o2:#EE6E62;--co2:#A9B7C2;--sucrose:#E0A040;
+  --rbc:#E0605A;--rbc-edge:#F09A94;--blood:#E0605A;--skin:#C99A78;--skin-edge:#E0B896;--shirt:#5A8FBF;
+  --bact:#A8C05A;--clath:#A9B7C2;--lyso:#B18BE6;--ldl:#E8C24A;
+  --heat:#F07A5E;--cold:#5AA9E6;--metal:#5E6B75;--glass:#1E2C34;--glass-edge:#7F99A6;
+  --soil:#A88A68;--soil-d:#D2B48E;--soil-fill:#2B241C;--clay:#C28E6E;--sand:#6E6040;--leaf:#6EB85A;--leaf-d:#9AD88A;--stem:#8FB05A;--wood:#B08A66;
+  --xylem:#5AA9E6;--phloem:#E0A040;--phloem-ink:#F2BE6A;--casp:#D07A64;--myco:#D9B98A;--nod:#EE7A8C;--n2:#A9B7C2;--nh4:#A98BEF;--no3:#5CC4B0;--aba:#D186C0;--aba-ink:#E0A6D4;
+  --sky:#1A2A36;--sun:#F2D857;--fruit:#EE6E62;--air:#16222B;--vapor:#7DB9EE;--bug:#A8C05A;--algae:#8FC05A;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -10px rgba(0,0,0,.6);
+}}
+:root[data-theme="dark"]{
+  --ground:#0E1519;--panel:#172026;--panel-2:#1D282F;--sunk:#0A1014;
+  --ink:#E8EEF1;--ink-soft:#A3B2BA;--ink-faint:#8D9EA7;--rule:#2C3A42;--rule-soft:#24313A;
+  --accent:#B9D66A;--accent-ink:#CDE48E;--accent-wash:#262F14;
+  --warn:#E0B04E;--warn-wash:#352A12;--bad:#E07067;--bad-wash:#3B1E1B;--good:#6BC293;--good-wash:#17301F;--on-accent:#0B1A20;--warn-ink:#E8BE62;
+  --act1:#E0BE48;--act2:#EE7A9A;--act3:#A9B7C2;--act4:#5AA9E6;--act5:#5CC4B0;--act6:#F0985A;--act7:#A98BEF;--act8:#B9D66A;
+  --gold:#E0BE48;--gold-wash:#352E14;--gold-ink:#E0BE48;
+  --ecf:#131A22;--grid:#26303D;--paper:#1E262B;--cyto:#221F1A;--cyto-edge:#9A8460;
+  --dna:#6FA8EE;--rna:#F2A057;--prot:#EE7A8C;--prot-ink:#F49AA8;--prot2:#B85A6C;
+  --lipid:#E8C24A;--lipid-ink:#F2D677;--tail:#5E5333;--tail-edge:#A8925A;--chol:#D89A5A;
+  --carb:#F2A24A;--carb-ink:#F5B66A;--atp:#F2D857;--atp-ink:#F5E08A;--elec:#5AD0EC;
+  --water:#7DB9EE;--water-ink:#9CCBF4;--water-fill:#1A3346;
+  --plant:#6CCB7C;--plant-ink:#8AD898;--wall:#8FB05A;--vac:#1C3040;--chloro:#5EA85A;
+  --na:#A98BEF;--na-ink:#C3AEF6;--k:#E07AC0;--k-ink:#EEA0D6;--cl:#6CCB7C;--hplus:#F59A5A;--hplus-ink:#F8B888;
+  --o2:#EE6E62;--co2:#A9B7C2;--sucrose:#E0A040;
+  --rbc:#E0605A;--rbc-edge:#F09A94;--blood:#E0605A;--skin:#C99A78;--skin-edge:#E0B896;--shirt:#5A8FBF;
+  --bact:#A8C05A;--clath:#A9B7C2;--lyso:#B18BE6;--ldl:#E8C24A;
+  --heat:#F07A5E;--cold:#5AA9E6;--metal:#5E6B75;--glass:#1E2C34;--glass-edge:#7F99A6;
+  --soil:#A88A68;--soil-d:#D2B48E;--soil-fill:#2B241C;--clay:#C28E6E;--sand:#6E6040;--leaf:#6EB85A;--leaf-d:#9AD88A;--stem:#8FB05A;--wood:#B08A66;
+  --xylem:#5AA9E6;--phloem:#E0A040;--phloem-ink:#F2BE6A;--casp:#D07A64;--myco:#D9B98A;--nod:#EE7A8C;--n2:#A9B7C2;--nh4:#A98BEF;--no3:#5CC4B0;--aba:#D186C0;--aba-ink:#E0A6D4;
+  --sky:#1A2A36;--sun:#F2D857;--fruit:#EE6E62;--air:#16222B;--vapor:#7DB9EE;--bug:#A8C05A;--algae:#8FC05A;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -10px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font:inherit;color:inherit}
+a{color:var(--accent)}
+.topbar{background:var(--panel);border-bottom:1px solid var(--rule)}
+.topbar-in{max-width:1180px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:16px;justify-content:space-between;flex-wrap:wrap}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--serif);font-weight:600;font-size:26px;margin:2px 0 0;line-height:1.2}
+.sub{margin:2px 0 0;color:var(--ink-soft);font-size:15px}
+.wrap{max-width:1180px;margin:0 auto;padding:16px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tab{background:var(--panel);border:1px solid var(--rule);border-radius:var(--r);padding:9px 14px;cursor:pointer;font-weight:500;font-size:15px}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.tbtn{background:var(--panel-2);border:1px solid var(--rule);border-radius:var(--r);padding:8px 13px;cursor:pointer;font-size:14.5px}
+.tbtn:hover{border-color:var(--accent)}
+.tbtn:disabled{opacity:.45;cursor:default}
+.tbtn[aria-pressed="true"]{background:var(--accent-wash);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn{background:var(--accent);color:var(--on-accent);border:0;border-radius:var(--r);padding:10px 18px;font-weight:600;cursor:pointer;font-size:15px}
+.btn:disabled{opacity:.45;cursor:default}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--shadow);padding:16px 18px;min-width:0}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.grid,.grid2{grid-template-columns:1fr}}
+.stage{padding:10px}
+.canvas-holder{width:100%;border-radius:4px;overflow:hidden;border:1px solid var(--rule-soft);background:var(--ecf)}
+canvas{display:block;width:100%;touch-action:manipulation}
+.stagebar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 4px 2px;font-size:14px;color:var(--ink-soft)}
+.caption{flex:1 1 220px;font-size:14px;color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:8px 4px 2px;font-size:13px;color:var(--ink-soft)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.2)}
+.legend i.s{border-radius:2px}
+.legend i.ln{width:20px;height:0;border-radius:0;border:0;border-top:3px solid}
+.legend i.t{width:0;height:0;border-radius:0;border:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:11px solid;background:none!important}
+.rounds{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.round{border:1.5px solid var(--rule);background:var(--panel-2);border-radius:99px;padding:6px 13px;cursor:pointer;font-size:14px}
+.round[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-wash);color:var(--accent-ink);font-weight:600}
+.round .ok{color:var(--gold-ink);margin-left:4px}
+.mode{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--ink-soft)}
+.mode input{accent-color:var(--accent);width:18px;height:18px}
+.lvl-n{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.lvl-t{font-family:var(--serif);font-size:22px;font-weight:600;margin:4px 0 8px;line-height:1.25}
+.goal{background:var(--accent-wash);border-left:4px solid var(--accent);border-radius:4px;padding:10px 12px;margin:0 0 10px;font-size:15px}
+.goal b.h{display:block;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent-ink);margin-bottom:2px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.msg{margin:10px 0 0;padding:10px 12px;border-radius:var(--r);font-size:15px;display:none}
+.msg.show{display:block}
+.msg.good{background:var(--good-wash);color:var(--ink);border:1px solid var(--good)}
+.msg.warn{background:var(--warn-wash);color:var(--ink);border:1px solid var(--warn)}
+.msg.info{background:var(--panel-2);color:var(--ink);border:1px solid var(--rule)}
+.stars{font-size:22px;letter-spacing:2px;color:var(--gold-ink)}
+.side h3{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin:14px 0 6px}
+.side p,.side li{font-size:14.5px}
+.side ul{padding-left:18px;margin:6px 0}
+.small{font-size:13px;color:var(--ink-soft)}
+.typebtns{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.typebtn{background:var(--panel);border:1.5px solid var(--rule);border-radius:var(--r);padding:9px 0;cursor:pointer;font-family:var(--mono);font-weight:600;font-size:15px}
+.typebtn:hover{border-color:var(--accent)}
+.typebtn.right{border-color:var(--good);background:var(--good-wash)}
+.typebtn.wrong{border-color:var(--warn);background:var(--warn-wash)}
+.typebtn:disabled{cursor:default}
+.prog{height:8px;background:var(--sunk);border-radius:99px;overflow:hidden;margin:6px 0 10px}
+.prog i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.timer{font-family:var(--mono);font-size:18px;font-weight:600}
+/* bags */
+.bags{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:10px 0 4px}
+.bag{position:relative;background:var(--panel);border:1.5px solid var(--rule);border-radius:var(--r);padding:6px 4px 4px;cursor:grab;touch-action:none;user-select:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:var(--mono);font-weight:700;font-size:14px}
+.bag svg{width:34px;height:44px;display:block}
+.bag.sel{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-wash)}
+.bag.ok{border-color:var(--good);background:var(--good-wash)}
+.bag.no{border-color:var(--warn);background:var(--warn-wash)}
+.bag .mk{position:absolute;top:3px;right:5px;font-size:13px}
+.bag.ghost{position:fixed;z-index:50;pointer-events:none;opacity:.9;box-shadow:0 10px 24px -8px rgba(0,0,0,.4)}
+.droptarget{outline:3px dashed var(--accent);outline-offset:-3px}
+.abbox{background:var(--panel-2);border:1px solid var(--rule);border-radius:var(--r);padding:10px 12px;font-size:14.5px;margin-top:10px}
+/* sim */
+.ctl{display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.ctl label{font-size:14.5px;font-weight:600;display:flex;justify-content:space-between;gap:8px}
+.ctl output{font-family:var(--mono);font-weight:600;color:var(--accent-ink)}
+.ctl input[type=range]{accent-color:var(--accent);width:100%}
+.ticks{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-faint);font-family:var(--mono)}
+.readouts{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:6px}
+.readouts th{text-align:left;font-weight:500;color:var(--ink-soft);padding:5px 6px 5px 0;border-top:1px solid var(--rule-soft)}
+.srhead th,.srhead td,.readouts caption.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;border:0}
+.readouts td{padding:5px 0;border-top:1px solid var(--rule-soft);font-family:var(--mono);font-size:13.5px;text-align:right;white-space:nowrap}
+.chal{list-style:none;padding:0;margin:6px 0}
+.chal li{display:flex;gap:8px;align-items:flex-start;padding:6px 0;border-top:1px solid var(--rule-soft);font-size:14px}
+.chal .ck{flex:0 0 22px;height:22px;border-radius:50%;border:1.5px solid var(--rule);display:grid;place-items:center;font-size:13px;font-family:var(--mono)}
+.chal li.done .ck{background:var(--good);border-color:var(--good);color:var(--on-accent)}
+.status{font-size:14.5px;padding:8px 10px;border-radius:var(--r);margin-top:8px;border:1px solid var(--rule);background:var(--panel-2)}
+.status.warn{background:var(--warn-wash);border-color:var(--warn)}
+.status.bad{background:var(--bad-wash);border-color:var(--bad)}
+.status.good{background:var(--good-wash);border-color:var(--good)}
+/* sequencer */
+ol.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.item{display:flex;align-items:center;gap:10px;background:var(--panel);border:1.5px solid var(--rule);border-left:6px solid var(--act4);border-radius:var(--r);padding:7px 8px 7px 10px;touch-action:none;user-select:none;cursor:grab;transition:background .15s,border-color .15s}
+.item.drag{box-shadow:0 10px 24px -8px rgba(0,0,0,.4);cursor:grabbing;border-color:var(--accent);z-index:2;position:relative}
+.item .pos{font-family:var(--mono);font-size:13px;color:var(--ink-faint);width:20px;text-align:right;flex:0 0 auto}
+.item .grip{color:var(--ink-faint);font-size:18px;line-height:1;flex:0 0 auto}
+.item .txt{flex:1;font-size:15px;line-height:1.35}
+.item .mv{display:flex;flex-direction:column;gap:2px}
+.mv button{width:30px;height:24px;border:1px solid var(--rule);background:var(--panel-2);border-radius:4px;cursor:pointer;font-size:12px;padding:0;line-height:1}
+.mv button:hover{border-color:var(--accent)}
+.item.right{background:var(--good-wash);border-color:var(--good)}
+.item.off{background:var(--warn-wash);border-color:var(--warn)}
+.item.hinted{box-shadow:0 0 0 3px var(--gold)}
+.sc-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.sc-n{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.sc-title{font-family:var(--serif);font-size:22px;font-weight:600;margin:2px 0 6px}
+.qlab{font-weight:600;margin:12px 0 8px}
+.opts{display:grid;grid-template-columns:1fr;gap:7px}
+.opt{text-align:left;background:var(--panel);border:1.5px solid var(--rule);border-radius:var(--r);padding:9px 12px;cursor:pointer;font-size:14.5px;line-height:1.35}
+.opt:hover{border-color:var(--accent)}
+.opt.right{border-color:var(--good);background:var(--good-wash)}
+.opt.wrong{border-color:var(--warn);background:var(--warn-wash)}
+.fb{margin:8px 0 0;font-size:14.5px;padding:8px 10px;border-radius:4px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--good-wash);border-left:4px solid var(--good)}
+.fb.no{background:var(--warn-wash);border-left:4px solid var(--warn)}
+.explain{margin-top:14px;padding:12px 14px;background:var(--accent-wash);border-left:4px solid var(--accent);border-radius:4px;display:none}
+.explain.show{display:block}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);display:grid;place-items:center;font-family:var(--mono);font-size:12.5px;background:var(--panel-2);cursor:pointer;padding:0}
+.chip.cur{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+.chip.done{border-color:var(--good);background:var(--good-wash);color:var(--good)}
+.chip.done.cur{background:var(--accent);color:var(--on-accent)}
+.calm{font-size:13px;color:var(--ink-faint);margin:8px 0 0}
+.subtabs{display:flex;gap:6px;margin:0 0 12px;flex-wrap:wrap}
+footer{max-width:1180px;margin:0 auto;padding:6px 16px 28px;font-size:13px;color:var(--ink-faint)}
+footer a{color:var(--ink-soft)}
+kbd{font-family:var(--mono);font-size:12.5px;border:1px solid var(--rule);border-bottom-width:2px;border-radius:4px;padding:0 5px;background:var(--panel-2)}
+sub,sup{line-height:0}
+[hidden]{display:none!important}
+/* heart lab */
+.sbank{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:10px}
+.sbtn{background:var(--panel);border:1.5px solid var(--rule);border-radius:var(--r);padding:7px 9px;cursor:pointer;font-size:14px;text-align:left;line-height:1.25}
+.sbtn:hover{border-color:var(--accent)}
+.sbtn.done{border-color:var(--good);background:var(--good-wash)}
+.sbtn.no{border-color:var(--warn);background:var(--warn-wash)}
+.sbtn.hint{box-shadow:0 0 0 3px var(--gold)}
+.paint{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.paint button{display:inline-flex;align-items:center;gap:8px}
+.paint i{width:16px;height:16px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.25)}
+.rhythms{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}
+.rhythms .tbtn{text-align:left;font-size:14px;line-height:1.25}
+.mopts{display:grid;grid-template-columns:1fr;gap:6px;margin:8px 0}
+.slwrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 4px 0}
+.slwrap input[type=range]{flex:1 1 260px;accent-color:var(--accent)}
+.slwrap output{font-family:var(--mono);font-weight:600;min-width:72px}
+.qcard{margin-top:12px;border:1px solid var(--rule);border-radius:var(--r);padding:12px 14px;background:var(--panel-2)}
+.qcard h3{margin-top:0}
+.scen{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.big{font-family:var(--mono);font-size:26px;font-weight:700;line-height:1.1}
+select{font:inherit;background:var(--panel);color:var(--ink);border:1px solid var(--rule);border-radius:var(--r);padding:4px 6px}
+/* genetics case lab */
+.gtgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.gtgrid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.gbtn{font-family:var(--mono);font-weight:600;font-size:15px;padding:8px 4px;text-align:center}
+.gbtn sup{font-size:10.5px;line-height:0}
+.modes{display:grid;grid-template-columns:1fr;gap:6px}
+.modes .tbtn{text-align:left;line-height:1.3}
+.modes .tbtn small{display:block;font-size:12.5px;color:var(--ink-soft);font-weight:500}
+.modes .tbtn[aria-pressed="true"] small{color:var(--accent-ink)}
+.kidbtns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0}
+.kidbtns .btn{padding:10px 6px;font-size:14.5px}
+.readouts td.l{font-family:var(--sans);text-align:left;white-space:normal}
+.readouts thead th{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em;border-top:0}
+.case{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.case{grid-template-columns:1fr}}
+.casechips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.casechip{border:1.5px solid var(--rule);background:var(--panel-2);border-radius:99px;padding:6px 12px;cursor:pointer;font-size:14px}
+.casechip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-wash);color:var(--accent-ink);font-weight:600}
+.casechip .ok{color:var(--good);margin-left:4px;font-weight:700}
+.story{font-size:15.5px;margin:0 0 8px}
+.qblock{border-top:1px solid var(--rule-soft);padding-top:8px;margin-top:10px}
+.hintbox{margin:8px 0 0;padding:8px 10px;border-radius:4px;background:var(--gold-wash);border-left:4px solid var(--gold);font-size:14.5px}
+.meter{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--ink-soft);margin-bottom:6px}
+.meter b{color:var(--ink);font-family:var(--mono)}
+/* sort game */
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:56px;padding:10px;border:1.5px dashed var(--rule);border-radius:var(--r);background:var(--panel-2);margin:8px 0 12px}
+.scard{background:var(--panel);border:1.5px solid var(--rule);border-left:5px solid var(--accent);border-radius:var(--r);padding:8px 10px;cursor:grab;font-size:14.5px;line-height:1.3;text-align:left;touch-action:none;user-select:none;max-width:100%}
+.scard:hover{border-color:var(--accent)}
+.scard[aria-pressed="true"]{box-shadow:0 0 0 3px var(--accent);border-color:var(--accent)}
+.scard.ghost{position:fixed;z-index:60;pointer-events:none;opacity:.92;box-shadow:0 10px 24px -8px rgba(0,0,0,.45)}
+.scard.placed{cursor:default;border-left-color:var(--good);background:var(--good-wash);font-size:13.5px;padding:6px 8px}
+.scard.hinted{box-shadow:0 0 0 3px var(--gold)}
+.bins{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.bin{border:1.5px solid var(--rule);border-radius:var(--r);background:var(--panel);padding:8px;display:flex;flex-direction:column;gap:6px;min-height:150px}
+.bin.over{outline:3px dashed var(--accent);outline-offset:-3px}
+.bin.hintbin{box-shadow:0 0 0 3px var(--gold)}
+.binhead{display:flex;align-items:center;gap:8px;width:100%;background:var(--panel-2);border:1px solid var(--rule);border-radius:var(--r);padding:6px;cursor:pointer;font-weight:600;font-size:14.5px;text-align:left;line-height:1.25}
+.binhead:hover{border-color:var(--accent)}
+.binhead svg{width:56px;height:46px;flex:0 0 auto}
+.binitems{display:flex;flex-direction:column;gap:5px}
+.sortbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0 8px}
+.sorthead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+h2.sec{font-family:var(--serif);font-size:21px;margin:2px 0 6px;font-weight:600}
+.sim-note{font-size:13.5px;color:var(--ink-soft);margin:6px 0 0}
+.readouts td{padding-left:10px}
+.diskgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.diskgrid .tbtn{text-align:left;font-size:13.5px;line-height:1.25;padding:7px 8px}
+.diskgrid .tbtn b{font-family:var(--mono);display:inline-block;min-width:34px}
+.readouts.chart td{text-align:center;padding-left:4px}
+.readouts.chart th,.readouts.chart td{font-size:13px}
+.readouts thead th{color:var(--ink-soft)}
+.scen .tbtn{font-family:var(--mono);font-size:13.5px}
+.seg3 .tbtn.right,.scen .tbtn.right{border-color:var(--good);background:var(--good-wash)}
+.seg3 .tbtn.wrong,.scen .tbtn.wrong{border-color:var(--warn);background:var(--warn-wash)}
+.ok-ic{color:var(--good);font-weight:700}
+.no-ic{color:var(--warn-ink);font-weight:700}
+.methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.methods .tbtn{text-align:left;line-height:1.25;font-size:14px}
+.seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.seg3 .tbtn,.seg4 .tbtn{font-size:13.5px;line-height:1.2;padding:8px 6px}
+.seg4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.verdict{font-weight:700}
+.drugbtns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.drugbtns .tbtn{font-size:13.5px;line-height:1.25;padding:7px 8px;text-align:left}
+.drugbtns .tbtn small{display:block;font-family:var(--mono);font-size:12px;color:var(--ink-soft);font-weight:500}
+.drugbtns .tbtn[aria-pressed="true"] small{color:var(--accent-ink)}
+.alerts{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.alert{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:var(--r);border:1px solid var(--rule);border-left-width:5px;background:var(--panel-2);font-size:14.5px}
+.alert b{white-space:nowrap}
+.alert .ic{flex:0 0 auto;font-family:var(--mono);font-weight:700;font-size:12px;padding:1px 6px;border-radius:4px;border:1.5px solid currentColor}
+.alert.bad{border-color:var(--bad);background:var(--bad-wash)}.alert.bad .ic{color:var(--bad)}
+.alert.warn{border-color:var(--warn);background:var(--warn-wash)}.alert.warn .ic{color:var(--warn-ink)}
+.alert.good{border-color:var(--good);background:var(--good-wash)}.alert.good .ic{color:var(--good)}
+.alert.info{border-color:var(--accent);background:var(--accent-wash)}.alert.info .ic{color:var(--accent-ink)}
+.readouts td.hi{color:var(--bad);font-weight:700}.readouts td.lo{color:var(--accent-ink);font-weight:700}.readouts td.ok{color:var(--good);font-weight:600}
+.bins{grid-template-columns:repeat(auto-fit,minmax(185px,1fr))}.binhead span{min-width:0;overflow-wrap:break-word}
+.practice-banner{background:var(--gold-wash);border-left:4px solid var(--gold);border-radius:4px;padding:8px 12px;margin:0 0 12px;font-size:14.5px;color:var(--ink)}
+.practice-tag{display:inline-block;background:var(--gold-wash);border:1.5px solid var(--gold);color:var(--ink);border-radius:6px;padding:4px 8px;font-size:13px;font-weight:600;line-height:1.3}
+.lab-sel{display:block;font-weight:600;font-size:14.5px;margin:12px 0 4px}
+#calcType{width:100%;padding:7px 8px;font-size:15px}
+.probcard{margin:12px 0 8px;padding:12px 14px;border:1px solid var(--rule);border-left:5px solid var(--accent);border-radius:var(--r);background:var(--panel-2);font-size:15.5px;line-height:1.5}
+.probcard .pt{font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:4px}
+.probcard .rd{display:block;font-size:13.5px;color:var(--ink-soft);margin-top:6px}
+.ansrow{display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.ans-l{font-weight:600;font-size:14.5px}
+.ansbox{display:flex;align-items:center;gap:8px}
+.ansbox input{font:600 18px var(--mono);width:150px;padding:7px 9px;border:1.5px solid var(--rule);border-radius:var(--r);background:var(--panel);color:var(--ink)}
+.ansbox input:focus{outline:3px solid var(--accent);outline-offset:1px}
+.unit{font-family:var(--mono);font-weight:600;font-size:15px;color:var(--ink-soft)}
+.streak{margin-top:10px}
+.seg2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.seg4b{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.seg2 .tbtn,.seg4b .tbtn{font-size:13.5px;line-height:1.25;padding:8px 6px}
+.marfields{display:grid;grid-template-columns:1fr;gap:6px}
+.mf{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:baseline;text-align:left;background:var(--panel);border:1.5px solid var(--rule);border-radius:var(--r);padding:8px 10px;cursor:pointer;font-size:14.5px;line-height:1.35}
+.mf:hover{border-color:var(--accent)}
+.mf .k{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft)}
+.mf.right{border-color:var(--good);background:var(--good-wash)}
+.mf.wrong{border-color:var(--warn);background:var(--warn-wash)}
+.mf.hinted{box-shadow:0 0 0 3px var(--gold)}
+.antis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.antis .tbtn{text-align:left;font-size:14px;line-height:1.25;padding:8px 9px}
+.antis .tbtn.right{border-color:var(--good);background:var(--good-wash)}
+.antis .tbtn.wrong{border-color:var(--warn);background:var(--warn-wash)}
+.antis .tbtn.hinted{box-shadow:0 0 0 3px var(--gold)}
+@media (max-width:420px){.mf{grid-template-columns:1fr;gap:2px}.antis{grid-template-columns:1fr}}
+.case.wide{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}
+@media (max-width:900px){.case.wide{grid-template-columns:1fr}}
+.ctl input[type=range]:disabled{opacity:.45}
+.modes3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.modes3 .tbtn{text-align:left;font-size:13.5px;line-height:1.25;padding:7px 8px}
+.modes3 .tbtn small{display:block;font-size:12px;color:var(--ink-soft);font-weight:500}
+.modes3 .tbtn[aria-pressed="true"] small{color:var(--accent-ink)}
+.gsel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.gsel .tbtn{font-size:13.5px;padding:7px 4px;line-height:1.25}
+.gsel .tbtn small{display:block;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}
+.gsel .tbtn[aria-pressed="true"] small{color:var(--accent-ink)}
+.lifeq .opts{margin-top:6px}
+.hgrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.hgrid{grid-template-columns:1fr}}
+.target{border:2px solid var(--act6);border-radius:var(--r);padding:10px 12px;background:var(--panel-2);margin-bottom:10px}
+.target .k{font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);display:block}
+.eqn{font-family:var(--mono);font-size:15.5px;font-weight:600;overflow-wrap:anywhere}
+.hzone{border:2px dashed var(--rule);border-radius:var(--r);padding:8px;min-height:90px;display:flex;flex-direction:column;gap:8px}
+.hzone.over{border-color:var(--accent);background:var(--accent-wash)}
+.hzone h3{margin:0;font-size:13px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft)}
+.hzone .empty{font-size:13.5px;color:var(--ink-soft);margin:0}
+.hcard{background:var(--panel);border:1.5px solid var(--rule);border-left:6px solid var(--exo);border-radius:var(--r);padding:8px 10px;touch-action:none}
+.hcard.pos{border-left-color:var(--endo)}
+.hcard.hinted{box-shadow:0 0 0 3px var(--gold)}
+.hcard.drag{opacity:.9;box-shadow:var(--shadow);position:relative;z-index:20}
+.hcard .top{display:flex;align-items:center;gap:8px;justify-content:space-between;flex-wrap:wrap}
+.hcard .grip{cursor:grab;font-family:var(--mono);font-size:13px;color:var(--ink-soft);border:1px dashed var(--rule);border-radius:4px;padding:2px 6px;background:var(--panel-2)}
+.hcard .dh{font-family:var(--mono);font-weight:700;font-size:14.5px}
+.hcard .dh.neg{color:var(--bad)}.hcard .dh.posv{color:var(--endo-ink)}
+.hcard .ctrls{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center}
+.hcard .ctrls .tbtn{padding:5px 9px;font-size:13.5px}
+.hcard .mult{font-family:var(--mono);font-weight:700;min-width:44px;text-align:center}
+.sumbox{border:1.5px solid var(--rule);border-radius:var(--r);padding:10px 12px;background:var(--panel-2);margin-top:10px}
+.sumbox .eqn s{color:var(--bad)}
+.sumbox .tot{font-family:var(--mono);font-weight:700;font-size:16px;margin-top:4px}
+.dhpos{color:var(--endo-ink)}.dhneg{color:var(--bad)}
+.hintline{font-size:14.5px;margin:4px 0}
+.seg4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.seg4 .tbtn,.seg3 .tbtn{font-size:13.5px;padding:7px 4px;line-height:1.25}
+.seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tg .tbtn{text-align:left;font-size:13.5px;line-height:1.25;padding:7px 8px}
+.tg .tbtn::before{content:"off";display:inline-block;font-family:var(--mono);font-size:11px;font-weight:700;border:1.5px solid var(--rule);border-radius:4px;padding:0 4px;margin-right:6px;color:var(--ink-soft)}
+.tg .tbtn[aria-pressed="true"]::before{content:"on";border-color:var(--accent);color:var(--accent-ink)}
+.modebar{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+.modebar .tbtn{font-weight:600}
+.sim-note{font-size:13px;color:var(--ink-soft);margin:8px 4px 0}
+.ctlgrp[hidden]{display:none}
+.side .ctl{margin:6px 0}
+.readouts td{white-space:normal;overflow-wrap:anywhere}
+@media (max-width:420px){.seg4{grid-template-columns:repeat(2,minmax(0,1fr))}.tg{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-in">
+  <div>
+    <div class="kicker">General Biology II &middot; Module 9 &middot; Plant transport and nutrition</div>
+    <h1>Plant Transport Lab</h1>
+    <p class="sub">Run a whole plant on a bench and watch water climb, stomata respond and sugar flow to a sink. Practise water potential and transpiration calculations with animated worked solutions, match transport routes and nutrients, and use the ideas on real cases. Nothing here is graded.</p>
+  </div>
+  <button class="tbtn" id="themeBtn" type="button">Light / dark</button>
+</div></header>
+<div class="wrap">
+  <div class="tabs" role="tablist" aria-label="Lab parts">
+    <button class="tab" role="tab" aria-selected="true" aria-controls="tab-sim" data-tab="sim" id="tabbtn-sim" type="button">Part 1 &middot; Whole Plant Bench</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="tab-train" data-tab="train" id="tabbtn-train" type="button" tabindex="-1">Part 2 &middot; Practice Trainer</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="tab-sort" data-tab="sort" id="tabbtn-sort" type="button" tabindex="-1">Part 3 &middot; Match-up Game</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="tab-life" data-tab="life" id="tabbtn-life" type="button" tabindex="-1">Part 4 &middot; Biology in the Real World</button>
+  </div>
+
+  <!-- PART 1 -->
+  <section id="tab-sim" role="tabpanel" aria-labelledby="tabbtn-sim">
+    <h2 class="gk-sr">Part 1: Whole Plant Bench</h2>
+        <div class="grid">
+      <div class="card stage">
+        <div class="canvas-holder"><canvas id="cvSim" role="img" aria-label="Whole plant bench."></canvas></div>
+        <div class="stagebar"><span class="caption" id="simCap"></span></div>
+        <div class="legend" id="simLegend"></div>
+        <table class="readouts" id="simRead"><caption class="gk-sr">Live readings</caption><thead class="srhead"><tr><th scope="col">Measure</th><th scope="col">Value</th></tr></thead><tbody></tbody></table>
+        <p class="sim-note" id="simNote"></p>
+      </div>
+      <aside class="card side" aria-label="Simulator controls">
+        <h3>Conditions</h3>
+        <div id="simSliders"></div>
+        <h3 id="sink-h">Sugar sink</h3>
+        <div class="seg2" id="simSink" role="group" aria-labelledby="sink-h"></div>
+        <h3>Presets</h3>
+        <div class="bar" id="simPre"></div>
+        <div class="bar"><button class="tbtn" type="button" id="simReset">Fresh plant</button></div>
+        <div class="status" id="simStatus" role="status"></div>
+        <h3>Challenges</h3>
+        <ul class="chal" id="simChal"></ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- PART 2 -->
+  <section id="tab-train" role="tabpanel" aria-labelledby="tabbtn-train" hidden>
+    <h2 class="gk-sr">Part 2: Practice Trainer</h2>
+    <div class="grid">
+      <div class="card stage">
+        <div class="canvas-holder"><canvas id="cvTrain" role="img" aria-label="Practice problem picture."></canvas></div>
+        <div class="stagebar"><span class="caption" id="calcCap"></span></div>
+        <p class="sim-note">Problems are randomly generated. For "predict then watch" items, make your prediction first: the picture plays out what really happens once you have answered. Water potentials are in megapascals (MPa); R = 0.00831 L·MPa/(mol·K); salts are assumed to dissociate completely.</p>
+      </div>
+      <aside class="card side" aria-label="Trainer controls">
+        <label class="lab-sel" for="calcType">Problem type</label>
+        <select id="calcType"></select>
+        <div class="probcard" id="calcProb" aria-live="polite"></div>
+        <div id="calcNumWrap" class="ansrow">
+          <label for="calcAns" class="ans-l">Your answer</label>
+          <div class="ansbox"><input type="text" id="calcAns" inputmode="decimal" autocomplete="off" spellcheck="false"><span id="calcUnit" class="unit"></span></div>
+        </div>
+        <div id="calcChoices" class="mopts" role="group" aria-label="Answer choices" hidden></div>
+        <div class="bar">
+          <button class="btn" id="calcCheck" type="button">Check</button>
+          <button class="tbtn" id="calcHint" type="button">Hint</button>
+          <button class="tbtn" id="calcSol" type="button">Show worked solution</button>
+          <button class="tbtn" id="calcNew" type="button">New problem</button>
+        </div>
+        <div class="msg" id="calcMsg" role="status"></div>
+        <div class="hintbox" id="calcHintBox" role="status" hidden></div>
+        <div class="meter streak"><span>Streak <b id="calcStreak">0</b></span><span>Best <b id="calcBest">0</b></span><span>Solved <b id="calcSolved">0</b></span></div>
+        <p class="small">Type a number (units are optional), or pick an answer. The hint ladder has three steps. The streak counts answers right on the first check without opening the solution.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- PART 3 -->
+  <section id="tab-sort" role="tabpanel" aria-labelledby="tabbtn-sort" hidden>
+    <h2 class="gk-sr">Part 3: Match-up Game</h2>
+    <div class="rounds" id="sRounds" role="group" aria-label="Rounds"></div>
+    <div class="card">
+      <div class="sorthead">
+        <div><div class="lvl-n" id="sN"></div><h2 class="sec" id="sTitle"></h2></div>
+        <div class="sortbar">
+          <label class="mode"><input type="checkbox" id="sRelaxed" checked> Relaxed mode (no timer)</label>
+          <span class="timer" id="sTimer" hidden>0:00</span>
+          <span class="stars" id="sStars" role="img" aria-label="Stars appear when the round is done"></span>
+        </div>
+      </div>
+      <p class="goal"><b class="h">Your job</b><span id="sGoal"></span></p>
+      <p class="small">Drag a card onto a box, or tap a card and then tap the box's name. Cards are buttons, so Tab and Enter work too.</p>
+      <div class="pool" id="sPool" aria-label="Cards to sort"></div>
+      <div class="bins" id="sBins"></div>
+      <div class="bar">
+        <button class="tbtn" id="sHint" type="button">Hint</button>
+        <button class="tbtn" id="sShow" type="button">Show answer</button>
+        <button class="tbtn" id="sShuffle" type="button">Start round over</button>
+        <button class="btn" id="sNext" type="button">Next round &rarr;</button>
+      </div>
+      <div class="msg" id="sMsg" role="status"></div>
+      <p class="small" id="sBest"></p>
+    </div>
+  </section>
+
+  <!-- PART 4 -->
+  <section id="tab-life" role="tabpanel" aria-labelledby="tabbtn-life" hidden>
+    <h2 class="gk-sr">Part 4: Biology in the Real World</h2>
+    <div class="casechips" id="lifeChips" role="group" aria-label="Choose a scenario"></div>
+    <div class="case wide">
+      <div class="card stage">
+        <div class="canvas-holder"><canvas id="cvLife" role="img" aria-label="Scenario picture."></canvas></div>
+        <div class="stagebar"><span class="caption" id="lifeCap"></span></div>
+        <p class="sim-note">Fictional settings and rounded teaching values based on typical published ranges.</p>
+      </div>
+      <div class="card">
+        <div class="sc-n" id="lifeN"></div>
+        <h2 class="sc-title" id="lifeTitle"></h2>
+        <p class="story" id="lifeStory"></p>
+        <div id="lifeQs"></div>
+        <div class="bar" style="margin-top:12px">
+          <button class="tbtn" id="lifePrev" type="button">&larr; Previous</button>
+          <button class="btn" id="lifeNext" type="button">Next scenario &rarr;</button>
+        </div>
+        <p class="calm">Wrong picks are fine here. Each one tells you why.</p>
+      </div>
+    </div>
+  </section>
+</div>
+<footer>Dr. Akash Garg &middot; General Biology II Study Tools &middot; Drawings are simplified and not to scale. CC BY-NC-SA 4.0<br>Learn the ideas first in the <a href="PlantTransport-Walkthrough.html">Plant Transport Walkthrough</a>. Simulations are simplified teaching models with sped-up timing; their simplifications are listed under each picture.</footer>
+<script>
+(function(){
+"use strict";
+const KEYS=["ground", "panel", "panel-2", "sunk", "ink", "ink-soft", "ink-faint", "rule", "rule-soft", "accent", "accent-ink", "accent-wash", "warn", "warn-wash", "bad", "bad-wash", "good", "good-wash", "on-accent", "warn-ink", "act1", "act2", "act3", "act4", "act5", "act6", "act7", "act8", "gold", "gold-wash", "gold-ink", "ecf", "grid", "paper", "cyto", "cyto-edge", "dna", "rna", "prot", "prot-ink", "prot2", "lipid", "lipid-ink", "tail", "tail-edge", "chol", "carb", "carb-ink", "atp", "atp-ink", "elec", "water", "water-ink", "water-fill", "plant", "plant-ink", "wall", "vac", "chloro", "na", "na-ink", "k", "k-ink", "cl", "hplus", "hplus-ink", "o2", "co2", "sucrose", "rbc", "rbc-edge", "blood", "skin", "skin-edge", "shirt", "bact", "clath", "lyso", "ldl", "heat", "cold", "metal", "glass", "glass-edge", "soil", "soil-d", "soil-fill", "clay", "sand", "leaf", "leaf-d", "stem", "wood", "xylem", "phloem", "phloem-ink", "casp", "myco", "nod", "n2", "nh4", "no3", "aba", "aba-ink", "sky", "sun", "fruit", "air", "vapor", "bug", "algae"];
+/* ================= drawing kit (shared by both pages) ================= */
+let ctx=null;
+const C={};
+function readColors(){const s=getComputedStyle(document.documentElement);KEYS.forEach(k=>C[k]=s.getPropertyValue("--"+k).trim())}
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const seg=(p,a,b)=>clamp((p-a)/(b-a),0,1);
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const smooth=x=>{x=clamp(x,0,1);return x*x*(3-2*x)};
+const lerp=(a,b,t)=>a+(b-a)*t;
+const TAU=Math.PI*2;
+const gauss=(t,m,s)=>Math.exp(-((t-m)*(t-m))/(2*s*s));
+const FONT='"IBM Plex Sans",system-ui,sans-serif',MONO='"IBM Plex Mono",ui-monospace,monospace';
+function hx(c){let h=(c||"#888").trim();if(h[0]!=="#"){const m=h.match(/\d+/g);return m&&m.length>=3?[+m[0],+m[1],+m[2]]:[136,136,136]}h=h.slice(1);if(h.length===3)h=h.split("").map(x=>x+x).join("");const n=parseInt(h,16);return [n>>16&255,n>>8&255,n&255]}
+function isDark(){return hx(C.ground)[0]<60}
+function onFill(){return isDark()?"#0E1519":"#fff"}
+function P(T,L){return ((T%L)+L)%L/L}
+function mix(a,b,t){const A=hx(a),B=hx(b);t=clamp(t,0,1);return "rgb("+A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(",")+")"}
+function hexA(c,a){const A=hx(c);return `rgba(${A[0]},${A[1]},${A[2]},${clamp(a,0,1)})`}
+function rr(x,y,w,h,r){r=Math.max(0,Math.min(r,w/2,h/2));ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function circ(x,y,r,fill,stroke,lw){ctx.beginPath();ctx.arc(x,y,Math.max(0,r),0,TAU);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw||1.5;ctx.stroke()}}
+function ell(x,y,rx,ry,rot,fill,stroke,lw){ctx.beginPath();ctx.ellipse(x,y,Math.max(0,rx),Math.max(0,ry),rot||0,0,TAU);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw||1.5;ctx.stroke()}}
+function glow(x,y,r,col,a){if(r<=0)return;const A=hx(col);const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,`rgba(${A},${clamp(a==null?1:a,0,1)})`);g.addColorStop(1,`rgba(${A},0)`);ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fill()}
+function label(x,y,t,o){o=o||{};if(o.a!=null){if(o.a<=0)return 0;ctx.save();ctx.globalAlpha*=clamp(o.a,0,1);const w=label(x,y,t,Object.assign({},o,{a:null}));ctx.restore();return w}const size=o.size||13;ctx.font=`${o.weight||500} ${size}px ${o.mono?MONO:FONT}`;
+  ctx.textAlign=o.align||"center";ctx.textBaseline="middle";
+  const w=ctx.measureText(t).width;let x0=x;if(ctx.textAlign==="center")x0=x-w/2;if(ctx.textAlign==="right")x0=x-w;
+  const a0=ctx.globalAlpha;
+  if(o.pill!==false){ctx.globalAlpha=a0*(o.bga==null?.9:o.bga);ctx.fillStyle=o.bg||C.panel;rr(x0-5,y-size*.75,w+10,size*1.5,4);ctx.fill();ctx.globalAlpha=a0;
+    if(o.border){ctx.strokeStyle=o.border;ctx.lineWidth=1.5;ctx.stroke()}}
+  ctx.fillStyle=o.color||C.ink;ctx.fillText(t,x,y+.5);return w}
+function txt(x,y,t,o){o=o||{};ctx.font=`${o.weight||500} ${o.size||12}px ${o.mono?MONO:FONT}`;ctx.textAlign=o.align||"left";ctx.textBaseline="middle";ctx.fillStyle=o.color||C.ink;ctx.fillText(t,x,y)}
+function line(x1,y1,x2,y2,col,lw,dash){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=col;ctx.lineWidth=lw||1.2;ctx.setLineDash(dash||[]);ctx.stroke();ctx.setLineDash([])}
+function arrow(x1,y1,x2,y2,col,lw,dash){line(x1,y1,x2,y2,col,lw||2,dash);const a=Math.atan2(y2-y1,x2-x1),h=7+(lw||2);ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-h*Math.cos(a-.45),y2-h*Math.sin(a-.45));ctx.lineTo(x2-h*Math.cos(a+.45),y2-h*Math.sin(a+.45));ctx.closePath();ctx.fillStyle=col;ctx.fill()}
+function chipText(x,y,t,col,fg){ctx.font=`600 11.5px ${MONO}`;ctx.textAlign="center";ctx.textBaseline="middle";const w=ctx.measureText(t).width;
+  ctx.fillStyle=col;rr(x-w/2-6,y-9.5,w+12,19,9.5);ctx.fill();ctx.fillStyle=fg||onFill();ctx.fillText(t,x,y+.5);return w+12}
+function chipL(x,y,t,col,fg){ctx.font=`600 11.5px ${MONO}`;const w=ctx.measureText(t).width;return chipText(x+w/2+6,y,t,col,fg)}
+function badge(x,y,n,col,r){r=r||10;circ(x,y,r,col||C.ink,C.panel,1.5);ctx.font=`700 ${r>10?13:11.5}px ${MONO}`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle=onFill();ctx.fillText(String(n),x,y+.5)}
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+function along(P_,p){let L=0;const ls=[];for(let i=0;i<P_.length-1;i++){const l=Math.hypot(P_[i+1][0]-P_[i][0],P_[i+1][1]-P_[i][1]);ls.push(l);L+=l}
+  let d=clamp(p,0,1)*L;for(let i=0;i<ls.length;i++){if(d<=ls[i]||i===ls.length-1){const f=ls[i]?Math.min(1,d/ls[i]):0;return [lerp(P_[i][0],P_[i+1][0],f),lerp(P_[i][1],P_[i+1][1],f)]}d-=ls[i]}return P_[P_.length-1]}
+function poly(pts,col,lw,dash){ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.strokeStyle=col;ctx.lineWidth=lw||1.5;ctx.setLineDash(dash||[]);ctx.lineJoin="round";ctx.lineCap="round";ctx.stroke();ctx.setLineDash([]);ctx.lineCap="butt"}
+function panelBox(x,y,w,h,o){o=o||{};rr(x,y,w,h,o.r||8);ctx.fillStyle=o.fill||hexA(C.panel,.85);ctx.fill();ctx.strokeStyle=o.stroke||C.rule;ctx.lineWidth=o.lw||1.2;ctx.stroke()}
+function wrapText(t,x,y,w,lh,o){o=o||{};ctx.font=`${o.weight||500} ${o.size||12}px ${o.mono?MONO:FONT}`;ctx.textAlign=o.align||"left";ctx.textBaseline="middle";ctx.fillStyle=o.color||C.ink;
+  const words=t.split(" ");let ln="";let yy=y;words.forEach(wd=>{const test=ln?ln+" "+wd:wd;if(ctx.measureText(test).width>w&&ln){ctx.fillText(ln,x,yy);ln=wd;yy+=lh}else ln=test});if(ln)ctx.fillText(ln,x,yy);return yy}
+function blobPath(x,y,r,seed,t,amp){amp=amp==null?.06:amp;ctx.beginPath();const N=44;for(let i=0;i<=N;i++){const a=i/N*TAU;const rad=r*(1+amp*Math.sin(a*3+seed+(t||0)*1.7)+amp*.7*Math.sin(a*5+seed*2.3-(t||0)*1.1));const X=x+Math.cos(a)*rad,Y=y+Math.sin(a)*rad;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.closePath()}
+function withA(a,fn){ctx.save();ctx.globalAlpha*=clamp(a==null?1:a,0,1);fn();ctx.restore()}
+function title(x,y,t,col,align){txt(x,y,t.toUpperCase().replace(/Μ/g,"µ").replace(/µM/g,"µm"),{size:12,mono:true,weight:700,color:col||C["ink-soft"],align:align||"left"})}
+function lead(px,py,lx,ly,t,o){o=o||{};const a=o.a==null?1:o.a;if(a<=0)return;ctx.save();ctx.globalAlpha*=a;line(px,py,lx,ly,o.lc||C["ink-soft"],1.2);circ(px,py,2.6,o.lc||C["ink-soft"]);
+  label(lx,ly,t,{size:o.size||12.5,weight:o.weight||600,align:o.align||(lx<px?"right":"left"),border:o.border,color:o.color});ctx.restore()}
+function pulseRing(x,y,r,col,p){ctx.save();ctx.globalAlpha*=(1-p);ctx.strokeStyle=col;ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(x,y,r*(.4+p),0,TAU);ctx.stroke();ctx.restore()}
+function plotFn(fn,t0,t1,x,y,w,h,v0,v1,col,lw,dash,upto){ctx.beginPath();const N=Math.max(40,Math.round(w));let started=false;for(let i=0;i<=N;i++){const t=lerp(t0,t1,i/N);if(upto!=null&&t>upto)break;const v=fn(t);const X=x+w*i/N,Y=y+h-(clamp(v,v0,v1)-v0)/(v1-v0)*h;started?ctx.lineTo(X,Y):(ctx.moveTo(X,Y),started=true)}
+  ctx.strokeStyle=col;ctx.lineWidth=lw||2;ctx.setLineDash(dash||[]);ctx.lineJoin="round";ctx.stroke();ctx.setLineDash([])}
+function bg(col){ctx.fillStyle=col||C.ecf;ctx.fillRect(0,0,4000,4000)}
+/* ================= core helpers (from the shared kit) ================= */
+function lumOf(c){const A=hx(c).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*A[0]+.7152*A[1]+.0722*A[2]}
+function inkOn(c){return lumOf(c)>.3?"#10161A":"#fff"}
+function fillStroke(f,s,lw){if(f){ctx.fillStyle=f;ctx.fill()}if(s){ctx.strokeStyle=s;ctx.lineWidth=lw||1.4;ctx.stroke()}}
+function checkMark(x,y,s,col){poly([[x-s,y],[x-s*.3,y+s*.7],[x+s,y-s*.7]],col||C.good,3)}
+function crossMark(x,y,s,col){line(x-s,y-s,x+s,y+s,col||C.bad,3);line(x+s,y-s,x-s,y+s,col||C.bad,3)}
+function fmtNum(v,dp){if(dp==null)dp=2;const r=Math.round(v*Math.pow(10,dp))/Math.pow(10,dp);let s=String(r);if(Math.abs(r)>=1000){const p=s.split(".");p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,",");s=p.join(".")}return s}
+/* format with n significant figures, never in e-notation for normal sizes */
+function sig(v,n){if(!isFinite(v))return "?";if(v===0)return (0).toFixed(Math.max(0,n-1));const e=Math.floor(Math.log10(Math.abs(v)));const dp=n-1-e;
+  if(dp>=0){return (Math.round(v*Math.pow(10,dp))/Math.pow(10,dp)).toFixed(dp)}
+  const f=Math.pow(10,-dp);const r=Math.round(v/f)*f;return String(r)}
+/* count significant figures in a typed string; returns {n, amb} (amb = trailing zeros without a decimal point) */
+function sigCount(str){let s=String(str).trim().replace(/^[+-]/,"").replace(/,/g,"");let ex="";const m=s.match(/^([0-9.]+)[eE]([+-]?\d+)$/);if(m)s=m[1];
+  if(!/^\d*\.?\d*$/.test(s)||s===""||s===".")return {n:0,amb:false};
+  const hasDot=s.indexOf(".")>=0;let d=s.replace(".","");d=d.replace(/^0+/,"");if(d==="")return {n:1,amb:false};
+  if(hasDot)return {n:d.length,amb:false};
+  const t=d.replace(/0+$/,"");return {n:t.length,amb:t.length!==d.length,max:d.length}}
+function graph(g){const X=v=>g.x+(v-g.x0)/(g.x1-g.x0)*g.w,Y=v=>g.y+g.h-(v-g.y0)/(g.y1-g.y0)*g.h;g.X=X;g.Y=Y;
+  rr(g.x,g.y,g.w,g.h,2);ctx.fillStyle=hexA(C.panel,.7);ctx.fill();
+  if(g.xt)g.xt.forEach(t=>{if(g.grid!==false)line(X(t),g.y,X(t),g.y+g.h,C.grid,1);txt(X(t),g.y+g.h+11,g.xf?g.xf(t):String(t),{size:10.5,align:"center",mono:true,color:C["ink-soft"]})});
+  if(g.yt)g.yt.forEach(t=>{if(g.grid!==false)line(g.x,Y(t),g.x+g.w,Y(t),C.grid,1);txt(g.x-5,Y(t),g.yf?g.yf(t):String(t),{size:10.5,align:"right",mono:true,color:C["ink-soft"]})});
+  line(g.x,g.y,g.x,g.y+g.h,C["ink-soft"],1.6);line(g.x,g.y+g.h,g.x+g.w,g.y+g.h,C["ink-soft"],1.6);
+  if(g.xl)txt(g.x+g.w,g.y+g.h+(g.xt?26:12),g.xl,{size:11.5,weight:600,align:"right",color:C["ink-soft"]});
+  if(g.yl)txt(g.x-(g.ylx||0),g.y-10,g.yl,{size:11.5,weight:600,align:"left",color:C["ink-soft"]});
+  if(g.title)title(g.x,g.y-24,g.title,g.tcol);return g}
+function curve(g,fn,a,b,col,lw,dash,o){o=o||{};ctx.save();ctx.beginPath();ctx.rect(g.x,g.y-2,g.w+2,g.h+4);ctx.clip();ctx.beginPath();const N=120;let st=false;
+  for(let i=0;i<=N;i++){const v=lerp(a,b,i/N);const w=fn(v);if(!isFinite(w)){st=false;continue}const X=g.X(v),Y=g.Y(w);st?ctx.lineTo(X,Y):(ctx.moveTo(X,Y),st=true)}
+  ctx.strokeStyle=col;ctx.lineWidth=lw||2.4;ctx.setLineDash(dash||[]);ctx.lineJoin="round";ctx.stroke();ctx.setLineDash([]);ctx.restore()}
+function gdot(g,a,b,col,lab,o){o=o||{};const X=g.X(a),Y=g.Y(b);if(X<g.x-1||X>g.x+g.w+1||Y<g.y-1||Y>g.y+g.h+1)return;if(o.guides){line(X,Y,X,g.y+g.h,hexA(col,.6),1.2,[3,3]);line(g.x,Y,X,Y,hexA(col,.6),1.2,[3,3])}
+  circ(X,Y,o.r||6,col,C.panel,2);if(lab)label(X+(o.dx||0),Y+(o.dy==null?-16:o.dy),lab,{size:o.size||11.5,weight:700,mono:true,border:col,align:o.align})}
+/* ---------- equation / dimensional analysis chain ----------
+   items: [{n:[str,[units]], d:[str,[units]]|null}], res:[str,[units]], p: 0..1 progress */
+function F(n,nu,d,du){return {n:[String(n),nu==null?[]:Array.isArray(nu)?nu:[nu]],d:d==null?null:[String(d),du==null?[]:Array.isArray(du)?du:[du]]}}
+function chainLayout(items,fs){ctx.font=`600 ${fs}px ${MONO}`;return items.map(it=>{const nt=(it.n[0]+" "+it.n[1].join("·")).trim();const dt=it.d?(it.d[0]+" "+it.d[1].join("·")).trim():"";return Math.max(ctx.measureText(nt).width,ctx.measureText(dt).width)+8})}
+function chainWidth(items,res,o){o=o||{};const fs=o.size||15;const gap=o.gap||20;const ws=chainLayout(items,fs);let X=ws.reduce((a,b)=>a+b,0)+gap*(items.length-1);if(res){ctx.font=`700 ${fs+2}px ${MONO}`;X+=gap+12+ctx.measureText(res[0]+" "+res[1].join("·")).width}return X}
+function chain(x,y,items,res,p,o){o=o||{};const fs=o.size||15;const gap=o.gap||20;const ws=chainLayout(items,fs);
+  const ns=[],ds=[];items.forEach((it,i)=>{it.n[1].forEach((u,k)=>ns.push({i,k,u,used:false}));if(it.d)it.d[1].forEach((u,k)=>ds.push({i,k,u,used:false}))});
+  const pairs=[];ds.forEach(d=>{const m=ns.find(n=>!n.used&&n.u.replace(/s$/,"")===d.u.replace(/s$/,""));if(m){m.used=true;d.used=true;pairs.push([m,d])}});
+  const pos={};let X=x;const nI=items.length;const pIn=o.pIn||.42,pSt=o.pSt||.78;
+  items.forEach((it,i)=>{const a=clamp((p*nI/pIn)-i,0,1);if(a<=0){X+=ws[i]+gap;return}ctx.save();ctx.globalAlpha*=a;const w=ws[i];const cx=X+w/2;const dy=(1-a)*-10;
+    const part=(val,units,yy,isN)=>{ctx.font=`600 ${fs}px ${MONO}`;const full=(val+" "+units.join("·")).trim();let px=cx-ctx.measureText(full).width/2;ctx.textAlign="left";ctx.textBaseline="middle";ctx.fillStyle=o.ncol||C.ink;ctx.fillText(val,px,yy+dy);px+=ctx.measureText(val+" ").width;
+      units.forEach((u,k)=>{const uw=ctx.measureText(u).width;pos[(isN?"n":"d")+i+"_"+k]=[px,yy,uw];ctx.fillStyle=o.ucol||C["accent-ink"];ctx.fillText(u,px,yy+dy);px+=uw;if(k<units.length-1){ctx.fillStyle=C.ink;ctx.fillText("·",px,yy+dy);px+=ctx.measureText("·").width}})};
+    if(it.d){part(it.n[0],it.n[1],y-fs*.95,true);line(X,y,X+w,y,C.ink,1.6);part(it.d[0],it.d[1],y+fs*1.0,false)}else part(it.n[0],it.n[1],y,true);
+    if(i<nI-1)txt(X+w+gap/2,y,"×",{size:fs+2,weight:700,align:"center",color:C["ink-soft"]});ctx.restore();X+=w+gap});
+  X-=gap;const sp=clamp((p-pIn)/(pSt-pIn),0,1);
+  pairs.forEach((pr,j)=>{const f=clamp(sp*pairs.length-j,0,1);if(f<=0)return;[pr[0],pr[1]].forEach((q,qi)=>{const ps=pos[(qi===0?"n":"d")+q.i+"_"+q.k];if(!ps)return;line(ps[0]-2,ps[1]+6,ps[0]-2+(ps[2]+4)*f,ps[1]-6,C.bad,2.4)})});
+  const rf=clamp((p-pSt-.04)/.1,0,1);
+  if(res){txt(X+gap/2,y,"=",{size:fs+3,weight:700,align:"center",color:C["ink-soft"]});X+=gap+4;
+    if(rf>0)withA(rf,()=>{const t=res[0]+" "+res[1].join("·");ctx.font=`700 ${fs+2}px ${MONO}`;const w=ctx.measureText(t).width;rr(X-4,y-15,w+12,30,6);ctx.fillStyle=C["good-wash"];ctx.fill();ctx.strokeStyle=C.good;ctx.lineWidth=1.8;ctx.stroke();txt(X+2,y,t,{size:fs+2,weight:700,mono:true})});}
+  return pairs.length}
+/* worked example card that animates over a loop of `per` seconds
+   w = {q:"problem", given:[...], conv:[...] (K reminders etc), items, res, ans:"...", sf:"note", miss:"mistake note"} */
+function worked(x,y,w,h,W_,T,o){o=o||{};const per=o.per||16;const t=P(T,per)*per;panelBox(x,y,w,h,{fill:hexA(C.paper,.96)});
+  title(x+12,y+16,o.title||"Worked example",C["accent-ink"]);let yy=y+38;
+  const sz=o.size||12.5;
+  if(o.split){const sw=o.split;let ly=wrapText(W_.q,x+12,yy,sw-20,sz+4,{size:sz,weight:600})+sz+6;
+    (W_.given||[]).forEach((g,i)=>{const a=seg(t,.8+i*.5,1.2+i*.5);if(a>0)withA(a,()=>txt(x+14,ly,g,{size:sz-.5,mono:true,color:C.ink}));ly+=sz+6});
+    const t0=1.2+(W_.given||[]).length*.5;
+    (W_.conv||[]).forEach((g,i)=>{const a=seg(t,t0+i*.8,t0+.5+i*.8);if(a>0)withA(a,()=>label(x+14,ly+2,g,{size:sz-.5,weight:700,mono:true,align:"left",border:C.gold,bg:C["gold-wash"]}));ly+=sz+13});
+    line(x+sw,y+28,x+sw,y+h-10,C["rule-soft"],1.2);
+    const t1=t0+(W_.conv||[]).length*.8+.4;const cp=clamp((t-t1)/(per*.45),0,1);const fs=o.cfs||14;const rx=x+sw+14,rw=w-sw-24;
+    let cy=y+(o.cy||52)+fs;(W_.rows||[[W_.items,W_.res]]).forEach((rw_,ri,arr)=>{const p_=clamp(cp*arr.length-ri,0,1);if(p_>0)chain(rx,cy,rw_[0],rw_[1],p_,{size:fs});cy+=fs*2+(o.rowGap||22)});
+    let yy2=cy-fs+4;const t2=t1+per*.45+.3;
+    if(W_.sf){const a=seg(t,t2,t2+.6);if(a>0)withA(a,()=>wrapText(W_.sf,rx,yy2,rw,sz+3,{size:sz-.5,color:C.good,weight:600}));yy2+=(o.sfH||sz+10)}
+    if(W_.miss){const a=seg(t,t2+1.2,t2+1.8);if(a>0)withA(a,()=>{rr(rx-4,yy2-10,rw+8,o.missH||38,5);ctx.fillStyle=C["warn-wash"];ctx.fill();ctx.strokeStyle=C.warn;ctx.lineWidth=1.2;ctx.stroke();wrapText("Common mistake: "+W_.miss,rx+4,yy2+3,rw-8,sz+3,{size:sz-1,color:C.ink})})}
+    return t}
+  yy=wrapText(W_.q,x+12,yy,w-24,sz+4,{size:sz,weight:600})+sz+6;
+  (W_.given||[]).forEach((g,i)=>{const a=seg(t,.8+i*.5,1.2+i*.5);if(a>0)withA(a,()=>txt(x+14,yy,g,{size:sz-.5,mono:true,color:C.ink}));yy+=sz+6});
+  const t0=1.2+(W_.given||[]).length*.5;
+  (W_.conv||[]).forEach((g,i)=>{const a=seg(t,t0+i*.8,t0+.5+i*.8);if(a>0)withA(a,()=>{const ww=label(x+14,yy,g,{size:sz-.5,weight:700,mono:true,align:"left",border:C.gold,bg:C["gold-wash"]})});yy+=sz+12});
+  const t1=t0+(W_.conv||[]).length*.8+.4;const cp=clamp((t-t1)/(per*.45),0,1);
+  const fs=o.cfs||14;const cw=chainWidth(W_.items,W_.res,{size:fs});let cy=yy+fs+12;if(W_.items&&cp>0){const cx=o.center?x+Math.max(12,(w-cw)/2):x+14;chain(cx,cy,W_.items,W_.res,cp,{size:fs})}
+  yy=cy+fs*2+8;const t2=t1+per*.45+.3;
+  if(W_.sf){const a=seg(t,t2,t2+.6);if(a>0)withA(a,()=>wrapText(W_.sf,x+14,yy,w-28,sz+4,{size:sz-.5,color:C.good,weight:600}));yy+=sz+10}
+  if(W_.miss){const a=seg(t,t2+1.2,t2+1.8);if(a>0)withA(a,()=>{rr(x+10,yy-10,w-20,o.missH||38,5);ctx.fillStyle=C["warn-wash"];ctx.fill();ctx.strokeStyle=C.warn;ctx.lineWidth=1.2;ctx.stroke();wrapText("Common mistake: "+W_.miss,x+18,yy+3,w-36,sz+3,{size:sz-1,color:C.ink})})}
+  return t}
+/* curved arrow */
+function carrow(x1,y1,cx,cy,x2,y2,col,lw){ctx.beginPath();ctx.moveTo(x1,y1);ctx.quadraticCurveTo(cx,cy,x2,y2);ctx.strokeStyle=col;ctx.lineWidth=lw||2;ctx.stroke();const a=Math.atan2(y2-cy,x2-cx),h=8;ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-h*Math.cos(a-.45),y2-h*Math.sin(a-.45));ctx.lineTo(x2-h*Math.cos(a+.45),y2-h*Math.sin(a+.45));ctx.closePath();ctx.fillStyle=col;ctx.fill()}
+/* ================= shared utilities (bars, cards, worked panels) ================= 
+   adapted from the site family kit */
+function bar(x,y,w,h,f,col,o){o=o||{};rr(x,y,w,h,Math.min(4,h/2));ctx.fillStyle=hexA(C.sunk,.85);ctx.fill();if(f>0){rr(x,y,w*clamp(f,0,1),h,Math.min(4,h/2));ctx.fillStyle=col;ctx.fill()}if(o.over&&f>1){txt(x+w+4,y+h/2,"+",{size:12,weight:700,color:C.bad})}}
+function vbar(x,y,w,h,f,col){rr(x,y,w,h,3);ctx.fillStyle=hexA(C.sunk,.85);ctx.fill();if(f>0){const hh=h*clamp(f,0,1);rr(x,y+h-hh,w,hh,3);ctx.fillStyle=col;ctx.fill()}}
+function cardBox(x,y,w,h,col,on){rr(x,y,w,h,8);ctx.fillStyle=on?hexA(col,.16):hexA(C.panel,.88);ctx.fill();ctx.strokeStyle=on?col:C.rule;ctx.lineWidth=on?2.4:1.2;ctx.stroke()}
+function tick(x,y,s,col){poly([[x-s,y],[x-s*.3,y+s*.7],[x+s,y-s*.7]],col||C.good,3)}
+function heatWave(x1,y1,x2,y2,col,T,lw,a){if(a!=null&&a<=0)return;ctx.save();if(a!=null)ctx.globalAlpha*=clamp(a,0,1);const L=Math.hypot(x2-x1,y2-y1),ang=Math.atan2(y2-y1,x2-x1);ctx.translate(x1,y1);ctx.rotate(ang);
+  ctx.beginPath();for(let i=0;i<=40;i++){const t=i/40;const X=t*L,Y=Math.sin(t*TAU*2.5-T*6)*5;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.strokeStyle=col;ctx.lineWidth=lw||2;ctx.stroke();
+  ctx.beginPath();ctx.moveTo(L,0);ctx.lineTo(L-8,-5);ctx.lineTo(L-8,5);ctx.closePath();ctx.fillStyle=col;ctx.fill();ctx.restore()}
+function thermo(x,y,h,f,o){o=o||{};const col=o.col||C.heat;rr(x-7,y-h,14,h,7);fillStroke(C.paper,C["ink-soft"],1.6);circ(x,y+6,12,col,C["ink-soft"],1.6);rr(x-3.5,y-h*clamp(f,0,1)+4,7,h*clamp(f,0,1),3.5);ctx.fillStyle=col;ctx.fill()}
+/* a speech bubble */
+function bubble(x,y,w,h,t,o){o=o||{};rr(x,y,w,h,10);fillStroke(o.fill||C.panel,o.stroke||C.rule,1.6);ctx.beginPath();const tx=o.tx==null?x+24:o.tx;ctx.moveTo(tx,y+h);ctx.lineTo(tx+10,y+h);ctx.lineTo(tx-4,y+h+14);ctx.closePath();ctx.fillStyle=o.fill||C.panel;ctx.fill();ctx.strokeStyle=o.stroke||C.rule;ctx.stroke();
+  rr(tx-1,y+h-3,13,5,0);ctx.fillStyle=o.fill||C.panel;ctx.fill();wrapText(t,x+10,y+16,w-20,o.lh||16,{size:o.size||12.5,weight:o.weight||500})}
+/* headline card */
+function headline(x,y,w,h,t,o){o=o||{};rr(x,y,w,h,6);fillStroke(C.paper,o.border||C.rule,1.6);rr(x,y,w,20,6);ctx.fillStyle=hexA(C.ink,.08);ctx.fill();txt(x+10,y+10,o.src||"NEWS FEED",{size:10.5,weight:700,mono:true,color:C["ink-soft"]});wrapText(t,x+10,y+36,w-20,o.lh||18,{size:o.size||14,weight:700})}
+/* ---------- gears ---------- */
+function gear(x,y,r,n,rot,col){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.beginPath();for(let i=0;i<n*2;i++){const a=i*Math.PI/n;const rr_=i%2?r*.78:r;ctx.lineTo(Math.cos(a-.12)*rr_,Math.sin(a-.12)*rr_);ctx.lineTo(Math.cos(a+.12)*rr_,Math.sin(a+.12)*rr_)}ctx.closePath();ctx.fillStyle=hexA(col,.5);ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=1.6;ctx.stroke();circ(0,0,r*.28,C.panel,col,1.6);ctx.restore()}
+/* count wrapped lines */
+function wrapCount(t,w,size,weight){ctx.font=`${weight||500} ${size}px ${FONT}`;let n=1,ln="";t.split(" ").forEach(wd=>{const test=ln?ln+" "+wd:wd;if(ctx.measureText(test).width>w&&ln){n++;ln=wd}else ln=test});return n}
+/* fit one line of text into a width (shrinks font) */
+function fitTxt(x,y,t,maxW,o){o=o||{};let sz=o.size||13;ctx.font=`${o.weight||600} ${sz}px ${o.mono?MONO:FONT}`;const w=ctx.measureText(t).width;if(w>maxW)sz=Math.max(9.5,sz*maxW/w);txt(x,y,t,Object.assign({},o,{size:sz}))}
+/* worked example panel: rows = [{c:[items,res]} | {l:"text"} | {ans:"text"}], animates over `per` seconds */
+function wk(x,y,w,h,W_,T,o){o=o||{};const per=o.per||16;const t=P(T,per)*per;panelBox(x,y,w,h,{fill:hexA(C.paper,.96)});title(x+12,y+16,o.title||"Worked example",C["accent-ink"]);
+  const sw=o.split||0;const sz=o.size||12.5;
+  if(sw){let ly=wrapText(W_.q,x+12,y+38,sw-22,sz+4,{size:sz,weight:600})+sz+8;(W_.given||[]).forEach((g,i)=>{const a=seg(t,.6+i*.4,1+i*.4);if(a>0)withA(a,()=>wrapText(g,x+14,ly,sw-26,sz+3,{size:sz-.5,mono:true,weight:500}));ly+=wrapCount(g,sw-26,sz-.5)*(sz+3)+6});line(x+sw,y+28,x+sw,y+h-10,C["rule-soft"],1.2)}
+  const rx=x+sw+14,rw=w-sw-28;let cy=y+(o.cy||30);const fs=o.cfs||14;const t0=o.t0||1.2;const dt=o.dt||1.8;
+  W_.rows.forEach((r,i)=>{const p_=clamp((t-t0-i*dt)/(dt*.85),0,1);
+    if(r.c){cy+=fs+6;if(p_>0){const cw=chainWidth(r.c[0],r.c[1],{size:fs});const sc=Math.min(1,rw/cw);ctx.save();ctx.translate(rx,cy);ctx.scale(sc,sc);chain(0,0,r.c[0],r.c[1],p_,{size:fs});ctx.restore()}cy+=fs+(o.rowGap||16)}
+    else if(r.l){cy+=12;if(p_>0)withA(p_,()=>fitTxt(rx,cy,r.l,rw,{size:o.lfs||13.5,weight:600,mono:true}));cy+=(o.lh||16)}
+    else if(r.ans){cy+=16;if(p_>0)withA(p_,()=>{ctx.font=`700 15px ${MONO}`;const tw=Math.min(rw,ctx.measureText(r.ans).width);rr(rx-4,cy-14,tw+14,28,6);ctx.fillStyle=C["good-wash"];ctx.fill();ctx.strokeStyle=C.good;ctx.lineWidth=1.8;ctx.stroke();fitTxt(rx+3,cy,r.ans,rw-6,{size:15,weight:700,mono:true})});cy+=18}});
+  if(W_.miss){const tm=t0+W_.rows.length*dt+.4;const a=seg(t,tm,tm+.6);if(a>0){const mw=o.missFull?w-24:rw+8;const mx=o.missFull?x+12:rx-4;const n=wrapCount("Common mistake: "+W_.miss,mw-16,sz-1);const mh=n*(sz+2)+10;
+    withA(a,()=>{rr(mx,y+h-mh-8,mw,mh,5);ctx.fillStyle=C["warn-wash"];ctx.fill();ctx.strokeStyle=C.warn;ctx.lineWidth=1.2;ctx.stroke();wrapText("Common mistake: "+W_.miss,mx+8,y+h-mh-8+5+(sz)/2+1,mw-16,sz+2,{size:sz-1})})}}
+  return t}
+/* ================= General Biology drawing kit: membranes and transport =================
+   One consistent set of helpers so every scene looks unified:
+   level tags, phospholipids and bilayers (flat and curved), proteins (blob, channel,
+   carrier, pump), molecules, cells (red blood cell, plant cell, animal cell),
+   organisms (person, fish, plant, neuron, macrophage) and a seeded particle simulator. */
+let SC={};let SYS={};
+function rng(seed){let a=(seed>>>0)||1;return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+/* deterministic simulation: the state is a pure function of time T (re-simulates when time goes backwards) */
+function simAt(key,T,init,step,dt){dt=dt||1/60;let s=SC[key];if(!s||T<s.t-1e-9){s=SC[key]={t:0,st:init()}}let n=0;while(s.t+dt<=T+1e-9&&n<4000){step(s.st,dt,s.t);s.t+=dt;n++}return s.st}
+function levelTag(x,y,k){const m={org:["ORGANISM",C.act5],cell:["CELL",C.act4],tissue:["TISSUE",C.act2],mol:["MOLECULE VIEW",C.act7],math:["THE MATH",C.accent],data:["THE DATA",C.act3],mem:["MEMBRANE VIEW",C.act1]}[k];
+  ctx.save();ctx.font=`700 10.5px ${MONO}`;const w=ctx.measureText(m[0]).width+12;rr(x,y-8,w,16,8);ctx.fillStyle=hexA(m[1],.16);ctx.fill();ctx.strokeStyle=m[1];ctx.lineWidth=1;ctx.stroke();
+  ctx.fillStyle=C.ink;ctx.textAlign="left";ctx.textBaseline="middle";ctx.fillText(m[0],x+6,y+.5);ctx.restore();return w}
+/* side labels for a horizontal membrane */
+function sideTags(x,yTop,yBot,o){o=o||{};txt(x,yTop,o.top||"OUTSIDE THE CELL (extracellular fluid)",{size:11,weight:700,mono:true,color:C["ink-soft"]});txt(x,yBot,o.bot||"INSIDE THE CELL (cytoplasm)",{size:11,weight:700,mono:true,color:C["ink-soft"]})}
+
+/* ---------- phospholipid ----------
+   head circle (hydrophilic, gold) + two fatty acid tails (hydrophobic, pale).
+   dir=+1: head on top, tails hang down. kink=true bends one tail (cis double bond). */
+function plipid(x,y,s,dir,o){o=o||{};const L=s*2.2,hr=s*.72;const d=dir||1;const hy=y,ty0=y+d*hr*.8;const sp=s*.36;
+  const tails=[[x-sp,0],[x+sp,o.kink?1:0]];
+  tails.forEach(t=>{ctx.beginPath();ctx.moveTo(t[0],ty0);if(t[1]){const yk=ty0+d*L*.45;ctx.lineTo(t[0],yk);ctx.lineTo(t[0]+s*.55,ty0+d*L*.95)}else{const w=o.wig||0;ctx.lineTo(t[0]+w,ty0+d*L*.5);ctx.lineTo(t[0]-w*.5,ty0+d*L)}
+    ctx.lineCap="round";ctx.lineJoin="round";ctx.strokeStyle=C["tail-edge"];ctx.lineWidth=s*.46;ctx.stroke();ctx.strokeStyle=C.tail;ctx.lineWidth=s*.24;ctx.stroke();ctx.lineCap="butt"});
+  circ(x,hy,hr,o.hl?C.accent:(o.col||C.lipid),C["lipid-ink"],o.hl?2:1);if(o.hl)circ(x,hy,hr*.45,C.panel)}
+/* cholesterol: rigid ring block with a small polar OH head */
+function chol(x,y,s,dir){const d=dir||1;ctx.save();ctx.translate(x,y);rr(-s*.32,d>0?s*.2:-s*1.75,s*.64,s*1.55,s*.2);fillStroke(C.chol,hexA(C.ink,.45),1);circ(0,d>0?s*.05:-s*.05,s*.26,C.chol,hexA(C.ink,.45),1);ctx.restore()}
+/* flat bilayer from x0 to x1 centred on y. returns geometry */
+function bilayer(x0,x1,y,o){o=o||{};const s=o.s||7;const gap=o.gap||s*1.55;const hr=s*.72,L=s*2.2;const half=hr+L*.98;const T=o.T||0;const amp=o.amp==null?1.2:o.amp;
+  const n=Math.floor((x1-x0)/gap);const kinkF=o.kinkF||0,cholF=o.cholF||0;const R=rng(o.seed||7);const skip=o.skip||(()=>false);
+  if(o.core!==false){ctx.fillStyle=hexA(C.tail,.55);ctx.fillRect(x0,y-half+hr,x1-x0,2*(half-hr))}
+  for(let lf=0;lf<2;lf++){const d=lf?-1:1;const yy=lf?y+half:y-half;for(let i=0;i<=n;i++){const r1=R(),r2=R(),r3=R();let x=x0+i*gap+(lf?gap*.5:0);if(x>x1)continue;
+      const jx=amp*Math.sin(T*(2.2+r1*2)+i*1.7+lf*3),jy=amp*.6*Math.sin(T*(3+r2*2)+i);
+      if(skip(x,lf))continue;
+      if(r3<cholF&&o.chol!==false){chol(x+jx,yy+d*hr*.6,s,d);continue}
+      plipid(x+jx,yy+jy,s,d,{kink:r1<kinkF,wig:o.wig?o.wig*Math.sin(T*6+i):0,hl:o.hl&&o.hl(i,lf)})}}
+  return {top:y-half,bot:y+half,half,s}}
+/* curved bilayer along an arc (outer leaflet heads outward) */
+function memArc(cx,cy,r,a0,a1,o){o=o||{};const s=o.s||6;const gap=o.gap||s*1.6;const hr=s*.72,L=s*2.2;const half=hr+L*.98;const T=o.T||0;
+  [r+half,r-half].forEach((rad,lf)=>{const n=Math.max(2,Math.floor(Math.abs(a1-a0)*rad/gap));for(let i=0;i<=n;i++){const a=lerp(a0,a1,(i+(lf?.5:0))/n);if(lf&&i===n)continue;ctx.save();ctx.translate(cx+Math.cos(a)*rad,cy+Math.sin(a)*rad);ctx.rotate(a+Math.PI/2);
+    plipid(.6*Math.sin(T*3+i),0,s,lf?-1:1,{col:o.col});ctx.restore()}});return half}
+/* simple cell outline: double gold line (cell-level drawings) */
+function memOutline(path,o){o=o||{};ctx.save();path();ctx.fillStyle=o.fill||C.cyto;ctx.fill();ctx.strokeStyle=C["lipid-ink"];ctx.lineWidth=(o.lw||6)+2;ctx.stroke();path();ctx.strokeStyle=C.lipid;ctx.lineWidth=o.lw||6;ctx.stroke();path();ctx.strokeStyle=hexA(C.tail,.95);ctx.lineWidth=(o.lw||6)*.35;ctx.stroke();ctx.restore()}
+function cellBlob(x,y,r,seed,T,o){o=o||{};memOutline(()=>blobPath(x,y,r,seed||1,T||0,o.amp==null?.04:o.amp),o)}
+
+/* ---------- proteins ---------- */
+function protBlob(x,y,w,h,col,o){o=o||{};ctx.save();ctx.translate(x,y);ctx.rotate(o.rot||0);ctx.beginPath();const N=36;for(let i=0;i<=N;i++){const a=i/N*TAU;const k=1+.06*Math.sin(a*3+(o.seed||0))+.04*Math.sin(a*5+(o.T||0)*2);const X=Math.cos(a)*w/2*k,Y=Math.sin(a)*h/2*k;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.closePath();
+  const g=ctx.createLinearGradient(-w/2,-h/2,w/2,h/2);g.addColorStop(0,mix(col,"#ffffff",.25));g.addColorStop(1,col);ctx.fillStyle=g;ctx.fill();ctx.strokeStyle=o.stroke||hexA(C.ink,.55);ctx.lineWidth=o.lw||1.5;ctx.stroke();
+  if(o.helix){const n=o.helix;for(let i=0;i<n;i++){const xx=-w/2+w*(i+.5)/n;ctx.beginPath();for(let j=0;j<=12;j++){const yy=-h*.38+h*.76*j/12;const X=xx+Math.sin(j*1.3)*w/(n*4.5);j?ctx.lineTo(X,yy):ctx.moveTo(X,yy)}ctx.strokeStyle=hexA(C.ink,.35);ctx.lineWidth=1.3;ctx.stroke()}}
+  ctx.restore()}
+/* integral transmembrane protein spanning a bilayer of half-thickness `half` */
+function integral(x,y,half,col,o){o=o||{};protBlob(x,y,o.w||34,half*2+(o.over||18),col||C.prot,{helix:o.helix==null?3:o.helix,T:o.T,seed:o.seed})}
+/* channel: two subunits with a pore. open 0..1. gate: "lig"|"volt"|null */
+function channel(x,y,half,open,col,o){o=o||{};const w=o.w||20,hh=half+(o.over||10);const pw=lerp(o.closedW==null?1:o.closedW,o.pore||12,clamp(open,0,1));
+  [-1,1].forEach(sd=>{rr(x+sd*(pw/2)+(sd<0?-w:0),y-hh,w,hh*2,8);const g=ctx.createLinearGradient(x-w,0,x+w,0);fillStroke(col||C.prot,hexA(C.ink,.55),1.5);
+    for(let j=0;j<3;j++){const yy=y-hh*.7+j*hh*.7;line(x+sd*(pw/2+w*.2),yy,x+sd*(pw/2+w*.8),yy+6,hexA(C.ink,.25),1.2)}});
+  if(o.gate==="volt"){const a=lerp(0,-1.25,open);ctx.save();ctx.translate(x-pw/2-2,y+hh-2);ctx.rotate(-a);rr(0,-4,pw+w*.3,8,4);fillStroke(o.gcol||C.prot2,hexA(C.ink,.55),1.3);ctx.restore()}
+  if(o.gate==="lig"){const a=lerp(0,1.25,open);ctx.save();ctx.translate(x-pw/2-2,y-hh+2);ctx.rotate(-a);rr(0,-4,pw+w*.3,8,4);fillStroke(o.gcol||C.prot2,hexA(C.ink,.55),1.3);ctx.restore()}
+  return pw}
+/* carrier with alternating access: s=0 open to the top (outside), s=1 open to the bottom (inside) */
+function carrier(x,y,half,s,col,o){o=o||{};const w=o.w||52,hh=half+(o.over||12);const top=lerp(18,0,s),bot=lerp(0,18,s);const k=smooth(s);
+  ctx.save();ctx.beginPath();
+  ctx.moveTo(x-w/2,y-hh+6);ctx.quadraticCurveTo(x-w/2,y-hh,x-w/2+8,y-hh);ctx.lineTo(x-top/2,y-hh);ctx.lineTo(x-2,y-lerp(4,hh*.55,k)+lerp(0,hh*.1,k));ctx.lineTo(x-bot/2,y+hh);ctx.lineTo(x-w/2+8,y+hh);ctx.quadraticCurveTo(x-w/2,y+hh,x-w/2,y+hh-6);ctx.closePath();
+  fillStroke(col||C.prot,hexA(C.ink,.55),1.5);ctx.beginPath();
+  ctx.moveTo(x+w/2,y-hh+6);ctx.quadraticCurveTo(x+w/2,y-hh,x+w/2-8,y-hh);ctx.lineTo(x+top/2,y-hh);ctx.lineTo(x+2,y-lerp(4,hh*.55,k)+lerp(0,hh*.1,k));ctx.lineTo(x+bot/2,y+hh);ctx.lineTo(x+w/2-8,y+hh);ctx.quadraticCurveTo(x+w/2,y+hh,x+w/2,y+hh-6);ctx.closePath();
+  fillStroke(o.col2||mix(col||C.prot,"#ffffff",.2),hexA(C.ink,.55),1.5);ctx.restore();
+  return {siteY:y+lerp(-hh*.45,hh*.45,k)}}
+/* Na+/K+ pump body (a P-type ATPase), open 0 = to inside, 1 = to outside. phos shows the bound phosphate */
+function pumpBody(x,y,half,s,o){o=o||{};const w=o.w||76,hh=half+16;const k=smooth(s);const tw=lerp(4,26,k),bw=lerp(26,4,k);
+  ctx.save();[-1,1].forEach(sd=>{ctx.beginPath();ctx.moveTo(x+sd*w/2,y-hh+10);ctx.quadraticCurveTo(x+sd*w/2,y-hh,x+sd*(w/2-10),y-hh);ctx.lineTo(x+sd*tw/2,y-hh);ctx.lineTo(x+sd*3,y);ctx.lineTo(x+sd*bw/2,y+hh);
+      ctx.lineTo(x+sd*(w/2-10),y+hh+14);ctx.quadraticCurveTo(x+sd*w/2,y+hh+14,x+sd*w/2,y+hh);ctx.closePath();fillStroke(sd<0?(o.col||C.prot):mix(o.col||C.prot,"#ffffff",.2),hexA(C.ink,.55),1.5)});
+  if(o.phos){circ(x+w/2-6,y+hh+6,9,C.atp,hexA(C.ink,.6),1.4);txt(x+w/2-6,y+hh+6.5,"P",{size:11,weight:800,align:"center",mono:true,color:"#10161A"})}
+  ctx.restore();return {inY:y+hh*.45,outY:y-hh*.45}}
+/* receptor (Y shape) on a membrane surface */
+function receptorY(x,y,dir,col,s){s=s||1;const d=dir||-1;line(x,y,x,y+d*18*s,col,5*s);line(x,y+d*18*s,x-9*s,y+d*30*s,col,5*s);line(x,y+d*18*s,x+9*s,y+d*30*s,col,5*s)}
+/* branching carbohydrate chain (glycoprotein / glycolipid) */
+function glycan(x,y,dir,n,o){o=o||{};const d=dir||-1;let px=x,py=y;const pts=[];for(let i=0;i<n;i++){const nx=x+(i%2?5:-5)*(o.spread||1),ny=y+d*(9+i*9);line(px,py,nx,ny,hexA(C["carb-ink"],.7),1.6);px=nx;py=ny;pts.push([nx,ny])}
+  if(o.branch)pts.slice(1).forEach((p,i)=>{if(i%2===0){line(p[0],p[1],p[0]+10,p[1]+d*6,hexA(C["carb-ink"],.7),1.4);hexRing(p[0]+10,p[1]+d*6,4,o.tip&&i===pts.length-3?o.tip:C.carb)}});
+  pts.forEach((p,i)=>hexRing(p[0],p[1],4.6,o.tip&&i===pts.length-1?o.tip:C.carb));return pts[pts.length-1]}
+function hexRing(x,y,s,col,rot){ctx.beginPath();for(let i=0;i<6;i++){const a=(rot||0)+i*TAU/6+Math.PI/6;const X=x+Math.cos(a)*s,Y=y+Math.sin(a)*s;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.closePath();ctx.fillStyle=hexA(col,.45);ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=1.8;ctx.stroke()}
+function pentRing(x,y,s,col,rot){ctx.beginPath();for(let i=0;i<5;i++){const a=(rot||0)+i*TAU/5-Math.PI/2;const X=x+Math.cos(a)*s,Y=y+Math.sin(a)*s;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.closePath();ctx.fillStyle=hexA(col,.45);ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=1.8;ctx.stroke()}
+
+/* ---------- molecules ---------- */
+const MOLN={o2:"O₂",co2:"CO₂",h2o:"water",glu:"glucose",suc:"sucrose",na:"Na⁺",k:"K⁺",cl:"Cl⁻",h:"H⁺",atp:"ATP",adp:"ADP",pi:"Pi",ldl:"LDL",urea:"urea",eth:"ethanol",aa:"amino acid",ca:"Ca²⁺"};
+function ionTxt(k){return {na:"Na+",k:"K+",cl:"Cl−",h:"H+",ca:"Ca2+"}[k]}
+function mol(k,x,y,r,o){o=o||{};r=r||7;const a=o.a==null?1:o.a;if(a<=0)return;ctx.save();ctx.globalAlpha*=a;
+  switch(k){
+  case "o2":circ(x-r*.45,y,r*.62,C.o2,hexA(C.ink,.5),1);circ(x+r*.45,y,r*.62,C.o2,hexA(C.ink,.5),1);break;
+  case "co2":circ(x-r*.75,y,r*.5,C.o2,hexA(C.ink,.5),1);circ(x+r*.75,y,r*.5,C.o2,hexA(C.ink,.5),1);circ(x,y,r*.58,C.co2,hexA(C.ink,.5),1);break;
+  case "h2o":{const t=o.rot||0;circ(x+Math.cos(t-1)*r*.7,y+Math.sin(t-1)*r*.7,r*.4,"#F4F6F7",hexA(C.ink,.5),.8);circ(x+Math.cos(t+1)*r*.7,y+Math.sin(t+1)*r*.7,r*.4,"#F4F6F7",hexA(C.ink,.5),.8);circ(x,y,r*.68,C.water,hexA(C.ink,.5),.9);break}
+  case "glu":hexRing(x,y,r*.85,C.carb,o.rot);break;
+  case "suc":hexRing(x-r*.6,y,r*.7,C.sucrose,o.rot);pentRing(x+r*.65,y,r*.62,C.sucrose,o.rot);break;
+  case "urea":circ(x,y,r*.6,C.metal,hexA(C.ink,.5),1);break;
+  case "eth":circ(x-r*.4,y,r*.5,C.co2,hexA(C.ink,.5),1);circ(x+r*.4,y,r*.45,C.o2,hexA(C.ink,.5),1);break;
+  case "na":case "k":case "cl":case "h":case "ca":{const col={na:C.na,k:C.k,cl:C.cl,h:C.hplus,ca:C.metal}[k];circ(x,y,r,col,hexA(C.ink,.55),1);
+    if(r>=6.5&&o.text!==false){ctx.font=`700 ${Math.max(8,r*(k==="k"||k==="h"?1.05:.9))}px ${MONO}`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#ffffff";ctx.fillText(ionTxt(k),x,y+.5)}
+    else{ctx.font=`800 ${Math.max(8,r*1.4)}px ${MONO}`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillStyle="#ffffff";ctx.fillText(k==="cl"?"−":"+",x,y+.5)}break}
+  case "atp":rr(x-r*1.6,y-r*.75,r*3.2,r*1.5,r*.75);fillStroke(C.atp,hexA(C.ink,.55),1.2);txt(x,y+.5,"ATP",{size:Math.max(9,r*.95),weight:800,align:"center",mono:true,color:"#10161A"});break;
+  case "adp":rr(x-r*1.6,y-r*.75,r*3.2,r*1.5,r*.75);fillStroke(mix(C.atp,"#ffffff",.55),hexA(C.ink,.45),1.2);txt(x,y+.5,"ADP",{size:Math.max(9,r*.95),weight:800,align:"center",mono:true,color:"#10161A"});break;
+  case "pi":circ(x,y,r*.8,C.atp,hexA(C.ink,.55),1.2);txt(x,y+.5,"P",{size:Math.max(9,r),weight:800,align:"center",mono:true,color:"#10161A"});break;
+  case "ldl":{circ(x,y,r,mix(C.ldl,"#ffffff",.25),C["lipid-ink"],1.4);ctx.beginPath();ctx.arc(x,y,r*.82,-.4,Math.PI*1.25);ctx.strokeStyle=C.prot;ctx.lineWidth=r*.28;ctx.stroke();for(let i=0;i<5;i++)circ(x+Math.cos(i*1.3)*r*.35,y+Math.sin(i*1.3)*r*.35,r*.16,C.chol);break}
+  case "aa":circ(x,y,r*.7,C.prot,hexA(C.ink,.5),1);break;
+  case "prot":protBlob(x,y,r*2,r*1.6,C.prot,{T:o.T||0});break;
+  }
+  if(o.lab)label(x,y-r-11,o.lab,{size:11,weight:700});ctx.restore()}
+/* hydration shell: water molecules clinging to a solute */
+function shell(x,y,r,n,T,o){for(let i=0;i<n;i++){const a=i/n*TAU+T*.6;mol("h2o",x+Math.cos(a)*r,y+Math.sin(a)*r,(o&&o.r)||5,{rot:a+Math.PI})}}
+
+/* ---------- cells ---------- */
+/* red blood cell seen from the side-ish (disc). v = relative volume; v<1 crenated, v>1.6 lysed */
+function rbc(x,y,r,v,T,o){o=o||{};const R=r*Math.cbrt(clamp(v,.4,1.8));if(o.lysed){ctx.save();ctx.globalAlpha*=.6;ctx.setLineDash([4,4]);circ(x,y,R*1.05,hexA(C.rbc,.12),C["rbc-edge"],1.6);ctx.setLineDash([]);for(let i=0;i<7;i++){const a=i*.9+.3;line(x+Math.cos(a)*R*.7,y+Math.sin(a)*R*.7,x+Math.cos(a)*R*1.25,y+Math.sin(a)*R*1.25,C["rbc-edge"],2)}ctx.restore();txt(x,y,"lysed",{size:12,weight:700,align:"center",color:C.bad});return}
+  const spikes=v<.95?clamp((1-v)*40,0,16):0;ctx.beginPath();const N=72;for(let i=0;i<=N;i++){const a=i/N*TAU;let k=1;if(spikes>0)k=1+.13*Math.pow(Math.abs(Math.sin(a*spikes/2)),6)*clamp((1-v)*4,0,1);const X=x+Math.cos(a)*R*k,Y=y+Math.sin(a)*R*k*(o.flat||1);i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.closePath();
+  fillStroke(C.rbc,C["rbc-edge"],1.6);const c=clamp(1.35-v,0,1);if(c>0.02){ell(x,y,R*.48*c+R*.1,R*.48*c*(o.flat||1)+R*.08,0,hexA("#ffffff",.25*c+.05))}}
+/* plant cell: rigid wall, protoplast (cytoplasm + central vacuole) with scale v (1 = pressed on wall) */
+function plantCell(x,y,w,h,v,T,o){o=o||{};const wt=7;rr(x-w/2,y-h/2,w,h,6);fillStroke(hexA(C.wall,.28),C.wall,wt);
+  const pv=clamp(v,.45,1.03);const pw=(w-wt*2-2)*Math.min(1,pv>=1?1:Math.sqrt(pv)),ph=(h-wt*2-2)*Math.min(1,pv>=1?1:Math.sqrt(pv));const r=pv>=1?4:lerp(4,Math.min(pw,ph)/2.4,clamp((1-pv)*3,0,1));
+  memOutline(()=>rr(x-pw/2,y-ph/2,pw,ph,r),{lw:3.5,fill:C.cyto});rr(x-pw/2+8,y-ph/2+8,pw-16,ph-16,Math.max(3,r-4));fillStroke(C.vac,hexA(C.water,.7),1.3);txt(x,y,o.vacLab||"vacuole",{size:11,weight:600,align:"center",color:C["water-ink"]});
+  for(let i=0;i<6;i++){const a=i/6*TAU+.3;const ex=x+Math.cos(a)*(pw/2-5),ey=y+Math.sin(a)*(ph/2-5);ell(ex,ey,6,3.5,a+Math.PI/2,C.chloro,hexA(C.ink,.4),.8)}
+  if(pv<.97&&o.gapLab!==false)txt(x,y+h/2+12,"",{size:10})}
+/* animal cell with nucleus */
+function animalCell(x,y,r,T,o){o=o||{};cellBlob(x,y,r,o.seed||2,T||0,{lw:o.lw||5,amp:o.amp});circ(x+(o.nx||-r*.2),y+(o.ny||-r*.1),r*.3,hexA(C.dna,.25),C.dna,1.6)}
+
+/* ---------- organisms (simple silhouettes) ---------- */
+function person(x,y,s,o){o=o||{};const sk=C.skin,sh=o.shirt||C.shirt;circ(x,y-s*1.55,s*.32,sk,C["skin-edge"],1.4);rr(x-s*.42,y-s*1.2,s*.84,s*.95,s*.25);fillStroke(sh,hexA(C.ink,.4),1.2);
+  line(x-s*.42,y-s*1.05,x-s*.68,y-s*.45,sh,s*.16);line(x+s*.42,y-s*1.05,x+s*.68,y-s*.45,sh,s*.16);rr(x-s*.36,y-s*.28,s*.3,s*.85,s*.1);ctx.fillStyle=hexA(C.ink,.65);ctx.fill();rr(x+s*.06,y-s*.28,s*.3,s*.85,s*.1);ctx.fill();
+  if(o.bed){rr(x-s*1.4,y+s*.05,s*2.8,s*.25,4);fillStroke(C.metal,hexA(C.ink,.4),1)}}
+function personLying(x,y,s){rr(x-s*1.6,y+s*.18,s*3.2,s*.3,5);fillStroke(C.metal,hexA(C.ink,.4),1.2);line(x-s*1.4,y+s*.48,x-s*1.4,y+s*.95,C.metal,4);line(x+s*1.4,y+s*.48,x+s*1.4,y+s*.95,C.metal,4);
+  circ(x-s*1.2,y-s*.08,s*.28,C.skin,C["skin-edge"],1.4);rr(x-s*.9,y-s*.3,s*2.2,s*.5,s*.2);fillStroke(C.shirt,hexA(C.ink,.4),1.2)}
+function fish(x,y,s,col,T){const w=Math.sin((T||0)*6)*s*.12;ctx.beginPath();ctx.ellipse(x,y,s,s*.42,0,0,TAU);fillStroke(col,hexA(C.ink,.5),1.4);ctx.beginPath();ctx.moveTo(x-s*.9,y);ctx.lineTo(x-s*1.5,y-s*.4+w);ctx.lineTo(x-s*1.5,y+s*.4+w);ctx.closePath();fillStroke(col,hexA(C.ink,.5),1.4);circ(x+s*.55,y-s*.08,s*.09,C.ink)}
+function plantPot(x,y,s,wilt,T){wilt=clamp(wilt||0,0,1);rr(x-s*.45,y-s*.1,s*.9,s*.6,4);fillStroke(C.chol,hexA(C.ink,.45),1.3);const top=[x+wilt*s*.5,y-s*1.5+wilt*s*.7];ctx.beginPath();ctx.moveTo(x,y-s*.1);ctx.quadraticCurveTo(x,y-s*.9,top[0],top[1]);ctx.strokeStyle=C.plant;ctx.lineWidth=4;ctx.stroke();
+  [[-.5,.35],[.5,.55],[-.45,.85],[.4,1.1]].forEach((l,i)=>{const by=y-s*l[1];const bx=x+wilt*s*.12*l[1];const ang=(l[0]<0?Math.PI:0)+(l[0]<0?-1:1)*(-.6+wilt*1.9)+Math.sin((T||0)*1.5+i)*.04;ctx.save();ctx.translate(bx,by);ctx.rotate(ang);ell(s*.3,0,s*.3,s*.11,0,C.plant,C["plant-ink"],1.2);ctx.restore()});
+  ctx.save();ctx.translate(top[0],top[1]);ctx.rotate(-Math.PI/2+wilt*1.9);ell(s*.22,0,s*.24,s*.1,0,C.plant,C["plant-ink"],1.2);ctx.restore()}
+function neuronSil(x,y,s,col){col=col||C.act4;circ(x,y,s*.35,hexA(col,.35),col,2);for(let i=0;i<6;i++){const a=i*1.05+.3;poly([[x+Math.cos(a)*s*.33,y+Math.sin(a)*s*.33],[x+Math.cos(a+.2)*s*.75,y+Math.sin(a+.2)*s*.75],[x+Math.cos(a-.1)*s,y+Math.sin(a-.1)*s]],col,2.2)}line(x+s*.35,y,x+s*2.4,y+s*.2,col,3)}
+function macrophage(x,y,r,T,ext){ctx.beginPath();const N=60;for(let i=0;i<=N;i++){const a=i/N*TAU;let k=1+.08*Math.sin(a*4+T*1.2);const d=Math.abs(((a-0+Math.PI)%TAU)-Math.PI);if(ext){k+=ext*.55*Math.max(0,Math.cos(a-.55)*.9-.5)*2+ext*.55*Math.max(0,Math.cos(a+.55)*.9-.5)*2}
+  const X=x+Math.cos(a)*r*k,Y=y+Math.sin(a)*r*k;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.closePath();ctx.fillStyle=C.cyto;ctx.fill();ctx.strokeStyle=C.lipid;ctx.lineWidth=4;ctx.stroke()}
+function bacterium(x,y,s,rot,col){ctx.save();ctx.translate(x,y);ctx.rotate(rot||0);rr(-s,-s*.45,s*2,s*.9,s*.45);fillStroke(col||C.bact,hexA(C.ink,.55),1.4);line(s,0,s*1.5,s*.25,hexA(C.ink,.5),1.2);ctx.restore()}
+function beaker(x,y,w,h,lvl,fill,o){o=o||{};rr(x,y+h*(1-lvl),w,h*lvl,3);ctx.fillStyle=fill||C["water-fill"];ctx.fill();ctx.beginPath();ctx.moveTo(x-4,y);ctx.lineTo(x,y+4);ctx.lineTo(x,y+h-4);ctx.quadraticCurveTo(x,y+h,x+4,y+h);ctx.lineTo(x+w-4,y+h);ctx.quadraticCurveTo(x+w,y+h,x+w,y+h-4);ctx.lineTo(x+w,y+4);ctx.lineTo(x+w+4,y);ctx.strokeStyle=C["glass-edge"];ctx.lineWidth=2.2;ctx.stroke();if(o.lab)txt(x+w/2,y+h+14,o.lab,{size:11.5,weight:700,align:"center"})}
+function voltmeter(x,y,mv,o){o=o||{};rr(x-44,y-26,88,52,8);fillStroke(C.paper,C["ink-soft"],1.6);const a=lerp(-2.4,-.7,clamp((mv+100)/140,0,1));ctx.beginPath();ctx.arc(x,y+14,26,-2.6,-.55);ctx.strokeStyle=C.rule;ctx.lineWidth=3;ctx.stroke();line(x,y+14,x+Math.cos(a)*24,y+14+Math.sin(a)*24,C.bad,2.2);txt(x,y+18,(mv>0?"+":"")+Math.round(mv)+" mV",{size:11.5,weight:700,mono:true,align:"center"})}
+function thermoB(x,y,h,f,col){thermo(x,y,h,f,{col})}
+/* electrochemical arrow bundle (gradient wedge) */
+function wedge(x,y,w,h,col,dir,lab){ctx.beginPath();if(dir>0){ctx.moveTo(x,y);ctx.lineTo(x+w,y+h/2);ctx.lineTo(x,y+h)}else{ctx.moveTo(x+w,y);ctx.lineTo(x,y+h/2);ctx.lineTo(x+w,y+h)}ctx.closePath();ctx.fillStyle=hexA(col,.22);ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=1.4;ctx.stroke();if(lab)txt(x+w/2,y+h/2,lab,{size:11,weight:700,align:"center"})}
+/* vertical gradient wedge: thick end = high concentration */
+function vwedge(x,y,w,h,col,highTop,lab){ctx.beginPath();if(highTop){ctx.moveTo(x,y);ctx.lineTo(x+w,y);ctx.lineTo(x+w/2,y+h)}else{ctx.moveTo(x,y+h);ctx.lineTo(x+w,y+h);ctx.lineTo(x+w/2,y)}ctx.closePath();ctx.fillStyle=hexA(col,.22);ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=1.4;ctx.stroke();if(lab){ctx.save();ctx.translate(x+w/2,y+h/2);ctx.rotate(-Math.PI/2);txt(0,0,lab,{size:10.5,weight:700,align:"center",mono:true});ctx.restore()}}
+/* spark (energy release) */
+function spark(x,y,r,col,p){if(p<=0||p>=1)return;const a=1-p;ctx.save();ctx.globalAlpha*=a;for(let i=0;i<6;i++){const an=i*TAU/6;line(x+Math.cos(an)*r*p*.4,y+Math.sin(an)*r*p*.4,x+Math.cos(an)*r*(.5+p),y+Math.sin(an)*r*(.5+p),col,2)}ctx.restore()}
+/* zoom lens circle connecting levels */
+function lens(x,y,r,fn,o){o=o||{};ctx.save();ctx.beginPath();ctx.arc(x,y,r,0,TAU);ctx.fillStyle=o.fill||C.ecf;ctx.fill();ctx.clip();fn();ctx.restore();circ(x,y,r,null,o.col||C["ink-soft"],2.5)}
+function zoomLines(x1,y1,r1,x2,y2,r2,col){const a=Math.atan2(y2-y1,x2-x1);const n=a+Math.PI/2;line(x1+Math.cos(n)*r1,y1+Math.sin(n)*r1,x2+Math.cos(n)*r2,y2+Math.sin(n)*r2,hexA(col||C["ink-soft"],.6),1.2,[4,3]);line(x1-Math.cos(n)*r1,y1-Math.sin(n)*r1,x2-Math.cos(n)*r2,y2-Math.sin(n)*r2,hexA(col||C["ink-soft"],.6),1.2,[4,3])}
+/* box particles that random-walk inside a rectangle (seeded) */
+function walkers(key,T,n,box,o){o=o||{};return simAt(key,T,()=>{const R=rng(o.seed||11);const p=[];for(let i=0;i<n;i++){const b=typeof box==="function"?box(i):box;p.push({x:b[0]+R()*b[2],y:b[1]+R()*b[3],vx:(R()-.5)*2,vy:(R()-.5)*2,i,R})}return {p,R}},(st,dt)=>{const sp=o.speed||60;st.p.forEach(q=>{const b=typeof box==="function"?box(q.i):box;q.vx+=(st.R()-.5)*(o.jit||6);q.vy+=(st.R()-.5)*(o.jit||6);const m=Math.hypot(q.vx,q.vy)||1;q.vx/=m;q.vy/=m;q.x+=q.vx*sp*dt;q.y+=q.vy*sp*dt;
+  if(q.x<b[0]){q.x=b[0];q.vx=Math.abs(q.vx)}if(q.x>b[0]+b[2]){q.x=b[0]+b[2];q.vx=-Math.abs(q.vx)}if(q.y<b[1]){q.y=b[1];q.vy=Math.abs(q.vy)}if(q.y>b[1]+b[3]){q.y=b[1]+b[3];q.vy=-Math.abs(q.vy)}})}).p}
+/* two-compartment diffusion across a vertical or horizontal membrane, permeability per particle */
+function twoBox(key,T,o){return simAt(key,T,()=>{const R=rng(o.seed||5);const p=[];o.groups.forEach((g,gi)=>{for(let i=0;i<g.nA;i++)p.push({g:gi,k:g.k,side:0,x:0,y:0,vx:R()-.5,vy:R()-.5});for(let i=0;i<g.nB;i++)p.push({g:gi,k:g.k,side:1,x:0,y:0,vx:R()-.5,vy:R()-.5})});
+  p.forEach(q=>{const b=q.side?o.B:o.A;q.x=b[0]+6+R()*(b[2]-12);q.y=b[1]+6+R()*(b[3]-12)});return {p,R,cross:[],hist:[],tt:0}},(st,dt,t)=>{const sp=o.speed||70;st.tt+=dt;
+  st.p.forEach(q=>{st.R;q.vx+=(st.R()-.5)*1.2;q.vy+=(st.R()-.5)*1.2;const m=Math.hypot(q.vx,q.vy)||1;q.vx/=m;q.vy/=m;const g=o.groups[q.g];const s=sp*(g.speed||1);q.x+=q.vx*s*dt;q.y+=q.vy*s*dt;const b=q.side?o.B:o.A;
+    const pad=g.r||5;let hitWall=false;
+    if(q.x<b[0]+pad){q.x=b[0]+pad;q.vx=Math.abs(q.vx);if(o.vertical&&q.side===1)hitWall=true}
+    if(q.x>b[0]+b[2]-pad){q.x=b[0]+b[2]-pad;q.vx=-Math.abs(q.vx);if(o.vertical&&q.side===0)hitWall=true}
+    if(q.y<b[1]+pad){q.y=b[1]+pad;q.vy=Math.abs(q.vy);if(!o.vertical&&q.side===1)hitWall=true}
+    if(q.y>b[1]+b[3]-pad){q.y=b[1]+b[3]-pad;q.vy=-Math.abs(q.vy);if(!o.vertical&&q.side===0)hitWall=true}
+    if(hitWall){const pr=typeof g.perm==="function"?g.perm(q,st):g.perm;if(st.R()<pr*dt*60){const nb=q.side?o.A:o.B;q.side=1-q.side;st.cross.push([t,q.g,q.side,q.y,q.x]);if(o.vertical){q.x=q.side?nb[0]+pad+1:nb[0]+nb[2]-pad-1;q.y=clamp(q.y,nb[1]+pad,nb[1]+nb[3]-pad)}else{q.y=q.side?nb[1]+pad+1:nb[1]+nb[3]-pad-1;q.x=clamp(q.x,nb[0]+pad,nb[0]+nb[2]-pad)}}}});
+  if(Math.floor(st.tt*4)!==Math.floor((st.tt-dt)*4)){st.hist.push(o.groups.map((g,gi)=>st.p.filter(q=>q.g===gi&&q.side===0).length))}})}
+
+/* isometric cube */
+function cubeIso(x,y,s,fill,o){o=o||{};const d=s*.42;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+s,y);ctx.lineTo(x+s,y-s);ctx.lineTo(x,y-s);ctx.closePath();fillStroke(fill,hexA(C.ink,.6),1.4);
+  ctx.beginPath();ctx.moveTo(x,y-s);ctx.lineTo(x+d,y-s-d);ctx.lineTo(x+s+d,y-s-d);ctx.lineTo(x+s,y-s);ctx.closePath();fillStroke(mix(fill,"#ffffff",.25),hexA(C.ink,.6),1.4);
+  ctx.beginPath();ctx.moveTo(x+s,y);ctx.lineTo(x+s+d,y-d);ctx.lineTo(x+s+d,y-s-d);ctx.lineTo(x+s,y-s);ctx.closePath();fillStroke(mix(fill,"#000000",.12),hexA(C.ink,.6),1.4)}
+
+/* membrane band following a path (cell-level bilayer) */
+function band(pts,o){o=o||{};const draw=()=>{ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));if(o.close)ctx.closePath()};ctx.save();ctx.lineJoin="round";ctx.lineCap="round";
+  draw();ctx.strokeStyle=C["lipid-ink"];ctx.lineWidth=(o.w||16)+2;ctx.stroke();draw();ctx.strokeStyle=C.lipid;ctx.lineWidth=o.w||16;ctx.stroke();draw();ctx.strokeStyle=C.tail;ctx.lineWidth=(o.w||16)*.45;ctx.stroke();ctx.restore()}
+function ringBand(x,y,r,o){const pts=[];for(let i=0;i<=48;i++){const a=i/48*TAU;pts.push([x+Math.cos(a)*r,y+Math.sin(a)*r])}band(pts,Object.assign({w:10},o||{}))}
+/* ================= plant drawing kit: whole plants, leaves, roots, tissues, soil ================= */
+/* sky + soil backdrop. returns the soil top y */
+function skySoil(x,y,w,h,gy,o){o=o||{};ctx.save();rr(x,y,w,h,8);ctx.clip();ctx.fillStyle=o.sky||C.sky;ctx.fillRect(x,y,w,gy-y);
+  const g=ctx.createLinearGradient(0,gy,0,y+h);g.addColorStop(0,mix(C["soil-fill"],C.soil,.25));g.addColorStop(1,mix(C["soil-fill"],C.soil,.5));ctx.fillStyle=g;ctx.fillRect(x,gy,w,y+h-gy);
+  if(o.wet!=null){ctx.fillStyle=hexA(C.water,.22*clamp(o.wet,0,1));ctx.fillRect(x,gy,w,y+h-gy)}
+  const R=rng(o.seed||31);for(let i=0;i<Math.round(w*(y+h-gy)/700);i++){const px=x+R()*w,py=gy+4+R()*(y+h-gy-6);circ(px,py,1+R()*2.2,hexA(C.soil,.35+R()*.3))}
+  line(x,gy,x+w,gy,C["soil-d"],2);ctx.restore();return gy}
+/* leaf blade from base (x,y) pointing at angle ang (radians, 0 = right), length len */
+function leafBlade(x,y,len,ang,o){o=o||{};const col=o.col||C.leaf;const wd=o.w||.36;ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.beginPath();ctx.moveTo(0,0);
+  ctx.quadraticCurveTo(len*.45,-len*wd,len,0);ctx.quadraticCurveTo(len*.45,len*wd,0,0);ctx.closePath();
+  const g=ctx.createLinearGradient(0,-len*wd,0,len*wd);g.addColorStop(0,mix(col,C.panel,.12));g.addColorStop(1,col);ctx.fillStyle=o.fill||g;ctx.fill();ctx.strokeStyle=o.edge||C["leaf-d"];ctx.lineWidth=o.lw||1.4;ctx.stroke();
+  if(o.chl!=null){/* chlorosis overlay pattern */const c=o.chl;if(c>0){ctx.save();ctx.clip();if(o.inter){for(let i=1;i<6;i++){ell(len*i/6.4,-len*wd*.35,len*.05,len*wd*.22,.3,hexA(C.atp,.75*c));ell(len*i/6.4,len*wd*.35,len*.05,len*wd*.22,-.3,hexA(C.atp,.75*c))}}
+    else if(o.margin){ctx.strokeStyle=hexA(C.wood,.95*c);ctx.lineWidth=len*.12;ctx.beginPath();ctx.moveTo(0,0);ctx.quadraticCurveTo(len*.45,-len*wd,len,0);ctx.quadraticCurveTo(len*.45,len*wd,0,0);ctx.stroke()}
+    else if(o.purple){ctx.fillStyle=hexA(C.aba,.55*c);ctx.fillRect(0,-len,len,len*2)}
+    else{ctx.fillStyle=hexA(C.atp,.8*c);ctx.fillRect(0,-len,len,len*2)}ctx.restore()}}
+  if(o.vein!==false){line(0,0,len*.95,0,hexA(C["leaf-d"],.8),1.3);for(let i=1;i<5;i++){const a=len*i/5;line(a,0,a+len*.12,-len*wd*.45*(1-i/6),hexA(C["leaf-d"],.55),1);line(a,0,a+len*.12,len*wd*.45*(1-i/6),hexA(C["leaf-d"],.55),1)}}
+  ctx.restore()}
+/* whole plant. cx = stem base x, gy = soil line y, h = shoot height. o.wilt 0..1, o.leaves n, o.fruit, o.roots ("tap"|"fibrous"|false)
+   returns geometry: stem points, leaves [{x,y,ang,len,tx,ty}], fruit {x,y}, rootTip, root points */
+function wholePlant(cx,gy,h,T,o){o=o||{};const wilt=clamp(o.wilt||0,0,1);const sway=Math.sin(T*1.1)*.02*(o.sway==null?1:o.sway);const G={leaves:[],stem:[]};
+  /* stem as a curve that bends at the top when wilting */
+  const N=24;for(let i=0;i<=N;i++){const f=i/N;const bend=(sway+wilt*.55*f*f)*h*f;G.stem.push([cx+bend,gy-h*f*(1-wilt*.18*f*f)])}
+  if(o.roots!==false)G.roots=drawRoots(cx,gy,o.rootLen||h*.55,o.roots||"tap",T,o);
+  ctx.save();ctx.lineCap="round";poly(G.stem,C["leaf-d"],o.stemW?o.stemW+2:8);poly(G.stem,C.stem,o.stemW||6);ctx.restore();
+  const n=o.nLeaves||6;for(let i=0;i<n;i++){const f=.22+.72*i/(n-1);const p=along(G.stem,f);const side=i%2?1:-1;const len=(o.leafLen||h*.32)*(1-.35*f);
+    const ang=(side>0?0:Math.PI)+side*(-.45+wilt*1.35+Math.sin(T*1.4+i)*.03);G.leaves.push({x:p[0],y:p[1],ang,len,side,tx:p[0]+Math.cos(ang)*len*.6,ty:p[1]+Math.sin(ang)*len*.6,f});
+    leafBlade(p[0],p[1],len,ang,{col:o.leafCol?o.leafCol(i,f):C.leaf,chl:o.chl?o.chl(i,f):null,inter:o.inter,margin:o.margin,purple:o.purple})}
+  const top=G.stem[N];G.top=top;leafBlade(top[0],top[1],(o.leafLen||h*.32)*.45,-Math.PI/2+wilt*1.6+sway*3,{col:o.leafCol?o.leafCol(n,1):C.leaf,chl:o.chl?o.chl(n,1):null,inter:o.inter,margin:o.margin,purple:o.purple});
+  if(o.fruit){const p=along(G.stem,.5);const fx=p[0]+18,fy=p[1]+14+wilt*8;line(p[0],p[1],fx,fy-10,C.stem,2.5);circ(fx,fy,o.fruitR||13,C.fruit,hexA(C.ink,.5),1.4);circ(fx-4,fy-4,3,hexA("#ffffff",.5));G.fruit={x:fx,y:fy}}
+  return G}
+/* roots: taproot with laterals or fibrous mat. returns list of polylines */
+function drawRoots(cx,gy,len,kind,T,o){o=o||{};const col=o.rootCol||C.wood;const out=[];ctx.save();ctx.lineCap="round";
+  if(kind==="fibrous"){for(let i=0;i<11;i++){const a=lerp(.35,Math.PI-.35,i/10);const L=len*(.6+.4*rnd(i+3));const pts=[];for(let j=0;j<=8;j++){const f=j/8;pts.push([cx+Math.cos(a)*L*f+Math.sin(f*6+i)*4,gy+Math.sin(a)*L*f*1.1])}poly(pts,col,2.6-1.2*Math.abs(i-5)/5);out.push(pts);
+      for(let k=2;k<8;k+=2){const p=pts[k];line(p[0],p[1],p[0]+Math.cos(a+.9)*8,p[1]+Math.sin(a+.9)*8,hexA(col,.7),1.2)}}}
+  else{const tap=[];for(let j=0;j<=10;j++){const f=j/10;tap.push([cx+Math.sin(f*5)*4,gy+len*f])}ctx.lineWidth=1;poly(tap,col,6-3*.5);out.push(tap);
+    for(let i=0;i<8;i++){const f=.12+.1*i;const p=along(tap,f);const sd=i%2?1:-1;const L=len*(.45-.3*f)*(1+.3*rnd(i));const pts=[];for(let j=0;j<=6;j++){const g=j/6;pts.push([p[0]+sd*L*g,p[1]+L*.35*g+Math.sin(g*5+i)*3])}poly(pts,col,2.6-1.4*f);out.push(pts);
+      if(o.hairs){for(let k=3;k<=6;k++){const q=pts[k];for(let m=0;m<3;m++)line(q[0],q[1],q[0]+(m-1)*3,q[1]+6,hexA(col,.7),.8)}}}}
+  ctx.restore();return out}
+/* moving particles along a path: n particles, speed (path fraction per second), draw fn */
+function flowAlong(path,T,n,speed,fn,o){o=o||{};for(let i=0;i<n;i++){let f=P(T*speed+i/n,1);if(o.rev)f=1-f;const p=along(path,f);fn(p[0],p[1],i,f)}}
+/* vertical xylem vessel (dead, hollow, lignified) from y0 (bottom) to y1 (top) at x, width w; water molecules ride up */
+function xylemTube(x,y0,y1,w,T,o){o=o||{};const sp=o.speed==null?.25:o.speed;rr(x-w/2,Math.min(y0,y1),w,Math.abs(y0-y1),w*.3);fillStroke(hexA(C.water,.16),C.xylem,2.2);
+  /* lignin rings */ const n=Math.floor(Math.abs(y0-y1)/14);for(let i=1;i<n;i++){const yy=Math.min(y0,y1)+i*14;line(x-w/2+1,yy,x+w/2-1,yy+3,hexA(C.xylem,.45),1.6)}
+  if(o.pits)for(let i=0;i<n;i+=2){const yy=Math.min(y0,y1)+i*14+7;ell(x-w/2,yy,1.6,3.5,0,C.panel);ell(x+w/2,yy,1.6,3.5,0,C.panel)}
+  if(sp>0||o.still){const m=o.n||Math.max(3,Math.floor(Math.abs(y0-y1)/22));for(let i=0;i<m;i++){const f=P(T*sp+i/m,1);const yy=lerp(y0,y1,f);mol("h2o",x+Math.sin(i*2.3+T)*w*.15,yy,Math.min(7,w*.32),{rot:i+T})}}}
+/* vertical phloem sieve tube with sieve plates, companion cells, sugar going from y0 to y1 */
+function phloemTube(x,y0,y1,w,T,o){o=o||{};const sp=o.speed==null?.2:o.speed;const top=Math.min(y0,y1),L=Math.abs(y0-y1);rr(x-w/2,top,w,L,4);fillStroke(hexA(C.phloem,.12),C.phloem,2);
+  const seg_=o.seg||48;for(let yy=top+seg_;yy<top+L-4;yy+=seg_){line(x-w/2,yy,x+w/2,yy,C["phloem-ink"],2.4);for(let k=-1;k<=1;k++)circ(x+k*w*.25,yy,1.6,C.panel)}
+  if(o.cc!==false){for(let yy=top;yy<top+L-8;yy+=seg_){rr(x+w/2+1,yy+4,w*.42,seg_-8,3);fillStroke(hexA(C.phloem,.08),hexA(C.phloem,.6),1.1);circ(x+w/2+1+w*.21,yy+seg_/2,2.4,hexA(C.dna,.8))}}
+  if(sp!==0){const m=o.n||Math.max(3,Math.floor(L/26));for(let i=0;i<m;i++){const f=P(T*Math.abs(sp)+i/m,1);const yy=lerp(y0,y1,f);mol("suc",x+Math.sin(i*1.7)*w*.12,yy,Math.min(7,w*.3),{rot:i})}}}
+/* stoma seen from the surface: two guard cells around a pore. open 0..1 */
+function guardPair(x,y,s,open,o){o=o||{};const op=clamp(open,0,1);const gap=lerp(.6,s*.34,op);const bow=lerp(.05,.6,op);
+  [-1,1].forEach(sd=>{ctx.save();ctx.translate(x+sd*(gap/2+s*.2),y);ctx.beginPath();const h=s*1.05,w=s*.42;
+    ctx.moveTo(0,-h);ctx.bezierCurveTo(sd*w*1.4,-h,sd*w*1.6,h,0,h);ctx.bezierCurveTo(sd*-w*bow*.6,h*.55,sd*-w*bow*.6,-h*.55,0,-h);ctx.closePath();
+    const fill=o.fill||mix(C.leaf,C.panel,.35);fillStroke(fill,C["leaf-d"],1.6);
+    if(o.fibrils!==false){for(let k=-3;k<=3;k++){const yy=k*h*.24;line(sd*w*.15,yy,sd*w*1.05,yy*1.18,hexA(C["leaf-d"],.4),1)}}
+    for(let k=0;k<3;k++)ell(sd*w*.65,-h*.4+k*h*.4,w*.18,w*.12,0,C.chloro);
+    if(o.vac){ell(sd*w*.6,0,w*lerp(.25,.5,op),h*lerp(.3,.6,op),0,hexA(C.vac,.9),hexA(C.water,.6),1)}ctx.restore()});
+  /* pore */ ell(x,y,Math.max(.5,gap*.5),s*.75*lerp(.2,1,op),0,op>.03?hexA(C.ink,.55):null);return gap}
+/* epidermal cells around a stoma tile */
+function epidermis(x,y,w,h,T){ctx.save();rr(x,y,w,h,6);ctx.clip();ctx.fillStyle=mix(C.leaf,C.panel,.72);ctx.fillRect(x,y,w,h);const R=rng(77);
+  for(let i=0;i<5;i++)for(let j=0;j<4;j++){const cx_=x+i*w/4.5+(j%2)*w/9,cy_=y+j*h/3.4;ctx.beginPath();for(let k=0;k<7;k++){const a=k/7*TAU;const r=w/9*(1+.18*Math.sin(k*2.1+i+j));const X=cx_+Math.cos(a)*r*1.1,Y=cy_+Math.sin(a)*r*.8;k?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.closePath();ctx.strokeStyle=hexA(C["leaf-d"],.45);ctx.lineWidth=1.2;ctx.stroke()}ctx.restore()}
+/* leaf cross-section box. o.open stomatal aperture, o.vapor 0..1 rate. returns geometry */
+function leafSection(x,y,w,h,T,o){o=o||{};const G={};const op=o.open==null?1:o.open;ctx.save();rr(x,y,w,h,6);ctx.clip();ctx.fillStyle=o.air||C.air;ctx.fillRect(x,y,w,h);
+  const top=y+h*.08,bot=y+h*.88;G.top=top;G.bot=bot;
+  /* cuticle */ rr(x,top-5,w,6,2);ctx.fillStyle=hexA(C.lipid,.7);ctx.fill();
+  /* upper epidermis */ const ec=Math.round(w/44);for(let i=0;i<ec;i++){rr(x+i*w/ec+1,top,w/ec-2,h*.08,4);fillStroke(mix(C.leaf,C.panel,.7),hexA(C["leaf-d"],.6),1.1)}
+  /* palisade */ const py=top+h*.09,ph=h*.3;const pc=Math.round(w/24);for(let i=0;i<pc;i++){rr(x+i*w/pc+2,py,w/pc-4,ph,6);fillStroke(mix(C.leaf,C.panel,.45),hexA(C["leaf-d"],.6),1.1);for(let k=0;k<4;k++)ell(x+i*w/pc+w/pc/2+(k%2?3:-3),py+10+k*ph/4.5,3.2,2.3,0,C.chloro)}
+  /* spongy */ const sy=py+ph+4,sh=bot-sy-h*.07;G.spongy=[sy,sh];const R=rng(41);
+  for(let i=0;i<Math.round(w/30);i++)for(let j=0;j<3;j++){const cx_=x+18+i*30+(j%2)*14+R()*6,cy_=sy+12+j*sh/3+R()*5;if(o.vein&&Math.abs(cx_-(x+w*o.vein))<34&&cy_<sy+sh*.75)continue;if(Math.abs(cx_-(x+w*(o.stomaX||.5)))<26&&cy_>sy+sh*.55)continue;ell(cx_,cy_,11,7.5,R()*.6-.3,mix(C.leaf,C.panel,.5),hexA(C["leaf-d"],.55),1.1);circ(cx_+3,cy_-1,2.4,C.chloro)}
+  /* vein */ if(o.vein){const vx=x+w*o.vein,vy=sy+sh*.36;G.vein=[vx,vy];ell(vx,vy,30,22,0,hexA(C.panel,.6),hexA(C["leaf-d"],.6),1.4);for(let k=0;k<4;k++)circ(vx-12+k*8,vy-8,4.2,hexA(C.water,.3),C.xylem,1.6);for(let k=0;k<3;k++)circ(vx-8+k*8,vy+9,3.6,hexA(C.phloem,.25),C.phloem,1.4)}
+  /* lower epidermis with stoma */ const ly=bot-h*.07;const sx=x+w*(o.stomaX||.5);G.stoma=[sx,ly];
+  for(let i=0;i<ec;i++){const cx0=x+i*w/ec;if(Math.abs(cx0+w/ec/2-sx)<w/ec*0.9)continue;rr(cx0+1,ly,w/ec-2,h*.07,4);fillStroke(mix(C.leaf,C.panel,.7),hexA(C["leaf-d"],.6),1.1)}
+  const gp=lerp(1,10,op);[-1,1].forEach(sd=>{ell(sx+sd*(gp/2+8),ly+h*.035,9,h*.04,0,mix(C.leaf,C.panel,.3),C["leaf-d"],1.4)});
+  rr(x,bot,w,5,2);ctx.fillStyle=hexA(C.lipid,.7);ctx.fill();
+  /* water vapour leaving */ const vr=(o.vapor==null?op:o.vapor);const nv=Math.round(10*clamp(vr,0,1.4));for(let i=0;i<nv;i++){const f=P(T*.35+i/nv,1);const a=(rnd(i)-.5)*1.4;const yy=lerp(sy+sh*.55,y+h+10,f);mol("h2o",sx+Math.sin(a)*f*60+Math.sin(T*2+i)*3,yy,5.5,{rot:i+T,a:f<.15?f/.15:1})}
+  ctx.restore();rr(x,y,w,h,6);ctx.strokeStyle=C.rule;ctx.lineWidth=1.2;ctx.stroke();return G}
+/* root cross-section (circle). parts: hairs, epidermis, cortex, endodermis with Casparian strip, pericycle, stele */
+function rootSection(cx,cy,r,T,o){o=o||{};const G={r};circ(cx,cy,r+2,mix(C["soil-fill"],C.soil,.15));
+  /* root hairs */ if(o.hairs!==false)for(let i=0;i<14;i++){const a=i/14*TAU+.2;const L=r*(.25+.1*Math.sin(i*3));line(cx+Math.cos(a)*r,cy+Math.sin(a)*r,cx+Math.cos(a+.05)*(r+L),cy+Math.sin(a+.05)*(r+L),C.wood,3);}
+  circ(cx,cy,r,mix(C.wood,C.panel,.75),C.wood,2.4);
+  /* cortex cells ring */ const rc0=r*.42,rc1=r*.9;for(let ring=0;ring<3;ring++){const rad=lerp(rc1,rc0+r*.08,ring/2.2);const n=Math.round(TAU*rad/(r*.17));for(let i=0;i<n;i++){const a=i/n*TAU+ring*.3;circ(cx+Math.cos(a)*rad,cy+Math.sin(a)*rad,r*.075,mix(C.leaf,C.panel,.82),hexA(C.wood,.6),1)}}
+  /* endodermis */ const re=r*.38;G.re=re;const ne=16;for(let i=0;i<ne;i++){const a=i/ne*TAU;ctx.save();ctx.translate(cx+Math.cos(a)*re,cy+Math.sin(a)*re);ctx.rotate(a);rr(-r*.045,-r*.07,r*.09,r*.14,2);fillStroke(mix(C.wood,C.panel,.6),C.wood,1.2);ctx.restore()}
+  if(o.casp!==false){ctx.save();ctx.setLineDash([3,TAU*re/ne-3]);ctx.lineDashOffset=-TAU*re/ne/2+1.5;ctx.beginPath();ctx.arc(cx,cy,re,0,TAU);ctx.strokeStyle=C.casp;ctx.lineWidth=r*.15;ctx.stroke();ctx.restore()}
+  /* stele */ circ(cx,cy,re-r*.07,mix(C.panel,C.paper,.5),hexA(C.wood,.7),1.2);const rs=re-r*.1;
+  for(let i=0;i<4;i++){const a=i/4*TAU+Math.PI/4;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a-.28)*rs*.95,cy+Math.sin(a-.28)*rs*.95);ctx.lineTo(cx+Math.cos(a+.28)*rs*.95,cy+Math.sin(a+.28)*rs*.95);ctx.closePath();ctx.fillStyle=hexA(C.xylem,.35);ctx.fill();ctx.strokeStyle=C.xylem;ctx.lineWidth=1.4;ctx.stroke();
+    const b=a+Math.PI/4;circ(cx+Math.cos(b)*rs*.62,cy+Math.sin(b)*rs*.62,rs*.17,hexA(C.phloem,.35),C.phloem,1.4)}
+  circ(cx,cy,rs*.22,hexA(C.xylem,.5),C.xylem,1.4);return G}
+/* ion / nutrient chip */
+function nut(x,y,t,col,o){o=o||{};const r=o.r||9;ctx.font=`700 ${o.fs||10}px ${MONO}`;const w=Math.max(r*2,ctx.measureText(t).width+8);rr(x-w/2,y-r,w,r*2,r);fillStroke(col,hexA(C.ink,.45),1);ctx.fillStyle=inkOn(col);ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText(t,x,y+.5)}
+/* soil particle panel with clay plates that hold cations */
+function clayPlate(x,y,w,h,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot||0);rr(-w/2,-h/2,w,h,h/2);fillStroke(C.clay,hexA(C.ink,.5),1.2);for(let i=0;i<Math.floor(w/14);i++)txt(-w/2+8+i*14,0,"−",{size:12,weight:800,align:"center",color:"#fff"});ctx.restore()}
+function sandGrain(x,y,r,seed){blobPath(x,y,r,seed||1,0,.12);fillStroke(C.sand,hexA(C.ink,.4),1.2)}
+/* sun, cloud, wind */
+function sunIcon(x,y,r,T,a){withA(a==null?1:a,()=>{glow(x,y,r*2.2,C.sun,.35);for(let i=0;i<10;i++){const an=i/10*TAU+T*.2;line(x+Math.cos(an)*(r+3),y+Math.sin(an)*(r+3),x+Math.cos(an)*(r+10),y+Math.sin(an)*(r+10),C.sun,2.4)}circ(x,y,r,C.sun,hexA(C.ink,.3),1)})}
+function moonIcon(x,y,r,sky){circ(x,y,r,"#E8EEF1",C["ink-soft"],1.4);circ(x+r*.45,y-r*.25,r*.85,sky||C.sky)}
+function cloud(x,y,s,a){withA(a==null?1:a,()=>{[[0,0,1],[-.8,.25,.7],[.8,.25,.75],[.3,-.35,.75]].forEach(c=>circ(x+c[0]*s,y+c[1]*s,s*c[2]*.7,"#E8EEF1",hexA(C["ink-soft"],.5),1))})}
+function windLines(x,y,w,str,T){const n=Math.round(1+4*clamp(str,0,1));for(let i=0;i<n;i++){const yy=y+i*12;const off=P(T*(.5+str)+i*.27,1)*w;ctx.save();ctx.globalAlpha*=.8;ctx.beginPath();for(let k=0;k<=20;k++){const xx=x+((off+k*w/40)%w);ctx.lineTo(xx,yy+Math.sin(k*.6+T*3)*2)}ctx.strokeStyle=C["ink-soft"];ctx.lineWidth=1.6;ctx.stroke();ctx.restore()}}
+/* dial gauge: val in [mn,mx] */
+function gauge(x,y,r,val,mn,mx,lab,o){o=o||{};circ(x,y,r,C.paper,C["ink-soft"],1.8);const a0=Math.PI*.8,a1=Math.PI*2.2;ctx.beginPath();ctx.arc(x,y,r*.8,a0,a1);ctx.strokeStyle=C.rule;ctx.lineWidth=5;ctx.stroke();
+  if(o.zones)o.zones.forEach(z=>{ctx.beginPath();ctx.arc(x,y,r*.8,lerp(a0,a1,(z[0]-mn)/(mx-mn)),lerp(a0,a1,(z[1]-mn)/(mx-mn)));ctx.strokeStyle=z[2];ctx.lineWidth=5;ctx.stroke()});
+  const a=lerp(a0,a1,clamp((val-mn)/(mx-mn),0,1));line(x,y,x+Math.cos(a)*r*.74,y+Math.sin(a)*r*.74,C.bad,2.6);circ(x,y,3.5,C.ink);
+  txt(x,y+r*.45,o.vt||(val.toFixed(o.dp==null?1:o.dp)),{size:o.fs||12,weight:700,mono:true,align:"center"});if(lab)txt(x,y+r+12,lab,{size:11.5,weight:700,align:"center",color:C["ink-soft"]})}
+/* clock face (circadian) */
+function clockFace(x,y,r,hour){circ(x,y,r,C.paper,C["ink-soft"],1.8);for(let i=0;i<12;i++){const a=i/12*TAU;line(x+Math.cos(a)*r*.82,y+Math.sin(a)*r*.82,x+Math.cos(a)*r*.95,y+Math.sin(a)*r*.95,C["ink-soft"],1.4)}
+  const a=(hour%12)/12*TAU-Math.PI/2;line(x,y,x+Math.cos(a)*r*.55,y+Math.sin(a)*r*.55,C.ink,3);const m=(hour%1)*TAU-Math.PI/2;line(x,y,x+Math.cos(m)*r*.8,y+Math.sin(m)*r*.8,C.ink,1.6);circ(x,y,2.5,C.ink)}
+/* potometer: shoot in water-filled tube joined to a horizontal capillary with a bubble at bubbleF (0..1) */
+function potometer(x,y,w,bubbleF,T,o){o=o||{};const capY=y+120;/* reservoir */ rr(x,y+40,26,120,5);fillStroke(hexA(C["water-fill"],1),C["glass-edge"],2);
+  /* shoot */ line(x+13,y+44,x+13,y-30,C.stem,4);for(let i=0;i<4;i++)leafBlade(x+13,y+20-i*16,34-i*4,i%2?-.5:Math.PI+.5,{w:.38});
+  /* seal */ rr(x+4,y+36,18,8,3);fillStroke(C.metal,hexA(C.ink,.5),1);
+  /* capillary */ rr(x+26,capY-5,w,10,4);fillStroke(hexA(C["water-fill"],1),C["glass-edge"],1.8);
+  for(let i=0;i<=10;i++){const xx=x+40+i*(w-28)/10;line(xx,capY+6,xx,capY+(i%5?11:15),C["ink-soft"],1.2);if(i%5===0)txt(xx,capY+24,String(i*(o.scale||10)),{size:10.5,mono:true,align:"center",color:C["ink-soft"]})}
+  txt(x+40+(w-28)/2,capY+38,o.unit||"scale (mm)",{size:10.5,align:"center",color:C["ink-soft"]});
+  const bx=x+40+(w-28)*clamp(bubbleF,0,1);rr(bx-7,capY-4,14,8,4);fillStroke(C.paper,C["ink"],1.4);
+  if(o.arrow!==false)arrow(bx-14,capY-16,bx-36,capY-16,C.water,2);
+  /* reservoir tap */ rr(x+w+26,capY-14,22,28,4);fillStroke(hexA(C["water-fill"],1),C["glass-edge"],1.8);return {bx,capY}}
+/* aphid with stylet into a stem */
+function aphid(x,y,s,T,o){o=o||{};ell(x,y,s,s*.65,-.2,C.bug,hexA(C.ink,.6),1.4);circ(x+s*.9,y-s*.35,s*.38,C.bug,hexA(C.ink,.6),1.4);circ(x+s*1.05,y-s*.42,s*.08,C.ink);
+  for(let i=0;i<3;i++){const lx=x-s*.4+i*s*.45;line(lx,y+s*.45,lx-4,y+s*.9+Math.sin(T*6+i)*1.5,hexA(C.ink,.7),1.6)}
+  if(o.stylet)line(x+s*1.15,y-s*.15,o.stylet[0],o.stylet[1],C.ink,1.6)}
+/* bacteroid-filled root nodule */
+function nodule(x,y,r,T){ell(x,y,r,r*.85,0,mix(C.nod,C.panel,.35),C.nod,2);for(let i=0;i<8;i++){const a=i*.8+T*.2;bacterium(x+Math.cos(a)*r*.45,y+Math.sin(a)*r*.38,r*.16,a,C.bact)}}
+/* fungal hyphae net growing from (x,y) */
+function hyphae(x,y,len,n,grow,seed,o){o=o||{};const R=rng(seed||9);for(let i=0;i<n;i++){const a=(o.a0==null?0:o.a0)+R()*(o.spread||TAU);let px=x,py=y;const L=len*(.6+.4*R())*clamp(grow,0,1);const steps=8;ctx.beginPath();ctx.moveTo(px,py);
+  for(let k=1;k<=steps;k++){const aa=a+Math.sin(k*1.3+i)*.35;px+=Math.cos(aa)*L/steps;py+=Math.sin(aa)*L/steps;ctx.lineTo(px,py)}ctx.strokeStyle=C.myco;ctx.lineWidth=1.6;ctx.stroke();
+  if(grow>.5&&i%2===0){line(px,py,px+Math.cos(a+1)*L*.25,py+Math.sin(a+1)*L*.25,C.myco,1.2)}}}
+/* simple water potential ladder (vertical list of bars on a symlog scale) */
+function psiScale(v){return -Math.log10(1+(-Math.min(0,v))*3)}
+/* venus flytrap */
+function flytrap(x,y,s,close){const c=clamp(close,0,1);line(x,y,x,y-s*.8,C.stem,3);[-1,1].forEach(sd=>{ctx.save();ctx.translate(x,y-s*.8);ctx.rotate(sd*lerp(.9,.15,c));ctx.beginPath();ctx.ellipse(0,-s*.35,s*.22,s*.4,0,0,TAU);fillStroke(mix(C.leaf,C.fruit,.35),C["leaf-d"],1.4);
+  for(let k=0;k<6;k++){const yy=-s*.7+k*s*.12;line(sd*s*.2,yy,sd*s*.32,yy-3,C["leaf-d"],1.2)}ctx.restore()})}
+/* dodder: twining orange parasitic stem around host stem */
+function dodder(x,y0,y1,T){ctx.beginPath();for(let i=0;i<=40;i++){const f=i/40;const yy=lerp(y0,y1,f);ctx.lineTo(x+Math.sin(f*18+T*.3)*9,yy)}ctx.strokeStyle=C.carb;ctx.lineWidth=2.6;ctx.stroke();
+  for(let i=0;i<5;i++){const yy=lerp(y0,y1,(i+.5)/5);circ(x,yy,2.5,C["carb-ink"])}}
+/* pitcher plant */
+function pitcher(x,y,s){ctx.beginPath();ctx.moveTo(x-s*.25,y-s);ctx.quadraticCurveTo(x-s*.45,y-s*.2,x,y);ctx.quadraticCurveTo(x+s*.45,y-s*.2,x+s*.25,y-s);ctx.closePath();fillStroke(mix(C.leaf,C.fruit,.25),C["leaf-d"],1.6);ell(x,y-s,s*.27,s*.08,0,mix(C.fruit,C.panel,.2),C["leaf-d"],1.4);rr(x-s*.2,y-s*.45,s*.4,s*.35,s*.15);ctx.fillStyle=hexA(C.water,.5);ctx.fill()}
+function stemPath(G,f0,f1){const a=Math.round(f0*(G.stem.length-1)),b=Math.round(f1*(G.stem.length-1));const out=[];if(a<=b)for(let i=a;i<=b;i++)out.push(G.stem[i]);else for(let i=a;i>=b;i--)out.push(G.stem[i]);return out}
+function fmtSign(v,d){d=d==null?2:d;const r=Math.abs(v)<.0005?0:v;return (r>0?"+":r<0?"−":"")+Math.abs(r).toFixed(d)}
+function grass(x,y,h,lean){ctx.beginPath();ctx.moveTo(x-3,y);ctx.quadraticCurveTo(x+lean*h*.5-2,y-h*.55,x+lean*h,y-h);ctx.quadraticCurveTo(x+lean*h*.5+3,y-h*.55,x+3,y);ctx.closePath();fillStroke(C.leaf,C["leaf-d"],1)}
+/* ---------------- lab helpers ---------------- */
+const $=s=>document.querySelector(s);
+function makeStage(id,W,H){const cv=document.getElementById(id);const st={cv,ctx:cv.getContext("2d"),W,H,K:1};
+  st.fit=()=>{const w=cv.parentElement.clientWidth;if(!w)return;const dpr=window.devicePixelRatio||1;cv.style.height=(w*H/W)+"px";cv.width=Math.round(w*dpr);cv.height=Math.round(w*H/W*dpr);st.K=cv.width/W};return st}
+function use(st){ctx=st.ctx;ctx.setTransform(st.K,0,0,st.K,0,0);ctx.clearRect(0,0,st.W,st.H);ctx.globalAlpha=1;bg(C.ecf)}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function fmt(s){s=Math.round(s);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+const store={get:k=>{try{return localStorage.getItem("b2-planttransport-lab-"+k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem("b2-planttransport-lab-"+k,v)}catch(e){}}};
+function segBtns(el,items,cur,onPick){el.innerHTML="";items.forEach(it=>{const b=document.createElement("button");b.type="button";b.className="tbtn";b.innerHTML=it[1];b.setAttribute("aria-pressed",String(it[0]===cur()));b.onclick=()=>{onPick(it[0]);el.querySelectorAll("button").forEach((x,i)=>x.setAttribute("aria-pressed",String(items[i][0]===cur())))};el.appendChild(b)})}
+function chalUI(el,list,done){el.innerHTML=list.map((c,i)=>`<li class="${done.has(i)?"done":""}"><span class="ck" aria-hidden="true">${done.has(i)?"✓":i+1}</span><span>${c}${done.has(i)?'<span class="gk-sr"> (done)</span>':""}</span></li>`).join("")}
+let DT=0;
+/* ================= PART 1: whole plant water and sugar bench ================= */
+const SIM={soil:80,rh:50,light:80,wind:2,temp:25,aba:0,sink:"fruit",
+  gs:.3,E:4,psiL:-1,psiX:-.6,psiS:-.06,plc:0,A:18,Q:.6,wilt:0,gut:0,t:0,hist:[],lastH:0,deliv:{roots:0,fruit:0},done:new Set(),hold:0};
+const CAV=-1.6;/* this model plant's xylem starts to cavitate below about -1.6 MPa */
+function esat(T){return .6108*Math.exp(17.27*T/(T+237.3))}
+function simModel(){const S=SIM;const sw=S.soil/100,RH=S.rh/100,L=S.light,T=S.temp,TK=T+273.15;
+  const psiS=-.03-1.8*Math.pow(1-sw,2.5);const vpd=esat(T)*(1-RH);const psiA=8.314*TK/18.05e-6*Math.log(Math.max(.01,RH))/1e6;
+  const fL=.05+.95*clamp((L/(L+20))/(100/120),0,1);const abaRoot=clamp((-psiS-.4)/1.0,0,1);const a=clamp(S.aba/100+abaRoot,0,1);const fA=1-.92*a;
+  const gb=.4+2.6*S.wind/(S.wind+2.5);const Rs=.05*(1+8*Math.pow(1-sw,3)),Rp=.12*(1+3*S.plc);
+  const flux=ps=>{const fW=1/(1+Math.exp(-(ps+1.7)/.15));const g_=.4*fL*fA*fW+.004;return [g_,1000*(1/(1/g_+1/gb))*vpd/101.3]};let lo=psiS-8,hi=psiS;for(let i=0;i<40;i++){const mid=(lo+hi)/2;const r=flux(mid);if(psiS-r[1]*(Rs+Rp)-.01-mid>0)lo=mid;else hi=mid}let psiL=(lo+hi)/2;const fr=flux(psiL);const gs=fr[0],E=fr[1];
+  let psiX=psiS-E*(Rs+Rp*.5)-.005;const rootP=E<.35&&sw>.65?.14*(sw-.6)/.4*(1-E/.35):0;if(rootP>0)psiX=Math.max(psiX,rootP*.9);
+  const fT=Math.exp(-Math.pow((T-27)/12,2));const A=25*clamp(L/(L+25)*1.25,0,1)*(gs/(gs+.06))/(.4/.46)*fT;
+  const aN=clamp(A/25,0,1);const ppSrc=psiL+1.2+1.2*aN;const ppSink=S.sink==="roots"?.3:.35;const supply=.25+.75*aN;const Q=Math.max(0,Math.min(clamp((ppSrc-ppSink)/.9,0,1),supply));
+  const wilt=clamp((-1.3-psiL)/.5,0,1);return {psiS,vpd,psiA,gs,E,psiL,psiX,A,Q,ppSrc,wilt,rootP,abaRoot,a,gb}}
+function simStep(dt){const S=SIM;const m=simModel();const k=1-Math.exp(-dt/1.2);S.gs=lerp(S.gs,m.gs,k);S.E=lerp(S.E,m.E,k);S.psiL=lerp(S.psiL,m.psiL,k);S.psiX=lerp(S.psiX,m.psiX,k);S.psiS=m.psiS;S.A=lerp(S.A,m.A,k);S.Q=lerp(S.Q,m.Q,k);S.wilt=lerp(S.wilt,m.wilt,k);S.m=m;
+  S.gut=lerp(S.gut,(S.psiX>.03&&S.rh>=80)?1:0,k);
+  if(S.psiX<CAV)S.plc=Math.min(.9,S.plc+dt*.12*(CAV-S.psiX));else if(S.psiX>-.1)S.plc=Math.max(0,S.plc-dt*.04);
+  S.deliv[S.sink]+=S.Q*dt;S.t+=dt;if(S.t-S.lastH>=.25){S.lastH=S.t;S.hist.push([S.E,S.Q]);if(S.hist.length>241)S.hist.shift()}simCheck(dt)}
+const SCHAL=["Close the stomata with ABA spray while the soil is still wet (soil water at least 60%, opening under 25%).","Push transpiration above 8 mmol per m² per s.","Make guttation happen: dark, very humid air (85% or more) and wet soil.","Drive xylem pressure below −1.6 MPa so vessels cavitate.","Make the plant wilt.","Show that drought stops phloem transport: with light at 50% or more, push sugar flow to the fruit below 10%."];
+function simCheck(dt){const S=SIM;const add=i=>{if(!S.done.has(i)){S.done.add(i);simChal();simStatus("good","Challenge "+(i+1)+" done.")}};
+  if(S.soil>=60&&S.aba>0&&S.gs/.4<.25&&S.light>20)add(0);if(S.E>8)add(1);if(S.gut>.6)add(2);if(S.plc>.08)add(3);if(S.wilt>.6)add(4);if(S.sink==="fruit"&&S.light>=50&&S.Q<.1)add(5)}
+function simStatus(cls,t){const s=$("#simStatus");s.className="status "+(cls||"");s.textContent=t}
+function simChal(){chalUI($("#simChal"),SCHAL,SIM.done)}
+const SL=[["soil","Soil water","%",0,100,5],["rh","Air humidity","%",10,95,5],["light","Light","%",0,100,5],["wind","Wind","m/s",0,10,1],["temp","Temperature","°C",5,40,1],["aba","ABA spray","%",0,100,5]];
+const PRE={sunny:{soil:80,rh:40,light:90,wind:3,temp:28,aba:0},night:{soil:85,rh:90,light:0,wind:0,temp:16,aba:0},drought:{soil:5,rh:30,light:90,wind:4,temp:33,aba:0},house:{soil:80,rh:90,light:50,wind:0,temp:24,aba:0}};
+function simUI(){SL.forEach(s=>{$("#sl-"+s[0]).value=SIM[s[0]];$("#sv-"+s[0]).textContent=SIM[s[0]]+" "+s[2]})}
+function simInit(){const box=$("#simSliders");box.innerHTML=SL.map(s=>`<div class="ctl"><label for="sl-${s[0]}">${s[1]} <output id="sv-${s[0]}"></output></label><input type="range" id="sl-${s[0]}" min="${s[3]}" max="${s[4]}" step="${s[5]}"></div>`).join("");
+  SL.forEach(s=>{$("#sl-"+s[0]).oninput=e=>{SIM[s[0]]=+e.target.value;simUI()}});
+  segBtns($("#simSink"),[["roots","Roots"],["fruit","Fruit"]],()=>SIM.sink,k=>{SIM.sink=k});
+  const pb=$("#simPre");[["sunny","Sunny afternoon"],["night","Humid night"],["drought","Drought"],["house","Humid greenhouse"]].forEach(p=>{const b=document.createElement("button");b.type="button";b.className="tbtn";b.textContent=p[1];b.onclick=()=>{Object.assign(SIM,PRE[p[0]]);simUI();simStatus("","Preset: "+p[1]+".")};pb.appendChild(b)});
+  $("#simReset").onclick=()=>{SIM.plc=0;SIM.deliv={roots:0,fruit:0};SIM.hist=[];simStatus("","Fresh plant: embolisms cleared.")};
+  simUI();simChal();for(let i=0;i<200;i++)simStep(.05);SIM.hist=[];
+  $("#simLegend").innerHTML=[["water","Water (xylem)"],["vapor","Water vapour"],["sucrose","Sugar (phloem)"],["aba","ABA"],["accent","Transpiration graph"]].map(l=>`<span><i style="background:var(--${l[0]})"></i>${l[1]}</span>`).join("");
+  $("#simNote").textContent="Simplified model: transpiration = conductance × vapour pressure deficit; stomatal conductance falls with darkness, ABA (sprayed, plus ABA the roots make in dry soil) and low leaf water potential; leaf Ψ = soil Ψ − transpiration × hydraulic resistance. This model plant's xylem cavitates below about −1.6 MPa, and root pressure appears only when transpiration is very low and the soil is wet. Phloem flow follows the pressure difference from source leaves to the sink, limited by how much sugar is loaded. Changes happen in seconds here; real stomata take minutes."}
+/* ---------- drawing ---------- */
+function drawSim(now){use(S1);const T=now/1000;const n=Math.max(1,Math.round(DT/(1/60)));for(let i=0;i<Math.min(4,n);i++)simStep(Math.min(DT,1/60));const S=SIM,m=S.m||simModel();
+  const lt=S.light/100;const sky=mix(mix(C.sky,"#14223F",.6),C.sky,lt);
+  ctx.save();rr(10,10,470,540,8);ctx.clip();ctx.fillStyle=sky;ctx.fillRect(10,10,470,430);
+  /* humidity haze */ const R=rng(4);const nh=Math.round(S.rh/3);for(let i=0;i<nh;i++)mol("h2o",20+R()*450,20+R()*380,3.5,{a:.35,rot:i});
+  if(lt>.02)sunIcon(70,62,10+12*lt,T,.3+.7*lt);else moonIcon(70,62,14,sky);
+  windLines(170,40,300,S.wind/10,T);if(S.wind>0)txt(470,30,"wind "+S.wind+" m/s",{size:11,weight:700,align:"right",color:lt>.4?C.ink:"#E8EEF1"});
+  const sw=S.soil/100;ctx.fillStyle=mix(mix(C.soil,C["soil-fill"],.4),mix(C.water,C.soil,.55),sw*.6);ctx.fillRect(10,440,470,110);for(let i=0;i<60;i++){const R2=rng(i+50);circ(20+R2()*450,446+R2()*100,1+R2()*2,hexA(C["soil-d"],.4))}
+  if(sw<.3)for(let i=0;i<6;i++)poly([[40+i*75,448],[52+i*75,472],[44+i*75,500]],hexA(C["soil-d"],1-sw*3),1.8);line(10,440,480,440,C["soil-d"],2);ctx.restore();
+  const cx=230,gy=440;const G=wholePlant(cx,gy,300,T,{fruit:true,fruitR:12+3*clamp(S.deliv.fruit/40,0,1),roots:"tap",rootLen:96,nLeaves:6,leafLen:96,wilt:S.wilt,stemW:7});
+  /* embolisms */ const ne=Math.round(S.plc*12);for(let i=0;i<ne;i++){const p=along(G.stem,.15+.07*i);circ(p[0]+(i%2?-1.5:1.5),p[1],3.2,"#ffffff",C["ink-soft"],1)}
+  /* xylem water */ const Ef=clamp(S.E/10,0,1.4);const lf=G.leaves[4];const xp=[[cx,gy+90],[cx,gy]].concat(stemPath(G,0,lf.f)).concat([[lf.x,lf.y],[lf.tx,lf.ty]]);
+  if(S.psiX>0.02&&S.E<.35){flowAlong([[cx,gy+90],[cx,gy]].concat(stemPath(G,0,1)),T,8,.06,(x,y)=>mol("h2o",x-2,y,5.5,{rot:T}))}else flowAlong(xp,T,Math.max(2,Math.round(4+8*Ef)),.03+.12*Ef,(x,y)=>mol("h2o",x-2,y,5.5,{rot:T}));
+  /* vapour */ G.leaves.forEach((l,j)=>{const nv=Math.round(3*Ef);for(let i=0;i<nv;i++){const f=P(T*(.25+.3*Ef)+i/Math.max(1,nv)+j*.13,1);mol("h2o",l.tx+Math.cos(l.ang)*10+f*20*(l.side||1)+S.wind*f*6,l.ty+12+f*30,4.5,{a:(1-f)*.9,rot:i})}});
+  /* guttation */ if(S.gut>.1)G.leaves.forEach((l,j)=>{const tipx=l.x+Math.cos(l.ang)*l.len,tipy=l.y+Math.sin(l.ang)*l.len;const ph=P(T*.2+j*.21,1);circ(tipx,tipy+2+(ph>.85?(ph-.85)/.15*30:0),(1.5+4*ph)*S.gut,hexA(C.vapor,.85),C["water-ink"],1)});
+  /* phloem sugar to sink */ const src=G.leaves[3];let pp;if(S.sink==="fruit")pp=[[src.tx,src.ty],[src.x,src.y]].concat(stemPath(G,src.f,.5)).concat([[G.fruit.x,G.fruit.y]]);else pp=[[src.tx,src.ty],[src.x,src.y]].concat(stemPath(G,src.f,0)).concat([[cx+3,gy+80]]);
+  if(S.Q>.02)flowAlong(pp,T,Math.max(2,Math.round(7*S.Q)),.05+.18*S.Q,(x,y)=>mol("suc",x+4,y,5.5));
+  if(m.a>.05){const ap=[[cx,gy+70],[cx,gy]].concat(stemPath(G,0,.85));flowAlong(ap,T,Math.round(2+4*m.a),.12,(x,y)=>withA(m.a,()=>nut(x-10,y,"ABA",C.aba,{r:6.5,fs:7.5})))}
+  label(S.sink==="fruit"?G.fruit.x+40:cx+60,S.sink==="fruit"?G.fruit.y+20:gy+70,"sink: "+S.sink,{size:11.5,weight:700,border:C.sucrose});label(src.tx-10,src.ty-26,"source leaf",{size:11.5,weight:700,border:C.good});
+  /* stoma inset */ panelBox(372,330,100,100,{fill:hexA(C.panel,.92)});guardPair(422,376,26,clamp(S.gs/.4,0,1),{fibrils:false});txt(422,420,"stoma "+Math.round(clamp(S.gs/.4,0,1)*100)+"%",{size:11,weight:700,align:"center"});
+  if(S.wilt>.4)label(cx,120,"wilting",{size:12,weight:700,border:C.bad});if(S.gut>.5)label(cx-80,150,"guttation",{size:12,weight:700,border:C.vapor});
+  thermo(30,410,70,(S.temp-5)/35,{col:C.heat});txt(46,350,S.temp+" °C",{size:11.5,weight:700,mono:true,color:lt>.4?C.ink:"#E8EEF1"});
+  /* right panel */ panelBox(488,10,302,540);gauge(560,92,56,clamp(S.psiX,-3,.3),-3,.3,"xylem pressure (MPa)",{zones:[[-3,CAV,C.bad],[0,.3,C.good]],dp:2,vt:fmtSign(S.psiX,2),fs:13});
+  txt(640,44,S.psiX>0?"root pressure (+)":S.psiX<CAV?"cavitation zone":"tension: pulled up",{size:11.5,weight:700,color:S.psiX<CAV?C.bad:C.ink});
+  const ladder=[["soil",S.psiS],["leaf",S.psiL],["air",m.psiA]];txt(640,70,"water potential (MPa)",{size:11.5,weight:700});ladder.forEach((q,i)=>{const y=88+i*24;txt(640,y+6,q[0],{size:11.5,weight:600});const L=-psiScale(q[1])*22;rr(676,y,Math.min(56,L),12,3);ctx.fillStyle=i===2?C.vapor:C.water;ctx.fill();txt(782,y+6,fmtSign(q[1],q[1]<-10?0:2),{size:11,weight:700,mono:true,align:"right"})});
+  txt(500,196,"embolized vessels",{size:11.5,weight:600});bar(640,190,140,10,S.plc,C.bad);txt(500,214,"stomatal opening",{size:11.5,weight:600});bar(640,208,140,10,clamp(S.gs/.4,0,1),C.leaf);
+  txt(500,232,"sugar flow to sink",{size:11.5,weight:600});bar(640,226,140,10,S.Q,C.sucrose);
+  const Gr=graph({x:530,y:292,w:240,h:158,x0:-60,x1:0,y0:0,y1:12,xt:[-60,-40,-20,0],yt:[0,4,8,12],xf:v=>v+" s",grid:true,title:"Transpiration (last 60 s)",yl:"mmol/m²/s",ylx:30});
+  const H=S.hist;ctx.save();ctx.beginPath();ctx.rect(Gr.x,Gr.y,Gr.w,Gr.h);ctx.clip();ctx.beginPath();H.forEach((h,i)=>{const X=Gr.X(-(H.length-1-i)*.25),Y=Gr.Y(clamp(h[0],0,12));i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});ctx.strokeStyle=C.accent;ctx.lineWidth=2.6;ctx.stroke();ctx.restore();
+  if(H.length)gdot(Gr,0,clamp(S.E,0,12),C.accent,S.E.toFixed(1),{dy:-14,align:"right"});
+  txt(500,490,"VPD "+m.vpd.toFixed(2)+" kPa",{size:11.5,mono:true,color:C["ink-soft"]});txt(500,508,"photosynthesis "+S.A.toFixed(0)+" µmol CO₂/m²/s",{size:11.5,mono:true,color:C["ink-soft"]});
+  txt(500,526,"delivered: fruit "+S.deliv.fruit.toFixed(0)+" · roots "+S.deliv.roots.toFixed(0)+" units",{size:11.5,mono:true,color:C["ink-soft"]});
+  simRead()}
+let readT=0;
+function simRead(){if(performance.now()-readT<500)return;readT=performance.now();const S=SIM,m=S.m||simModel();
+  const rows=[["Transpiration rate",S.E.toFixed(2)+" mmol H₂O per m² per s"],["Stomatal opening",Math.round(clamp(S.gs/.4,0,1)*100)+"% (conductance "+S.gs.toFixed(3)+" mol/m²/s)"],["Soil Ψ / leaf Ψ / air Ψ",S.psiS.toFixed(2)+" / "+S.psiL.toFixed(2)+" / "+m.psiA.toFixed(0)+" MPa"],["Xylem pressure",fmtSign(S.psiX,2)+" MPa"+(S.psiX>0?" (root pressure)":" (tension)")],["Embolized vessels",Math.round(S.plc*100)+"%"],["Photosynthesis",S.A.toFixed(1)+" µmol CO₂ per m² per s"],["Sugar flow to "+S.sink,Math.round(S.Q*100)+"% of maximum"],["Plant state",simState()]];
+  $("#simRead tbody").innerHTML=rows.map(r=>`<tr><th scope="row">${r[0]}</th><td>${r[1]}</td></tr>`).join("");$("#simCap").textContent="Water is pulled up the xylem and leaves as vapour; sugar is pushed through the phloem to the sink you choose."}
+function simState(){const S=SIM;const st=[];if(S.wilt>.4)st.push("wilting");if(S.gut>.5)st.push("guttation at leaf tips");if(S.plc>.08)st.push("some vessels cavitated");if(S.gs/.4<.25)st.push("stomata mostly closed");return st.join(", ")||"healthy"}
+function simA11y(){const S=SIM,m=S.m||simModel();const op=Math.round(clamp(S.gs/.4,0,1)*100);
+  return ["Whole plant bench: transpiration "+S.E.toFixed(1)+" millimoles per square metre per second, stomata "+op+"% open, xylem pressure "+S.psiX.toFixed(2)+" megapascals.",
+   `A plant stands in ${S.soil<30?"dry, cracked":"moist"} soil under a ${S.light<5?"dark night":"sky at "+S.light+"% light"} with ${S.rh}% humidity, ${S.wind} metres per second of wind and ${S.temp} °C. Blue water molecules move up the stem ${S.E>6?"quickly":S.E>2?"steadily":"slowly"} and drift off the leaves as vapour. Amber sugar molecules move through the phloem from a source leaf to the ${S.sink} at ${Math.round(S.Q*100)}% of maximum. The stoma inset is ${op}% open. ${m.a>.05?"Magenta ABA travels up from the roots. ":""}Plant state: ${simState()}. On the right, a gauge shows xylem pressure and a graph plots transpiration over the last minute.`]}
+/* ================= PART 2: practice trainer ================= */
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const r2=v=>Math.round(v*100)/100;
+const fx=(v,d)=>{d=d==null?2:d;const r=+(+v).toFixed(d);return (r<0?"−":"")+Math.abs(r).toFixed(d)};
+const fxs=(v,d)=>{d=d==null?2:d;const r=+(+v).toFixed(d);return (r<0?"−":r>0?"+":"")+Math.abs(r).toFixed(d)};
+const par=v=>v<0?"("+fx(v)+")":fx(v);
+const CTYPES=[["mix","All types, mixed"],["psi","Water potential: Ψ = Ψs + Ψp"],["psis","Solute potential: Ψs = −iCRT"],["dir","Which way? Cell to cell"],["soil","Which way? Soil and root"],["eq","Turgor at equilibrium"],["pot","Potometer: transpiration rate"],["trans","Predict the transpiration change"]];
+const TR={type:"mix",p:null,hint:0,first:true,sol:false,solved:false,streak:0,best:0,count:0,solT:0,pick:null};
+const SOLS=[["sucrose",1],["glucose",1],["NaCl",2],["KCl",2],["CaCl₂",3]];
+const step05=(a,b)=>r2(ri(Math.round(a*20),Math.round(b*20))/20);
+const GEN={
+ psi(){const ctxs=[["a leaf mesophyll cell","cell",[-1.5,-.4],[0,.8]],["a root cortex cell","cell",[-1,-.3],[0,.6]],["xylem sap in a stem","xylem",[-.2,-.05],[-1.5,-.3]],["phloem sap near a source leaf","phloem",[-2,-1.2],[.4,1.2]],["a guard cell in bright light","cell",[-2.5,-1.2],[.3,1.5]]];
+  const c=pick(ctxs);const ps=step05(c[2][0],c[2][1]);let pp=step05(c[3][0],c[3][1]);const ans=r2(ps+pp);
+  return {title:"Water potential",html:`In ${c[0]}, <b>Ψs = ${fx(ps)} MPa</b> and <b>Ψp = ${fxs(pp)} MPa</b>. What is the water potential <b>Ψ</b>?`,ans,unit:"MPa",dp:2,tol:.006,
+   hints:["Ψ = Ψs + Ψp. Keep each sign.",`Ψs is ${fx(ps)} MPa; Ψp is ${fxs(pp)} MPa${pp<0?" (negative pressure: tension)":""}.`,`Add them: ${fx(ps)} + ${par(pp)}.`],
+   rows:[{l:"Ψ = Ψs + Ψp"},{l:`Ψ = ${fx(ps)} + ${par(pp)}`},{ans:`Ψ = ${fx(ans)} MPa`}],
+   miss:"subtracting Ψp or dropping a sign. Solute potential is negative; pressure can be positive (turgor) or negative (tension).",
+   slips:[[ps-pp,"That subtracts the pressure potential. Ψ = Ψs + Ψp."],[ps,"That is only Ψs. Add the pressure potential too."],[-ans,"Check the sign: add the two signed values."],[Math.abs(ps)+pp,"Ψs is negative; keep its minus sign when you add."]],vis:{k:"bars",rows:[["Ψs",ps],["Ψp",pp]],ans}}},
+ psis(){const s=pick(SOLS);const c=pick([.05,.1,.15,.2,.25,.3,.4,.5]);const tc=pick([15,20,22,25,27,30]);const TK=tc+273;const ans=-s[1]*c*.00831*TK;
+  return {title:"Solute potential",html:`Find the solute potential <b>Ψs</b> of <b>${c} M ${s[0]}</b> at <b>${tc} °C</b>. Use R = 0.00831 L·MPa/(mol·K) and assume ${s[1]>1?"complete dissociation":"no dissociation"}.`,ans,unit:"MPa",dp:2,tol:.011,
+   hints:["Ψs = −iCRT, with T in kelvin.",`i = ${s[1]}, C = ${c} mol/L, T = ${tc} + 273 = ${TK} K.`,`Ψs = −(${s[1]})(${c})(0.00831)(${TK}).`],
+   rows:[{l:`i = ${s[1]}, C = ${c} mol/L, T = ${TK} K`},{c:[[F(s[1]),F(c,["mol"],"1",["L"]),F("0.00831",["L","MPa"],"1",["mol","K"]),F(TK,["K"])],[fx(-ans,3),["MPa"]]]},{ans:`Ψs = −${fx(-ans,3)} ≈ ${fx(ans)} MPa`}],
+   miss:"using °C instead of kelvin, or dropping the minus sign. Solute potential is never positive.",
+   slips:[[-ans,"Solute potential is negative: Ψs = −iCRT."],[-s[1]*c*.00831*tc,"Convert to kelvin: add 273 to the Celsius temperature."],s[1]>1?[-c*.00831*TK,"Include i: "+s[0]+" gives "+s[1]+" particles."]:[NaN,""],[ans*10,"That is in bars. With R = 0.00831 the answer is in MPa (1 MPa = 10 bar)."]],vis:{k:"line",ans}}},
+ dir(){let a,b,A,B;for(let i=0;i<60;i++){a=[step05(-1.4,-.4),step05(0,.7)];b=[step05(-1.4,-.4),step05(0,.7)];A=r2(a[0]+a[1]);B=r2(b[0]+b[1]);
+    if(Math.random()<.2){b[1]=r2(A-b[0]);if(b[1]<0||b[1]>.9)continue;B=r2(b[0]+b[1])}
+    if(Math.sign(a[0]-b[0])!==Math.sign(A-B)||Math.abs(A-B)<.005||Math.random()<.4)break}
+  const ans=Math.abs(A-B)<.005?2:A>B?0:1;
+  return {title:"Which way? Cell to cell",html:`Two neighbouring plant cells are joined by plasmodesmata. Cell A: <b>Ψs = ${fx(a[0])}</b>, <b>Ψp = ${fxs(a[1])}</b> MPa. Cell B: <b>Ψs = ${fx(b[0])}</b>, <b>Ψp = ${fxs(b[1])}</b> MPa. Which way does net water move?`,
+   choices:["From A to B","From B to A","No net movement"],ans,unit:"",
+   hints:["Find each cell's total Ψ = Ψs + Ψp first.",`Ψ(A) = ${fx(a[0])} + ${par(a[1])} = ${fx(A)}; Ψ(B) = ${fx(b[0])} + ${par(b[1])} = ${fx(B)} MPa.`,"Water moves from higher (less negative) Ψ to lower (more negative) Ψ."],
+   rows:[{l:`Ψ(A) = ${fx(a[0])} + ${par(a[1])} = ${fx(A)} MPa`},{l:`Ψ(B) = ${fx(b[0])} + ${par(b[1])} = ${fx(B)} MPa`},{ans:["A is higher: water moves A → B","B is higher: water moves B → A","Equal Ψ: no net movement"][ans]}],
+   miss:"comparing only Ψs (solute) and forgetting the pressure potential.",vis:{k:"cells",a,b,A,B,ans}}},
+ soil(){const root=[step05(-1.1,-.5),step05(.1,.5)];const R=r2(root[0]+root[1]);let sp,stxt;
+  if(Math.random()<.25){const c=pick([.05,.1,.15,.2,.25,.3]);const tc=20;sp=r2(-2*c*.00831*293);stxt=`soil water containing ${c} M NaCl at ${tc} °C (Ψ = −iCRT = ${fx(sp)} MPa)`}
+  else{sp=Math.random()<.2?R:step05(-.9,-.05);if(Math.abs(sp-R)<.005&&Math.random()<.5)sp=r2(sp-.15);stxt=`soil water with <b>Ψ = ${fx(sp)} MPa</b>`}
+  const ans=Math.abs(sp-R)<.005?2:sp>R?0:1;
+  return {title:"Which way? Soil and root",html:`A root hair cell has <b>Ψs = ${fx(root[0])}</b> and <b>Ψp = ${fxs(root[1])}</b> MPa. It is surrounded by ${stxt}. Which way does net water move?`,choices:["Into the root hair","Out of the root hair","No net movement"],ans,unit:"",
+   hints:["Find the root cell's total Ψ.",`Ψ(root) = ${fx(root[0])} + ${par(root[1])} = ${fx(R)} MPa; Ψ(soil) = ${fx(sp)} MPa.`,"Water moves toward the lower (more negative) Ψ."],
+   rows:[{l:`Ψ(root) = ${fx(root[0])} + ${par(root[1])} = ${fx(R)} MPa`},{l:`Ψ(soil) = ${fx(sp)} MPa`},{ans:["soil is higher: water moves INTO the root","root is higher: water moves OUT (the plant loses water)","equal: no net movement"][ans]}],
+   miss:"thinking water always flows into roots. In very salty or very dry soil, Ψ outside can drop below the root's, and the root loses water.",vis:{k:"soil",root,R,sp,ans}}},
+ eq(){const ps=step05(-1.2,-.4);const water=Math.random()<.35;const out=water?0:step05(ps+.1,-.05);const ans=r2(out-ps);
+  return {title:"Turgor at equilibrium",html:`A flaccid cell (<b>Ψs = ${fx(ps)} MPa</b>, Ψp = 0) is placed in ${water?"<b>pure water (Ψ = 0)</b>":`a solution with <b>Ψ = ${fx(out)} MPa</b>`}. Assume its volume barely changes. At equilibrium, what is its pressure potential <b>Ψp</b>?`,ans,unit:"MPa",dp:2,tol:.006,
+   hints:["At equilibrium the cell's Ψ equals the solution's Ψ.",`So Ψs + Ψp = ${fx(out)}, with Ψs = ${fx(ps)}.`,`Ψp = ${fx(out)} − ${par(ps)}.`],
+   rows:[{l:`at equilibrium: Ψcell = Ψsolution = ${fx(out)} MPa`},{l:`Ψp = Ψ − Ψs = ${fx(out)} − ${par(ps)}`},{ans:`Ψp = ${fxs(ans)} MPa (turgid)`}],
+   miss:"setting Ψp equal to Ψs, or forgetting that subtracting a negative number adds.",
+   slips:[[ps,"That is Ψs. At equilibrium Ψp = Ψ(solution) − Ψs."],[-ans,"Check the sign: water entering builds a positive pressure."],[out,"That is the solution's Ψ. Subtract Ψs from it."],[out+ps,"Subtract Ψs, do not add it: Ψp = Ψ − Ψs."]],vis:{k:"eq",ps,out,ans}}},
+ pot(){const v=pick(["dist","vol","vol","area","pct"]);
+  if(v==="dist"){const t=pick([2,3,4,5,6,8,10]);const rate=pick([1.5,2,2.5,3,3.5,4,4.5,5,6,7.5]);const d=r2(rate*t);const ans=d/t;
+   return {title:"Potometer: distance rate",html:`In a potometer the air bubble moves <b>${d} mm</b> in <b>${t} min</b>. What is the rate of bubble movement?`,ans,unit:"mm/min",dp:2,tol:.011,
+    hints:["Rate = distance ÷ time.",`Distance ${d} mm, time ${t} min.`,`${d} ÷ ${t}.`],rows:[{c:[[F(d,["mm"],t,["min"])],[fx(ans),["mm/min"]]]},{ans:`${fx(ans)} mm/min`}],miss:"multiplying distance by time, or dividing time by distance.",
+    slips:[[d*t,"Divide the distance by the time."],[t/d,"Put distance on top: distance ÷ time."]],vis:{k:"pot",d,t,r:null}}}
+  if(v==="vol"){const t=pick([2,4,5,6,8,10]);const d=pick([10,12,15,18,20,24,25,30,36,40,45,50]);const r=pick([.25,.4,.5,.75,1]);const ans=Math.PI*r*r*d/t;
+   return {title:"Potometer: volume rate",html:`The bubble moves <b>${d} mm</b> in <b>${t} min</b> along a capillary of radius <b>${r} mm</b>. What is the volume rate of water uptake? (Use π = 3.14.)`,ans,unit:"mm³/min",dp:2,tol:Math.max(.011,ans*.012),
+    hints:["Volume = πr² × distance; rate = volume ÷ time.",`πr² = 3.14 × ${r}² = ${fx(Math.PI*r*r,3)} mm².`,`${fx(Math.PI*r*r,3)} mm² × ${d} mm ÷ ${t} min.`],
+    rows:[{l:`area = πr² = 3.14 × (${r} mm)² = ${fx(Math.PI*r*r,3)} mm²`},{l:`distance rate = ${d} mm ÷ ${t} min = ${fx(d/t)} mm/min`},{ans:`${fx(Math.PI*r*r,3)} × ${fx(d/t)} = ${fx(ans)} mm³/min`}],miss:"using the diameter as r, or forgetting to divide by time.",
+    slips:[[Math.PI*4*r*r*d/t,"That used the diameter. r is the radius."],[Math.PI*r*r*d,"That is the total volume. Divide by the time."],[r*r*d/t,"Multiply by π too: area = πr²."],[Math.PI*r*d/t,"Square the radius: area = πr²."]],vis:{k:"pot",d,t,r}}}
+  if(v==="area"){const vr=pick([2.4,3,3.6,4.2,4.8,6,7.2,9]);const la=pick([30,40,48,60,75,80,120]);const ans=vr/la;
+   return {title:"Potometer: rate per leaf area",html:`A shoot takes up water at <b>${vr} mm³/min</b>. Its total leaf area is <b>${la} cm²</b>. What is the uptake rate per cm² of leaf?`,ans,unit:"mm³/cm²/min",dp:3,tol:Math.max(.0011,ans*.012),
+    hints:["Divide the rate by the leaf area so shoots of different sizes can be compared.",`${vr} mm³/min and ${la} cm².`,`${vr} ÷ ${la}.`],rows:[{c:[[F(vr,["mm³"],"1",["min"]),F("1",[],la,["cm²"])],[fx(ans,3),["mm³/cm²/min"]]]},{ans:`${fx(ans,3)} mm³ per cm² per min`}],miss:"multiplying by the leaf area instead of dividing.",
+    slips:[[vr*la,"Divide by the leaf area, do not multiply."],[la/vr,"Put the rate on top: rate ÷ area."]],vis:{k:"pot",d:30,t:5,r:.5}}}
+  const old=pick([2,2.5,3,4,5,6]);const fac=pick([.5,.6,.75,1.5,1.8,2,2.5,3]);const nw=r2(old*fac);const ans=(nw-old)/old*100;const cond=fac>1?pick(["a fan is switched on","a lamp is moved closer","the room air is made drier"]):pick(["a clear plastic bag is placed over the shoot","the lamp is switched off","the lower leaf surfaces are coated with petroleum jelly"]);
+  return {title:"Potometer: percent change",html:`A shoot's uptake rate is <b>${old} mm/min</b>. After ${cond}, it is <b>${nw} mm/min</b>. What is the percent change? (Use a minus sign for a decrease.)`,ans,unit:"%",dp:0,tol:.6,
+   hints:["Percent change = (new − old) ÷ old × 100.",`new = ${nw}, old = ${old}.`,`(${nw} − ${old}) ÷ ${old} × 100.`],rows:[{l:`(${nw} − ${old}) ÷ ${old} = ${fx((nw-old)/old,3)}`},{ans:`× 100 = ${fxs(ans,0)}%`}],miss:"dividing by the new value instead of the old one.",
+   slips:[[(nw-old)/nw*100,"Divide by the OLD value, not the new one."],[-ans,"Check the sign: a decrease is negative."],[nw/old*100,"That is the new rate as a percent of the old. Subtract 100 to get the change."]],vis:{k:"pot",d:30,t:5,r:null,pct:{old,nw}}}},
+ trans(){const S=[["The air around a plant goes from 40% to 90% humidity.",1,"humid","Humid air shrinks the vapour gradient from leaf to air, so less water evaporates."],["A fan starts blowing across the leaves (soil is wet).",0,"wind","Wind strips away the moist boundary layer, keeping the gradient steep."],["Lights come on in the morning.",0,"light","Light opens stomata (blue-light receptors, K⁺ uptake) and warms the leaves."],["The air warms from 20 °C to 28 °C at the same relative humidity (soil wet).",0,"temp","Warm air holds more vapour, so the leaf-to-air pull increases."],["The plant is sprayed with abscisic acid (ABA).",1,"aba","ABA makes guard cells lose K⁺ and water, so stomata close."],["A clear plastic bag is sealed over the shoot.",1,"humid","The bag fills with vapour, so the gradient shrinks."],["The lower surfaces of the leaves, where most stomata are, are coated with petroleum jelly.",1,"coat","Blocking the stomata stops most water loss."],["Only the upper surfaces of leaves are coated, but nearly all stomata are on the lower surface.",2,"coat","Little water leaves through the waxy upper surface, so blocking it changes little."],["Night falls and the air stays at the same humidity.",1,"light","In darkness stomata close, so transpiration drops."],["The soil dries out severely.",1,"drought","Roots make ABA and leaf water potential falls, so stomata close."],["CO₂ inside the leaf air spaces rises sharply.",1,"co2","High internal CO₂ signals guard cells to close the stomata."],["Half of the leaves are removed from the shoot.",1,"leaves","Fewer leaves means less surface and fewer stomata, so the whole shoot loses less water."],["Dry air from a desert wind replaces still, humid air.",0,"wind","Drier, moving air steepens the gradient on two counts."],["A shade cloth cuts sunlight on a hot day, while the air stays dry.",1,"light","Less light means stomata open less and the leaves stay cooler."]];
+  const s=pick(S);const ans=s[1];return {title:"Predict the transpiration change",html:s[0]+" What happens to the rate of transpiration?",choices:["Transpiration increases","Transpiration decreases","Little or no change"],ans,unit:"",
+   hints:["Transpiration depends on how open the stomata are and how steep the vapour gradient from leaf to air is.",{humid:"Think about how much vapour is already in the air.",wind:"Think about the thin layer of still, moist air next to the leaf.",light:"Think about what light does to guard cells.",temp:"Think about how much vapour warm air can hold.",aba:"Think about what ABA does to guard cell K⁺.",coat:"Think about where the stomata are.",drought:"Think about ABA and leaf water potential.",co2:"Think about the CO₂ cue for stomata.",leaves:"Think about the total leaf area losing water."}[s[2]],s[3]],
+   rows:[{l:"rate depends on: stomatal opening × leaf-to-air vapour gradient"},{l:s[3]},{ans:["Transpiration increases","Transpiration decreases","Little or no change"][ans]}],miss:"forgetting that stomata, not the whole leaf surface, are where most water escapes.",vis:{k:"trans",f:s[2],ans}}}
+};
+const GKEYS=Object.keys(GEN);
+function genOne(k){let q=null;for(let i=0;i<40&&!q;i++){try{q=GEN[k]()}catch(e){console.error(e);q=null}if(q&&!q.choices&&!isFinite(q.ans))q=null}q.kind=k;return q}
+function fmtAns(p,v){if(p.choices)return p.choices[v];return (+v).toFixed(p.dp==null?2:p.dp)}
+function parseAns(s){s=String(s).trim().replace(/[−–]/g,"-").replace(/,/g,"");const m=s.match(/^[-+]?(\d+\.?\d*|\.\d+)/);if(!m)return null;const rest=s.slice(m[0].length);if(/^[\d.]/.test(rest))return null;return parseFloat(m[0])}
+function judge(p,str){if(p.choices){const v=+str;if(str===""||!(v>=0))return {ok:false,kind:"empty"};return v===p.ans?{ok:true}:{ok:false,kind:"choice"}}
+  const v=parseAns(str);if(v==null)return {ok:false,kind:"empty"};if(Math.abs(v-p.ans)<=p.tol)return {ok:true};
+  const sl=(p.slips||[]).find(s=>isFinite(s[0])&&s[1]&&Math.abs(v-s[0])<=Math.max(Math.abs(s[0])*.02,p.tol));if(sl&&Math.abs(sl[0]-p.ans)>p.tol)return {ok:false,kind:"slip",msg:sl[1]};
+  if(Math.abs(v-p.ans)<=Math.abs(p.ans)*.06)return {ok:false,kind:"close"};return {ok:false,kind:"wrong"}}
+function calcMsg(cls,t){const m=$("#calcMsg");m.className="msg show "+cls;m.textContent=t}
+function ansTxt(p){return p.choices?p.choices[p.ans]:fmtAns(p,p.ans)+" "+p.unit}
+function calcNew(){const k=TR.type==="mix"?pick(GKEYS):TR.type;const q=genOne(k);TR.p=q;TR.hint=0;TR.first=true;TR.sol=false;TR.solved=false;TR.pick=null;
+  const rd=q.choices?"Predict first, then watch: pick one answer.":q.dp===0?"Give a whole number.":"Give the number to "+q.dp+" decimal places.";
+  $("#calcProb").innerHTML=`<span class="pt">${q.title}</span>${q.html}<span class="rd">${rd}</span>`;$("#calcUnit").textContent=q.unit;$("#calcAns").value="";
+  $("#calcNumWrap").hidden=!!q.choices;const cb=$("#calcChoices");cb.hidden=!q.choices;cb.innerHTML="";
+  if(q.choices)q.choices.forEach((c,i)=>{const b=document.createElement("button");b.type="button";b.className="opt";b.textContent=c;b.setAttribute("aria-pressed","false");b.onclick=()=>{TR.pick=i;cb.querySelectorAll(".opt").forEach((x,j)=>{x.setAttribute("aria-pressed",String(j===i));x.classList.remove("wrong","right")});calcCheck()};cb.appendChild(b)});
+  $("#calcMsg").className="msg";$("#calcHintBox").hidden=true;$("#calcCap").textContent=q.title+": the picture shows the problem; after you answer, it plays out and the worked solution builds below.";a11yKey=""}
+function calcCheck(){const p=TR.p;const str=p.choices?(TR.pick==null?"":String(TR.pick)):$("#calcAns").value;const j=judge(p,str);
+  if(j.kind==="empty"){calcMsg("info",p.choices?"Pick one of the answers first.":"Type a number in the answer box first.");return}
+  if(p.choices){$("#calcChoices").querySelectorAll(".opt").forEach((x,i)=>{x.classList.toggle("right",j.ok&&i===TR.pick);x.classList.toggle("wrong",!j.ok&&i===TR.pick)})}
+  if(j.ok){const wasFirst=TR.first&&!TR.sol;if(!TR.solved){TR.count++;if(wasFirst){TR.streak++;if(TR.streak>TR.best){TR.best=TR.streak;store.set("best",TR.best)}}}TR.solved=true;calcMsg("good",`✓ Correct: ${ansTxt(p)}. Watch it play out and the worked solution build.`);showSol(false)}
+  else{TR.first=false;TR.streak=0;let msg="Not quite. ";if(j.kind==="slip")msg+=j.msg;else if(j.kind==="close")msg+="Very close. Check your rounding.";else if(j.kind==="choice")msg+=p.hints[2];else msg+="Check the setup. "+p.hints[0];calcMsg("warn",msg)}
+  updCalcMeter();a11yKey=""}
+function showSol(byBtn){if(byBtn&&!TR.solved){TR.streak=0;TR.first=false}TR.sol=true;TR.solT=performance.now();updCalcMeter();a11yKey=""}
+function updCalcMeter(){$("#calcStreak").textContent=TR.streak;$("#calcBest").textContent=TR.best;$("#calcSolved").textContent=TR.count}
+function calcInit(){const sel=$("#calcType");sel.innerHTML=CTYPES.map(c=>`<option value="${c[0]}">${c[1]}</option>`).join("");sel.onchange=()=>{TR.type=sel.value;calcNew()};
+  $("#calcCheck").onclick=calcCheck;$("#calcAns").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();calcCheck()}});
+  $("#calcHint").onclick=()=>{const p=TR.p;const b=$("#calcHintBox");if(TR.hint<p.hints.length)TR.hint++;b.hidden=false;b.innerHTML=p.hints.slice(0,TR.hint).map((h,i)=>`<div><b>Hint ${i+1}:</b> ${h}</div>`).join("")+(TR.hint>=p.hints.length?`<div class="small">That is the whole ladder. Try it, or press Show worked solution.</div>`:"")};
+  $("#calcSol").onclick=()=>{showSol(true);calcMsg("info",`Worked solution: ${ansTxt(TR.p)}. Watch it play out, then try a new problem.`)};$("#calcNew").onclick=calcNew;
+  TR.best=+(store.get("best")||0)}
+/* ---------- trainer drawing ---------- */
+function tvTyped(){const v=parseAns($("#calcAns").value);return v==null||!isFinite(v)?null:v}
+function psiBars(x0,y0,rows,sc,showLast,lastLab,lx){lx=lx||150;const X0=x0;line(X0,y0-6,X0,y0+rows.length*44-10,C["ink-soft"],1.4);txt(X0,y0-14,"0",{size:10.5,mono:true,align:"center",color:C["ink-soft"]});
+  rows.forEach((r,i)=>{const y=y0+i*44;txt(lx,y+12,r[0],{size:13,weight:700});const hide=r[2]&&!showLast;const w=clamp(r[1],-3,3)*sc;if(!hide){rr(Math.min(X0,X0+w),y,Math.max(2,Math.abs(w)),24,4);ctx.fillStyle=r[3]||(r[1]<0?hexA(C.act3,.8):C.good);ctx.fill();txt(X0+(w<0?8:-8),y+12,fxs(r[1])+" MPa",{size:12,weight:700,mono:true,align:w<0?"left":"right"})}else txt(X0+8,y+12,lastLab||"?",{size:12,weight:700,mono:true})})}
+function drawCalc(now){use(S2);const T=now/1000;const p=TR.p;const vs=p.vis;const ok=TR.solved;const el=TR.sol?(now-TR.solT)/1000:0;const play=TR.sol?smooth(clamp(el/3,0,1)):0;const tv=p.choices?null:tvTyped();
+  panelBox(10,10,780,262);
+  const tvs=v=>v==null?"?":String(+(+v).toPrecision(4));
+  if(vs.k==="bars"){const rows=vs.rows.map(r=>[r[0],r[1]]);rows.push(["Ψ = Ψs + Ψp",vs.ans,true,C.accent]);psiBars(420,44,rows,120,TR.sol,"? = Ψs + Ψp");
+    if(tv!=null)label(640,236,"your answer: "+tvs(tv)+" MPa",{size:12.5,weight:700,mono:true,border:ok?C.good:C.accent});txt(30,250,"bars: left of the line is negative, right is positive",{size:11.5,color:C["ink-soft"]})}
+  else if(vs.k==="line"){const X=v=>lerp(80,720,(v+3)/3);line(80,140,720,140,C["ink-soft"],2);for(let i=0;i<=6;i++){const v=-3+i*.5;line(X(v),132,X(v),148,C["ink-soft"],1.5);txt(X(v),164,v.toFixed(1),{size:11.5,mono:true,align:"center",color:C["ink-soft"]})}
+    txt(400,60,"Ψs = −iCRT",{size:22,weight:700,mono:true,align:"center"});txt(400,92,"pure water = 0; more solute → more negative",{size:12.5,align:"center",color:C["ink-soft"]});txt(724,186,"0 = pure water",{size:11,align:"right",color:C["water-ink"]});
+    if(tv!=null&&tv>=-3.2&&tv<=.5){circ(X(clamp(tv,-3,0)),140,9,C.accent,C.ink,1.5);label(X(clamp(tv,-3,0)),112,"you: "+tvs(tv),{size:12,weight:700,mono:true,border:C.accent})}
+    if(TR.sol){circ(X(vs.ans),140,9,C.good,C.ink,1.5);label(X(vs.ans),210,"answer: "+fx(vs.ans)+" MPa",{size:12.5,weight:700,mono:true,border:C.good})}}
+  else if(vs.k==="cells"){[["A",vs.a,vs.A,230],["B",vs.b,vs.B,570]].forEach(c=>{const big=c[1][1]>.3;plantCell(c[3],130,180,140,big?1.03:1,T);label(c[3],46,"cell "+c[0],{size:13,weight:700});
+      txt(c[3],222,"Ψs "+fx(c[1][0])+"  Ψp "+fxs(c[1][1]),{size:12.5,weight:700,mono:true,align:"center"});txt(c[3],244,TR.sol?"Ψ = "+fx(c[2])+" MPa":"Ψ = ?",{size:13,weight:800,mono:true,align:"center",color:C["accent-ink"]})});
+    rr(320,110,100,40,4);ctx.fillStyle=hexA(C.wall,.5);ctx.fill();for(let k=0;k<3;k++){rr(320,116+k*12,100,4,2);ctx.fillStyle=C.cyto;ctx.fill()}txt(400,100,"plasmodesmata",{size:11,align:"center",color:C["ink-soft"]});
+    if(TR.sol&&vs.ans<2){const d=vs.ans===0?1:-1;for(let i=0;i<4;i++){const f=P(T*.6+i/4,1);mol("h2o",d>0?lerp(330,470,f):lerp(470,330,f),120+i*6,7,{rot:i})}arrow(d>0?340:460,170,d>0?460:340,170,C.water,3)}
+    if(TR.sol&&vs.ans===2)txt(400,180,"no net flow",{size:13,weight:700,align:"center",color:C["water-ink"]})}
+  else if(vs.k==="soil"){rr(20,30,760,220,8);ctx.fillStyle=mix(C["soil-fill"],C.soil,.25);ctx.fill();const R=rng(3);for(let i=0;i<22;i++){const x=40+R()*720,y=40+R()*200;if(Math.abs(y-140)<40&&x>200&&x<620)continue;sandGrain(x,y,8+R()*8,i)}
+    rr(200,112,420,56,28);fillStroke(hexA(C.wood,.45),C.wood,2.4);txt(410,140,"root hair cell",{size:12.5,weight:700,align:"center"});
+    label(410,94,"Ψ(root) = "+fx(vs.root[0])+" + "+par(vs.root[1])+" = "+(TR.sol?fx(vs.R):"?"),{size:12,weight:700,mono:true,border:C.wood});label(410,200,"Ψ(soil) = "+fx(vs.sp)+" MPa",{size:12,weight:700,mono:true,border:C.water});
+    if(TR.sol&&vs.ans<2){for(let i=0;i<6;i++){const f=P(T*.5+i/6,1);const x=230+i*65;const y=vs.ans===0?lerp(230,170,f):lerp(170,230,f);mol("h2o",x,y,7,{rot:i})}label(410,236,vs.ans===0?"water moves in":"water moves OUT: the plant loses water",{size:12.5,weight:700,border:vs.ans===0?C.good:C.bad})}}
+  else if(vs.k==="eq"){beaker(60,40,300,210,.85,vs.out===0?C["water-fill"]:mix(C["water-fill"],C.sucrose,.25),{});const v=TR.sol?lerp(.99,1.03,play):.99;plantCell(210,150,170,120,v,T);
+    label(210,30,vs.out===0?"pure water, Ψ = 0":"solution, Ψ = "+fx(vs.out)+" MPa",{size:12,weight:700,border:C.water});
+    if(TR.sol)for(let i=0;i<6;i++){const a=i/6*TAU+.4;const f=P(T*.8+i/6,1);const rr_=lerp(120,90,f);mol("h2o",210+Math.cos(a)*rr_,150+Math.sin(a)*rr_*.7,6,{a:1-play*.8})}
+    psiBars(560,60,[["Ψs",vs.ps],["Ψp",TR.sol?vs.ans*play:0,!TR.sol]],110,true,null,410);txt(560,180,"Ψcell = Ψs + Ψp",{size:12.5,weight:700,mono:true,align:"center"});txt(560,204,TR.sol?"→ "+fx(vs.ps+vs.ans*play)+" MPa":"starts at "+fx(vs.ps)+" MPa",{size:12.5,weight:700,mono:true,align:"center",color:C["accent-ink"]});
+    if(tv!=null)label(560,240,"your Ψp: "+tvs(tv)+" MPa",{size:12.5,weight:700,mono:true,border:ok?C.good:C.accent})}
+  else if(vs.k==="pot"){const d=vs.d||30,t=vs.t||5;const m=TR.sol?play:P(T,6)*.3;const pos=80-d*m*.9;potometer(40,70,420,pos/100,T,{scale:10});txt(260,252,TR.sol?d+" mm in "+t+" min":"bubble moves toward the shoot",{size:12.5,weight:700,align:"center"});
+    panelBox(520,30,250,210,{fill:hexA(C.paper,.95)});if(vs.pct){txt(536,56,"before vs after",{size:12.5,weight:700});const mxp=Math.max(vs.pct.old,vs.pct.nw)*1.15;vbar(560,80,50,130,vs.pct.old/mxp,C.vapor);vbar(660,80,50,130,TR.sol?vs.pct.nw/mxp:0,C.vapor);txt(585,226,vs.pct.old+"",{size:12,mono:true,align:"center"});txt(685,226,TR.sol?vs.pct.nw+"":"?",{size:12,mono:true,align:"center"})}
+    else{txt(536,56,"capillary",{size:12.5,weight:700});if(vs.r){circ(645,130,52,hexA(C["water-fill"],1),C["glass-edge"],2);line(645,130,697,130,C.bad,2);txt(671,120,"r = "+vs.r+" mm",{size:11.5,weight:700,mono:true,align:"center"});txt(645,206,"area = πr²",{size:12.5,weight:700,mono:true,align:"center"})}else txt(645,140,"rate = distance ÷ time",{size:13,weight:700,mono:true,align:"center"})}
+    if(tv!=null)label(260,20+0,"your answer: "+tvs(tv)+" "+p.unit,{size:12,weight:700,mono:true,border:ok?C.good:C.accent})}
+  else if(vs.k==="trans"){const before=.5,after=TR.sol?[.5+.35*play,.5-.35*play,.5][vs.ans]:null;leafBlade(60,140,300,0,{w:.24});
+    const rate=after==null?before:after;const n=Math.round(12*rate);for(let i=0;i<n;i++){const f=P(T*.35+i/n,1);mol("h2o",110+(i*37)%220,lerp(170,250,f),6,{a:1-f,rot:i})}
+    const ic={humid:()=>{for(let i=0;i<14;i++)mol("h2o",40+(i*53)%340,40+(i*29)%60,4,{a:.5})},wind:()=>windLines(50,50,320,.6,T),light:()=>sunIcon(380,60,16,T),temp:()=>thermo(400,120,70,.7,{col:C.heat}),aba:()=>nut(380,60,"ABA",C.aba,{r:10,fs:10}),coat:()=>{rr(60,150,300,8,3);ctx.fillStyle=hexA(C.lipid,.7);ctx.fill()},drought:()=>{for(let i=0;i<4;i++)poly([[60+i*80,240],[70+i*80,254],[64+i*80,266]],C["soil-d"],1.6)},co2:()=>{for(let i=0;i<5;i++)mol("co2",120+i*50,140,7)},leaves:()=>{crossMark(300,140,10,C.bad)}}[vs.f];if(ic)ic();
+    panelBox(480,30,290,224);txt(496,54,"transpiration rate",{size:12.5,weight:700});vbar(530,80,60,140,before,C.vapor);txt(560,236,"before",{size:12,align:"center"});
+    if(after!=null)vbar(650,80,60,140,after,vs.ans===0?C.good:vs.ans===1?C.warn:C.accent);else{rr(650,80,60,140,3);ctx.fillStyle=hexA(C.sunk,.85);ctx.fill();txt(680,150,"?",{size:24,weight:700,align:"center"})}txt(680,236,"after",{size:12,align:"center"})}
+  if(ok){circ(764,30,13,C.good);tick(764,30,7,"#ffffff")}
+  const WY=280;if(TR.sol){const per=Math.max(8,1.2+p.rows.length*1.8+3);wk(10,WY,780,310,{q:"",rows:p.rows,miss:p.miss},Math.min(el,per-.01),{per,cfs:15,dt:1.8,t0:.6,rowGap:18,cy:30,title:"Worked solution",missFull:true,lfs:14.5,lh:18})}
+  else{panelBox(10,WY,780,310,{fill:hexA(C.paper,.96)});title(22,WY+18,"Worked solution",C["accent-ink"]);wrapText("The worked solution builds here after a correct answer, or when you press Show worked solution. A common mistake is flagged at the end.",24,WY+50,740,18,{size:13,color:C["ink-soft"]})}}
+function calcA11y(){const p=TR.p;const v=p.choices?(TR.pick==null?"not chosen":p.choices[TR.pick]):($("#calcAns").value.trim()||"not entered");const lab=`Practice problem, ${p.title}. Your answer ${v}.${TR.solved?" Correct.":""}`;
+  const vk={bars:"horizontal bars for the solute potential and pressure potential, with the total water potential hidden until you answer",line:"a water potential number line from −3 to 0 megapascals with your answer marked",cells:"two neighbouring plant cells A and B joined by plasmodesmata, each labelled with its solute and pressure potential",soil:"a root hair cell lying in soil, labelled with its water potential and the soil's",eq:"a flaccid plant cell in a beaker of solution, with bars for its solute and pressure potential",pot:"a potometer with a leafy shoot and an air bubble in a capillary tube with a millimetre scale",trans:"a leaf giving off water vapour, with a before and after transpiration rate bar"}[p.vis.k];
+  return [lab,`The picture shows ${vk}. ${TR.sol?"The answer now plays out in the picture, and below it the worked solution builds step by step, ending with "+ansTxt(p)+" in a green box.":"The outcome and the worked solution stay hidden until you answer or ask for the solution."}`]}
+/* ================= PART 3: match-up game ================= */
+function binSVG(k){const sv=s=>`<svg viewBox="0 0 56 46" aria-hidden="true">${s}</svg>`;
+  const T_=(x,y,t,sz,c)=>`<text x="${x}" y="${y}" font-size="${sz||10}" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-weight="700" fill="${c||"var(--ink)"}">${t}</text>`;
+  const cells='<rect x="2" y="4" width="52" height="38" fill="var(--wall)" opacity=".5"/><rect x="5" y="7" width="20" height="32" rx="4" fill="var(--cyto)" stroke="var(--lipid)" stroke-width="2"/><rect x="31" y="7" width="20" height="32" rx="4" fill="var(--cyto)" stroke="var(--lipid)" stroke-width="2"/>';
+  const tile=(t,c)=>sv(`<rect x="10" y="4" width="36" height="38" rx="5" fill="${c}" fill-opacity=".22" stroke="${c}" stroke-width="2"/>`+T_(28,29,t,15));
+  switch(k){
+  case "apo":return sv(cells+'<path d="M2 23 H28 V10 M28 36 V23 H54" stroke="var(--gold)" stroke-width="3" fill="none"/>');
+  case "sym":return sv(cells+'<rect x="24" y="20" width="8" height="5" fill="var(--cyto)"/><path d="M8 23 H48" stroke="var(--act5)" stroke-width="3"/>');
+  case "tm":return sv(cells+'<path d="M2 23 H54" stroke="var(--prot)" stroke-width="3"/><circle cx="5" cy="23" r="3" fill="none" stroke="var(--prot)"/><circle cx="25" cy="23" r="3" fill="none" stroke="var(--prot)"/><circle cx="31" cy="23" r="3" fill="none" stroke="var(--prot)"/><circle cx="51" cy="23" r="3" fill="none" stroke="var(--prot)"/>');
+  case "N":return tile("N","var(--nh4)");case "P":return tile("P","var(--carb)");case "K":return tile("K","var(--k)");case "Mg":return tile("Mg","var(--leaf)");case "Fe":return tile("Fe","var(--bad)");case "Ca":return tile("Ca","var(--metal)");
+  case "xyl":return sv('<rect x="18" y="3" width="20" height="40" rx="5" fill="var(--water)" fill-opacity=".2" stroke="var(--xylem)" stroke-width="2"/><path d="M20 12 h16 M20 20 h16 M20 28 h16 M20 36 h16" stroke="var(--xylem)" stroke-width="1.5"/><path d="M45 36 V10 M41 14 L45 9 L49 14" stroke="var(--xylem)" stroke-width="2" fill="none"/>');
+  case "phl":return sv('<rect x="18" y="3" width="20" height="40" rx="3" fill="var(--phloem)" fill-opacity=".15" stroke="var(--phloem)" stroke-width="2"/><path d="M18 17 h20 M18 31 h20" stroke="var(--phloem-ink)" stroke-width="2.4"/><path d="M45 12 V36 M41 32 L45 37 L49 32 M41 16 L45 11 L49 16" stroke="var(--phloem)" stroke-width="2" fill="none"/>');
+  case "both":return sv('<rect x="6" y="3" width="18" height="40" rx="5" fill="var(--water)" fill-opacity=".2" stroke="var(--xylem)" stroke-width="2"/><rect x="32" y="3" width="18" height="40" rx="3" fill="var(--phloem)" fill-opacity=".15" stroke="var(--phloem)" stroke-width="2"/>');
+  case "open":return sv('<ellipse cx="18" cy="23" rx="10" ry="19" fill="var(--leaf)" stroke="var(--leaf-d)"/><ellipse cx="38" cy="23" rx="10" ry="19" fill="var(--leaf)" stroke="var(--leaf-d)"/><ellipse cx="28" cy="23" rx="4" ry="12" fill="var(--ink)" fill-opacity=".6"/>');
+  case "close":return sv('<ellipse cx="21" cy="23" rx="8" ry="19" fill="var(--leaf)" stroke="var(--leaf-d)"/><ellipse cx="35" cy="23" rx="8" ry="19" fill="var(--leaf)" stroke="var(--leaf-d)"/><path d="M28 6 V40" stroke="var(--ink)" stroke-width="1.5"/>');
+  }return ""}
+const SROUNDS=[
+{name:"Route to description",goal:"Match each description to the short-distance route it describes.",
+ bins:[["apo","Apoplastic route"],["sym","Symplastic route"],["tm","Transmembrane route"]],
+ cards:[["Travels only through cell walls and the spaces between cells","apo","Apoplastic: it stays outside every plasma membrane."],
+  ["Is blocked at the endodermis by the Casparian strip","apo","Apoplastic: the waxy strip seals the walls, so this route stops there."],
+  ["Includes the hollow insides of dead xylem cells","apo","Apoplastic: dead xylem lumens are outside any living membrane."],
+  ["Crosses a plasma membrane once, then stays in the cytosol","sym","Symplastic: after one crossing, it moves cell to cell inside."],
+  ["Moves from cell to cell through plasmodesmata","sym","Symplastic: plasmodesmata join neighbouring cytoplasms."],
+  ["Continues straight past the Casparian strip without a new membrane crossing","sym","Symplastic: it is already inside the living cells, so the strip does not stop it."],
+  ["Crosses plasma membranes again and again, cell after cell","tm","Transmembrane: out of one cell, across the wall, into the next."],
+  ["May also cross the tonoplast into and out of vacuoles","tm","Transmembrane: it can pass through vacuoles on the way."],
+  ["Depends heavily on aquaporins in every membrane it meets","tm","Transmembrane: each membrane crossing is sped up by aquaporins."]]},
+{name:"Nutrient to role",goal:"Match each job in the plant to the essential element that does it.",
+ bins:[["N","Nitrogen (N)"],["P","Phosphorus (P)"],["K","Potassium (K)"],["Mg","Magnesium (Mg)"],["Fe","Iron (Fe)"],["Ca","Calcium (Ca)"]],
+ cards:[["Part of every amino acid and protein","N","Nitrogen: amino acids contain an amino group."],
+  ["Part of nucleic acids and chlorophyll, and the nutrient most often in short supply","N","Nitrogen: it is in DNA bases and chlorophyll rings; crops need lots of it."],
+  ["Part of ATP and the backbone of DNA and RNA","P","Phosphorus: phosphate groups carry energy and link nucleotides."],
+  ["Part of phospholipids in every membrane","P","Phosphorus: phospholipids have a phosphate head."],
+  ["The main cation that opens stomata when it enters guard cells","K","Potassium: K⁺ uptake lowers guard cell Ψ, so water follows."],
+  ["Keeps osmotic balance and activates many enzymes","K","Potassium: K⁺ is the most abundant cation in plant cytoplasm."],
+  ["The atom at the centre of each chlorophyll molecule","Mg","Magnesium: Mg²⁺ sits in the middle of the chlorophyll ring."],
+  ["Needed by enzymes that use ATP","Mg","Magnesium: ATP is usually bound to Mg²⁺ when enzymes use it."],
+  ["Part of cytochromes that carry electrons","Fe","Iron: Fe in cytochromes accepts and passes electrons."],
+  ["Needed to make chlorophyll, though not part of it","Fe","Iron: chlorophyll synthesis needs Fe-containing enzymes."],
+  ["Holds pectin together in cell walls","Ca","Calcium: Ca²⁺ cross-links pectins in the middle lamella."],
+  ["Acts as a second messenger in cell signalling, as in ABA closing stomata","Ca","Calcium: a rise in cytosolic Ca²⁺ relays signals."]]},
+{name:"Deficiency to nutrient",goal:"Each card describes a deficiency. Which missing element fits best? Remember: mobile nutrients show up in old leaves first, immobile ones in young leaves.",
+ bins:[["N","Nitrogen (N)"],["P","Phosphorus (P)"],["K","Potassium (K)"],["Mg","Magnesium (Mg)"],["Fe","Iron (Fe)"],["Ca","Calcium (Ca)"]],
+ cards:[["Older leaves turn evenly yellow, starting at the tips; the plant is pale and small","N","Nitrogen: mobile, so old leaves give theirs up and yellow first."],
+  ["The crop responds best to a fertilizer high in the first number of the N-P-K label","N","Nitrogen is the first number on fertilizer labels."],
+  ["Stunted plant with dark green or purplish older leaves","P","Phosphorus: shortage often shows as purple pigment in older leaves."],
+  ["Poor root growth and slow flowering in young seedlings","P","Phosphorus: needed for ATP and nucleic acids in fast-growing roots."],
+  ["Older leaves get yellow then brown, scorched edges; stems are weak","K","Potassium: mobile; marginal scorch on old leaves is typical."],
+  ["Plants wilt easily because guard cells and cells cannot hold water well","K","Potassium: K⁺ drives turgor in guard cells and other cells."],
+  ["Older leaves yellow between the veins while the veins stay green","Mg","Magnesium: mobile, and central to chlorophyll, so old leaves lose green between veins."],
+  ["Youngest leaves yellow between the veins; older leaves stay green","Fe","Iron: immobile, so the newest leaves suffer first."],
+  ["Common in alkaline (high pH) soils, where this metal is hard to absorb","Fe","Iron becomes insoluble at high pH, causing lime-induced chlorosis."],
+  ["Growing tips die and young leaves are hooked or deformed","Ca","Calcium: immobile and needed for new cell walls, so growing tips fail."],
+  ["Tomato fruits get dark, sunken patches at the blossom end","Ca","Calcium: blossom-end rot comes from poor calcium supply to the fruit."]]},
+{name:"Xylem, phloem or both",goal:"Sort each feature into xylem, phloem, or both.",
+ bins:[["xyl","Xylem"],["phl","Phloem"],["both","Both"]],
+ cards:[["Conducting cells are dead and hollow at maturity","xyl","Xylem: tracheids and vessel elements are dead when they work."],
+  ["Sap is under negative pressure (tension) on a sunny day","xyl","Xylem: transpiration pulls the sap."],
+  ["Carries water and minerals upward from the roots","xyl","Xylem moves water and minerals up."],
+  ["Can be blocked by cavitation","xyl","Xylem: gas bubbles break the column under tension."],
+  ["Conducting cells are alive but lack a nucleus","phl","Phloem: sieve-tube elements are living but have lost their nuclei."],
+  ["Sap is under positive pressure","phl","Phloem: loading sugar draws water in and builds pressure."],
+  ["Moves sugar from sources to sinks, up or down","phl","Phloem: direction depends on where sources and sinks are."],
+  ["Sap oozes from a cut aphid stylet","phl","Phloem: aphids feed from sieve tubes, and the sap is pushed out."],
+  ["Moves materials by bulk flow driven by a pressure difference","both","Both: xylem by tension, phloem by positive pressure, but both are bulk flow."],
+  ["Found together in every vascular bundle and leaf vein","both","Both: veins hold xylem and phloem side by side."]]},
+{name:"Opens or closes stomata",goal:"Sort each change by its effect on stomata.",
+ bins:[["open","Opens stomata"],["close","Closes stomata"]],
+ cards:[["Blue light hits the guard cells at dawn","open","Blue-light receptors switch on proton pumps and K⁺ uptake."],
+  ["K⁺ flows into the guard cells","open","K⁺ lowers Ψ, water follows, the guard cells swell and bow apart."],
+  ["Photosynthesis lowers CO₂ in the leaf air spaces","open","Low internal CO₂ signals the stomata to open."],
+  ["The circadian clock signals morning, even in darkness","open","The internal clock times opening for a while without light."],
+  ["Proton pumps in guard cells speed up","open","Pumping H⁺ out makes the inside negative, pulling K⁺ in."],
+  ["Abscisic acid (ABA) reaches the guard cells","close","ABA triggers K⁺ and anion loss, so turgor drops."],
+  ["The soil dries out","close","Dry roots make ABA, and the leaf loses water."],
+  ["K⁺ and Cl⁻ flow out of the guard cells","close","Losing solute raises Ψ, water leaves and the guard cells go limp."],
+  ["CO₂ in the leaf air spaces rises high","close","High internal CO₂ closes stomata."],
+  ["Night falls","close","Without light, guard cells lose K⁺ and the stomata close."]]}
+];
+const SG={r:0,placed:{},mist:0,sel:null,t0:0,timer:null,hint:null,doneRounds:{}};
+function cardBins(c){return Array.isArray(c[1])?c[1]:[c[1]]}
+function sRoundsUI(){$("#sRounds").innerHTML=SROUNDS.map((r,i)=>`<button type="button" class="round" aria-pressed="${i===SG.r}" data-i="${i}">Round ${i+1}: ${r.name}${SG.doneRounds[i]?`<span class="ok" aria-label="${SG.doneRounds[i]} stars">${"★".repeat(SG.doneRounds[i])}</span>`:""}</button>`).join("");
+  $("#sRounds").querySelectorAll("button").forEach(b=>b.onclick=()=>sLoad(+b.dataset.i))}
+function sLoad(i){SG.r=i;SG.placed={};SG.mist=0;SG.sel=null;SG.hint=null;SG.t0=Date.now();const R=SROUNDS[i];SG.order=shuffle(R.cards.map((c,k)=>k));
+  $("#sN").textContent=`Round ${i+1} of ${SROUNDS.length}`;$("#sTitle").textContent=R.name;$("#sGoal").textContent=R.goal;
+  const bins=$("#sBins");bins.innerHTML="";R.bins.forEach(b=>{const d=document.createElement("div");d.className="bin";d.dataset.k=b[0];
+    d.innerHTML=`<button type="button" class="binhead" data-k="${b[0]}">${binSVG(b[0])}<span>${b[1]}</span></button><div class="binitems"></div>`;
+    d.querySelector(".binhead").onclick=()=>{if(SG.sel!=null)sDrop(SG.sel,b[0]);else sMsg("info","Pick a card first, then tap a box.")};bins.appendChild(d)});
+  const best=store.get("best-"+i);$("#sBest").textContent=best?`Best for this round: ${"★".repeat(+best)}`:"";
+  $("#sMsg").className="msg";sRoundsUI();sRender();sTimerUI();a11yKey=""}
+function sRender(){const R=SROUNDS[SG.r];const pool=$("#sPool");pool.innerHTML="";
+  SG.order.forEach(k=>{if(SG.placed[k])return;const c=R.cards[k];const b=document.createElement("button");b.type="button";b.className="scard"+(SG.hint===k?" hinted":"");b.innerHTML=(c[3]||"")+"<span>"+c[0]+"</span>";b.dataset.k=k;
+    b.setAttribute("aria-pressed",SG.sel===k);b.onclick=e=>{if(b.dataset.dragged){delete b.dataset.dragged;return}SG.sel=SG.sel===k?null:k;sRender();const nb=pool.querySelector(`[data-k="${k}"]`);if(nb)nb.focus()};
+    b.addEventListener("pointerdown",e=>sDragStart(e,b,k));pool.appendChild(b)});
+  if(!pool.children.length)pool.innerHTML='<span class="small">All cards sorted.</span>';
+  document.querySelectorAll("#sBins .bin").forEach(d=>{const items=d.querySelector(".binitems");items.innerHTML="";d.classList.toggle("hintbin",SG.hint!=null&&cardBins(R.cards[SG.hint]).indexOf(d.dataset.k)>=0);
+    R.cards.forEach((c,k)=>{if(SG.placed[k]===d.dataset.k){const s=document.createElement("div");s.className="scard placed";s.innerHTML=(c[3]||"")+"<span>✓ "+c[0]+"</span>";items.appendChild(s)}})});
+  const n=Object.keys(SG.placed).length,tot=R.cards.length;$("#sStars").textContent=n===tot?"★".repeat(sStars())+"☆".repeat(3-sStars()):"";$("#sStars").setAttribute("aria-label",n===tot?sStars()+" of 3 stars":"Stars appear when the round is done")}
+function sStars(){return SG.mist===0?3:SG.mist<=2?2:1}
+function sMsg(cls,t){const m=$("#sMsg");m.className="msg show "+cls;m.textContent=t}
+function sDrop(k,bin){const R=SROUNDS[SG.r];const c=R.cards[k];SG.sel=null;SG.hint=null;
+  if(cardBins(c).indexOf(bin)>=0){SG.placed[k]=bin;sMsg("good","✓ "+c[0]+": "+c[2])}else{SG.mist++;const nm=R.bins.find(b=>b[0]===bin)[1];sMsg("warn",`Not quite. "${c[0]}" does not go in ${nm}. Hint: ${c[2].split(":")[0].split(".")[0]}.`)}
+  sRender();a11yKey="";if(Object.keys(SG.placed).length===R.cards.length)sFinish();else{const f=$("#sPool .scard");if(f&&document.activeElement===document.body)f.focus()}}
+function sFinish(){const st=sStars();SG.doneRounds[SG.r]=Math.max(SG.doneRounds[SG.r]||0,st);const best=+(store.get("best-"+SG.r)||0);if(st>best)store.set("best-"+SG.r,st);
+  const tm=!$("#sRelaxed").checked?` Time: ${fmt((Date.now()-SG.t0)/1000)}.`:"";sMsg("good",`Round complete with ${SG.mist} ${SG.mist===1?"mistake":"mistakes"}: ${st} of 3 stars.${tm} `+(SG.r<SROUNDS.length-1?"Press Next round when you are ready.":"That was the last round. Well done."));sRoundsUI();sRender()}
+let drag=null;
+function sDragStart(e,b,k){if(e.button>0)return;const r=b.getBoundingClientRect();drag={k,b,sx:e.clientX,sy:e.clientY,dx:e.clientX-r.left,dy:e.clientY-r.top,g:null,over:null,id:e.pointerId};
+  window.addEventListener("pointermove",sDragMove);window.addEventListener("pointerup",sDragEnd);window.addEventListener("pointercancel",sDragEnd)}
+function sDragMove(e){if(!drag||e.pointerId!==drag.id)return;if(!drag.g){if(Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)<6)return;const g=drag.b.cloneNode(true);g.classList.add("ghost");g.removeAttribute("id");g.setAttribute("aria-hidden","true");g.tabIndex=-1;g.style.width=drag.b.offsetWidth+"px";document.body.appendChild(g);drag.g=g;drag.b.style.opacity=".35"}
+  e.preventDefault();drag.g.style.left=(e.clientX-drag.dx)+"px";drag.g.style.top=(e.clientY-drag.dy)+"px";
+  const el=document.elementFromPoint(e.clientX,e.clientY);const bin=el&&el.closest?el.closest(".bin"):null;document.querySelectorAll(".bin.over").forEach(x=>x!==bin&&x.classList.remove("over"));if(bin)bin.classList.add("over");drag.over=bin}
+function sDragEnd(e){if(!drag)return;window.removeEventListener("pointermove",sDragMove);window.removeEventListener("pointerup",sDragEnd);window.removeEventListener("pointercancel",sDragEnd);
+  const d=drag;drag=null;document.querySelectorAll(".bin.over").forEach(x=>x.classList.remove("over"));if(!d.g)return;d.g.remove();d.b.style.opacity="";d.b.dataset.dragged="1";
+  if(d.over)sDrop(d.k,d.over.dataset.k);else sRender()}
+$("#sHint").onclick=()=>{const R=SROUNDS[SG.r];const k=SG.sel!=null?SG.sel:SG.order.find(k=>!SG.placed[k]);if(k==null){sMsg("info","Everything is sorted.");return}SG.hint=k;
+  const bn=cardBins(R.cards[k]).map(b=>R.bins.find(x=>x[0]===b)[1]).join(" or ");sMsg("info",`Hint: "${R.cards[k][0]}" goes in the glowing box (${bn}).`);sRender()};
+$("#sShow").onclick=()=>{const R=SROUNDS[SG.r];R.cards.forEach((c,k)=>{if(!SG.placed[k])SG.placed[k]=cardBins(c)[0]});SG.mist=Math.max(SG.mist,3);sMsg("info","All cards placed. Read each box to see why they belong there.");sRender();sFinish()};
+$("#sShuffle").onclick=()=>sLoad(SG.r);$("#sNext").onclick=()=>sLoad((SG.r+1)%SROUNDS.length);
+function sTimerUI(){const relaxed=$("#sRelaxed").checked;$("#sTimer").hidden=relaxed;clearInterval(SG.timer);if(!relaxed){SG.timer=setInterval(()=>{if(Object.keys(SG.placed).length<SROUNDS[SG.r].cards.length)$("#sTimer").textContent=fmt((Date.now()-SG.t0)/1000)},500)}}
+$("#sRelaxed").onchange=()=>{SG.t0=Date.now();sTimerUI()};
+function sortA11y(){const R=SROUNDS[SG.r];const n=Object.keys(SG.placed).length;
+  return [null,`Round ${SG.r+1}, ${R.name}. ${n} of ${R.cards.length} cards sorted. Each box has a small drawing and a name: `+R.bins.map(b=>b[1]).join(", ")+`. Cards still to sort: `+(SG.order.filter(k=>!SG.placed[k]).map(k=>R.cards[k][0]).join(", ")||"none")+"."]}
+/* ================= PART 4: biology in the real world ================= */
+function maize(x,gy,h,roll,T){line(x,gy,x+Math.sin(T+x)*2,gy-h,C.stem,4);for(let i=0;i<5;i++){const y=gy-h*(.2+.15*i);const sd=i%2?1:-1;const L=h*.45;ctx.save();ctx.translate(x,y);ctx.scale(sd,1);ctx.rotate(-.5+roll*.25);
+  ctx.beginPath();ctx.moveTo(0,0);ctx.quadraticCurveTo(L*.5,-L*.25,L,L*.1);ctx.quadraticCurveTo(L*.5,-L*.25*(1-roll*.85)+L*.08*(1-roll),0,4);ctx.closePath();fillStroke(mix(C.leaf,C.wood,roll*.35),C["leaf-d"],1.2);ctx.restore()}
+  rr(x+2,gy-h*.55,8,20,4);fillStroke(C.gold,hexA(C.ink,.4),1)}
+function rainDrops(x,y,w,h,T,n){for(let i=0;i<n;i++){const f=P(T*1.2+i/n*3.7,1);const xx=x+(i*53)%w;const yy=y+f*h;line(xx,yy,xx-3,yy+9,hexA(C.water,.8),1.6)}}
+function fishSil(x,y,s,col,dead){ctx.save();ctx.translate(x,y);if(dead)ctx.rotate(Math.PI);ell(0,0,s,s*.42,0,col,hexA(C.ink,.5),1.2);ctx.beginPath();ctx.moveTo(-s*.9,0);ctx.lineTo(-s*1.5,-s*.4);ctx.lineTo(-s*1.5,s*.4);ctx.closePath();fillStroke(col,hexA(C.ink,.5),1.2);circ(s*.55,-s*.08,s*.09,C.ink);ctx.restore()}
+const LIFE=[
+{name:"Wilting maize in a drought",who:"Scenario 1 · the farm",
+ story:"In a dry summer, a farmer sees her maize leaves roll into tight tubes by early afternoon and unroll again overnight. An agronomist measures leaf water potential every few hours for one day in an irrigated plot and in a plot that has had no rain for three weeks.",
+ cap:"Maize in a drought plot rolls its leaves at midday. The graph shows leaf Ψ over one day in both plots.",
+ desc:"On the left, two rows of maize plants stand in soil: irrigated plants in dark moist soil keep flat leaves, while drought plants in pale cracked soil roll their leaves into tubes as a clock moves toward midday and unroll them at night. On the right, a line graph plots leaf water potential from midnight to midnight. The irrigated line, in blue, starts near minus 0.3 megapascals before dawn, dips to about minus 1.2 in the early afternoon, and recovers by evening. The drought line, dashed in orange, starts near minus 1.0, dips to about minus 2.1 in the early afternoon, and recovers only to about minus 1.0. A red dashed line at minus 1.6 is labelled leaves roll below this.",
+ draw(T){const hr=P(T,14)*24;const dip=h=>h>7&&h<20?Math.pow(Math.sin((h-7)/13*Math.PI),1.3):0;const irr=h=>-.3-.9*dip(h),dro=h=>-1.0-1.1*dip(h);
+   panelBox(10,10,360,480);levelTag(22,26,"org");skySoil(16,40,348,444,260,{wet:.9,seed:3});ctx.save();ctx.beginPath();ctx.rect(16,370,348,114);ctx.clip();ctx.fillStyle=hexA(C.sand,.5);ctx.fillRect(16,370,348,114);for(let i=0;i<6;i++)poly([[30+i*56,380],[42+i*56,404],[36+i*56,430]],C["soil-d"],1.6);ctx.restore();
+   txt(26,58,"irrigated",{size:12,weight:700});for(let i=0;i<4;i++)maize(60+i*80,260,150,0,T);
+   line(16,370,364,370,C["soil-d"],2);txt(26,300,"no rain for 3 weeks",{size:12,weight:700});const roll=clamp((-1.6-dro(hr))/.4,0,1);for(let i=0;i<4;i++)maize(60+i*80,370,60,roll,T);
+   clockFace(320,80,24,hr);txt(320,118,String(Math.floor(hr)).padStart(2,"0")+":00",{size:11.5,weight:700,mono:true,align:"center"});
+   panelBox(380,10,410,480);levelTag(392,26,"data");const G=graph({x:440,y:70,w:320,h:340,x0:0,x1:24,y0:-2.4,y1:0,xt:[0,6,12,18,24],xf:v=>v+":00",yt:[-2,-1.5,-1,-.5,0],yf:v=>v.toFixed(1),grid:true,title:"Leaf water potential (MPa)",xl:"time of day"});
+   line(G.x,G.Y(-1.6),G.x+G.w,G.Y(-1.6),C.bad,1.4,[6,4]);txt(G.x+G.w-4,G.Y(-1.6)-10,"leaves roll below this",{size:11,weight:700,align:"right",color:C.bad});
+   curve(G,irr,0,24,C.water,2.8);curve(G,dro,0,24,C.carb,2.8,[7,4]);gdot(G,hr,irr(hr),C.water,null,{r:5});gdot(G,hr,dro(hr),C.carb,null,{r:5});
+   txt(G.x+6,G.Y(-.3)-14,"irrigated",{size:11.5,weight:700,color:C["water-ink"]});txt(G.x+6,G.Y(-1.0)+16,"drought (dashed)",{size:11.5,weight:700,color:C["carb-ink"]})},
+ qs:[{q:"Read the graph. At what time is leaf water potential lowest in both plots, and why?",opts:[["In the early afternoon, when transpiration is fastest and pulls hardest on the xylem",1,"Right. Strong sun, warm dry air and open stomata make transpiration peak in early afternoon, so leaf Ψ falls most then."],["Around midnight, because there is no light for photosynthesis",0,"At night stomata close and the plant rehydrates, so leaf Ψ rises toward the soil's value."],["At dawn, because the plants have used up all their water overnight",0,"Predawn is when leaf Ψ is highest; the plant has refilled from the soil overnight."],["It never changes; only the plots differ",0,"Both lines dip strongly in the middle of the day."]]},
+  {q:"Before dawn, the drought plot's leaves are at −1.0 MPa and the irrigated plot's at −0.3 MPa. What does predawn leaf Ψ mainly tell the agronomist?",opts:[["How fast the plant was transpiring at noon",0,"Predawn values are measured when transpiration is near zero."],["How much water the soil can still supply, because overnight the leaf comes close to the soil's Ψ",1,"Correct. With stomata closed overnight, water flows in until the leaf is near the soil's water potential."],["How much sugar the leaves made the day before",0,"Water potential is about water, not stored sugar."],["Nothing, because leaves have no water potential at night",0,"Every tissue has a water potential at all times."]]},
+  {q:"The drought plants close their stomata and roll their leaves every afternoon. What is the main cost to the farmer?",opts:[["The leaves will freeze",0,"Rolling and stomatal closure do not cause freezing."],["Water use rises sharply",0,"Closing stomata and rolling leaves both reduce water loss."],["Less CO₂ enters, so photosynthesis and grain yield fall",1,"Right. The same pores that lose water let CO₂ in, so saving water costs growth."],["The roots stop absorbing all minerals for the season",0,"Mineral uptake slows with less water flow, but it does not stop for the season."]]}]},
+{name:"Nitrogen fertilizer runoff",who:"Scenario 2 · the watershed",
+ story:"A farm spreads a large dose of ammonium nitrate fertilizer just before a week of heavy rain. Downstream, a lake turns bright green with algae, and fish die when the algae later decompose. Soil tests afterward show plenty of calcium and potassium still in the field, but very little nitrate.",
+ cap:"Rain washes nitrate down through the soil and into a stream; the lake downstream blooms with algae.",
+ desc:"Rain falls on a sloping field of young crops. Below the surface, a soil cross section shows rust-coloured clay particles with minus signs holding pink K+ and grey Ca2+ ions in place, while teal nitrate ions flow down with blue water past the roots and sideways into a stream. The stream runs right into a lake that gradually turns green as algae dots multiply. A fish swims in the lake at first; later a second fish floats upside down near the bottom, labelled low oxygen.",
+ draw(T){const t=P(T,16)*16;panelBox(10,10,780,480);levelTag(22,26,"org");ctx.save();rr(14,40,772,446,8);ctx.clip();ctx.fillStyle=C.sky;ctx.fillRect(14,40,772,140);
+   ctx.beginPath();ctx.moveTo(14,150);ctx.lineTo(520,230);ctx.lineTo(786,230);ctx.lineTo(786,486);ctx.lineTo(14,486);ctx.closePath();ctx.fillStyle=mix(C["soil-fill"],C.soil,.3);ctx.fill();
+   for(let i=0;i<10;i++){const x=40+i*46,y=150+(x-14)*80/506;grass(x,y,22,0)}rainDrops(20,50,500,120,T,40);
+   for(let i=0;i<5;i++)clayPlate(80+i*80,250+i*12,46,10,.16);for(let i=0;i<5;i++){mol(i%2?"k":"ca",70+i*80,236+i*12,6.5)}
+   for(let i=0;i<10;i++){const f=P(T*.12+i/10,1);const x=40+(i*47)%420+f*120,y=200+f*180+(i%3)*10;nut(x,Math.min(y,420),"NO₃⁻",C.no3,{r:8,fs:8.5})}
+   ctx.fillStyle=hexA(C.water,.55);ctx.fillRect(520,226,266,30);const bloom=smooth(clamp((t-2)/7,0,1));rr(560,250,226,236,0);ctx.fillStyle=mix(hexA(C.water,.6),C.algae,bloom*.7);ctx.fill();
+   for(let i=0;i<Math.round(40*bloom);i++){const R=rng(i+5);circ(570+R()*200,260+R()*210,2.2,C.algae)}
+   fishSil(650,330,18,C.carb,false);if(t>9)fishSil(700,440,16,C.metal,true);ctx.restore();
+   label(260,470,"nitrate leaches down with water",{size:12,weight:700,border:C.no3});label(240,330-60,"K⁺ and Ca²⁺ held on clay",{size:11.5,weight:700,border:C.clay});label(670,214,"stream",{size:11.5,weight:700,border:C.water});
+   label(670,300-20,bloom>.5?"algal bloom":"lake",{size:12,weight:700,border:C.algae});if(t>9)label(700,410,"low oxygen",{size:11.5,weight:700,border:C.bad})},
+ qs:[{q:"Why did nitrate wash out of the field while K⁺ and Ca²⁺ stayed?",opts:[["Nitrate is negatively charged, so the negative clay and humus particles do not hold it",1,"Right. Cations stick to the negative soil particles; anions like nitrate stay dissolved and move with the water."],["Nitrate is a gas and floats away",0,"Nitrate is a dissolved ion, not a gas."],["K⁺ and Ca²⁺ are too heavy to move",0,"Mass is not the reason. Their positive charge keeps them on the clay."],["The crop absorbed all the nitrate in one day",0,"Young crops cannot take up a large dose that fast; the soil test points to leaching."]]},
+  {q:"Which practice would most reduce nitrate loss next season?",opts:[["Apply the same large dose, but right after a rain instead of before",0,"Better timing helps a little, but one big dose still leaves lots of nitrate exposed to the next rain."],["Split the fertilizer into smaller doses timed to when the crop is growing fast, and plant a cover crop after harvest",1,"Correct. Smaller, well-timed doses are taken up before they can leach, and a cover crop soaks up what is left."],["Add lime to make the soil hold more nitrate",0,"Lime changes pH but does not give the soil positive sites to hold nitrate."],["Remove all the clay from the field",0,"Clay holds cations and water; removing it would make leaching worse."]]},
+  {q:"The farmer plans to grow soybeans next year before going back to maize. Why could this cut her fertilizer needs?",opts:[["Soybeans release nitrate from their leaves into the air",0,"Plants do not release nitrate into the air."],["Soybean roots repel algae",0,"Algae live in the lake, not in the field."],["Soybeans make the soil more acidic, which creates nitrogen",0,"Acidity does not create nitrogen."],["Nodule bacteria on soybean roots fix N₂, and the residues leave fixed nitrogen in the soil",1,"Right. Legumes with Rhizobium add fixed nitrogen that the next crop can use."]]}]},
+{name:"Potometer experiment data",who:"Scenario 3 · the teaching lab",
+ story:"A class seals a leafy shoot into a potometer whose capillary has a radius of 0.5 mm. They record how far the bubble moves in 5 minutes under four conditions, three trials each. Still air: 12, 13, 11 mm. Fan: 30, 28, 32 mm. Clear plastic bag over the shoot: 4, 5, 3 mm. Bright lamp: 22, 21, 23 mm.",
+ cap:"Bar chart of mean bubble distance in 5 minutes for each condition, with the three trials shown as dots.",
+ desc:"On the left, a potometer is drawn with a leafy shoot sealed into a water-filled tube and a long capillary with an air bubble creeping toward the shoot. On the right, a bar chart shows the mean distance the bubble moved in 5 minutes under four conditions: still air about 12 millimetres, fan 30, plastic bag 4, and lamp 22. Each bar has three small dots for the individual trials, close to the bar top. A note gives the capillary radius as 0.5 millimetres.",
+ draw(T){panelBox(10,10,780,480);levelTag(22,26,"cell");potometer(30,90,300,.62-.3*P(T*.08,1),T,{scale:10});txt(190,300,"capillary radius r = 0.5 mm",{size:12.5,weight:700,mono:true,align:"center"});txt(190,324,"bubble distance in 5 min",{size:12,align:"center",color:C["ink-soft"]});
+   levelTag(392,26,"data");const D=[["still air",[12,13,11],C["ink-soft"]],["fan",[30,28,32],C.accent],["plastic bag",[4,5,3],C.water],["lamp",[22,21,23],C.sun]];
+   const G=graph({x:440,y:80,w:320,h:330,x0:0,x1:4,y0:0,y1:35,yt:[0,10,20,30],grid:true,title:"Mean distance in 5 min (mm)"});
+   D.forEach((d,i)=>{const m=d[1].reduce((a,b)=>a+b,0)/3;const x=G.x+20+i*78;const grow=smooth(clamp(P(T,12)*12/1.2-i*.25,0,1));const top=G.Y(m*grow);rr(x,top,46,G.y+G.h-top,3);ctx.fillStyle=hexA(d[2],.75);ctx.fill();
+     d[1].forEach((v,k)=>circ(x+10+k*13,G.Y(v),3.6,C.ink,C.panel,1));txt(x+23,Math.min(top,G.Y(Math.max(...d[1])*grow))-12,m.toFixed(0),{size:12,weight:700,mono:true,align:"center"});txt(x+23,G.y+G.h+14,d[0],{size:11.5,weight:700,align:"center"})})},
+ qs:[{q:"Using the mean fan distance (30 mm in 5 min) and r = 0.5 mm, what is the volume rate of water uptake?",opts:[["6.0 mm³/min",0,"6.0 is the distance rate in mm/min. Multiply by πr² = 0.785 mm²."],["About 23.6 mm³/min",0,"That is the volume moved in all 5 minutes. Divide by 5."],["About 4.7 mm³/min",1,"Correct. 30 ÷ 5 = 6.0 mm/min; 0.785 mm² × 6.0 mm/min ≈ 4.7 mm³/min."],["About 18.8 mm³/min",0,"That used the diameter (1 mm) as the radius. Use r = 0.5 mm."]]},
+  {q:"What is the best control here, and what should be kept the same in every run?",opts:[["Still air is the control; use the same shoot, temperature and timing in every run",1,"Right. Still air is the baseline, and only one factor should change at a time."],["The plastic bag is the control because it gives the smallest number",0,"The control is the normal baseline condition, not the smallest result."],["There is no need for a control with three trials",0,"Repeats show variation; a control gives the baseline to compare against."],["The fan is the control; each run can use a different shoot",0,"Different shoots differ in leaf area and stomata, which would confuse the comparison."]]},
+  {q:"A potometer actually measures water uptake. Why is that only an estimate of transpiration?",opts:[["Water only enters the shoot at night",0,"Water enters whenever the shoot loses water, day or night."],["A small part of the water taken up is used or stored by the plant instead of being lost as vapour",1,"Right. Most uptake replaces transpired water, but a little goes into photosynthesis, growth and cell turgor."],["The bubble pushes extra water into the leaves",0,"The bubble is just a marker; it does not push water."],["Transpiration happens only through the cut stem",0,"Transpiration happens mainly through the stomata of the leaves."]]}]},
+{name:"Aphid stylets and phloem sap",who:"Scenario 4 · the research lab",
+ story:"Researchers let aphids feed on a willow stem, then cut each aphid away with a fine laser, leaving its stylet in a sieve tube. Sap kept oozing out. They measured the flow rate and sucrose concentration of sap from stylets at different distances below a group of mature, sunlit leaves.",
+ cap:"Sap flow rate and sucrose concentration fall with distance from the source leaves.",
+ desc:"On the left, a willow stem is drawn with mature leaves at the top and a row of four cut aphid stylets lower down, each with a droplet of amber sap. Droplets near the leaves are bigger and form faster. On the right, a graph plots two lines against distance below the source leaves, from 0 to 60 centimetres: sap flow rate falls from about 1.0 to 0.35 relative units, and sucrose concentration, dashed, falls from about 0.9 to 0.6 molar.",
+ draw(T){panelBox(10,10,360,480);levelTag(22,26,"tissue");rr(170,40,30,430,10);fillStroke(mix(C.stem,C.wood,.4),hexA(C.ink,.45),1.4);rr(178,40,8,430,3);ctx.fillStyle=hexA(C.phloem,.6);ctx.fill();
+   for(let i=0;i<5;i++)leafBlade(185,60+i*14,90,i%2?-.3:Math.PI+.3,{w:.3});label(260,52,"source leaves",{size:11.5,weight:700,border:C.good});
+   const ds=[5,20,40,60];ds.forEach((d,i)=>{const y=150+d*4.6;line(182,y,128,y-14,C.ink,1.8);const rate=1-.011*d;const ph=P(T*(.15+.35*rate),1);circ(124,y-18,2+8*rate*ph,hexA(C.sucrose,.7),C["phloem-ink"],1.2);txt(220,y,d+" cm",{size:12,weight:700,mono:true})});
+   txt(30,112,"cut stylets",{size:11.5,weight:700});txt(30,128,"(aphid removed)",{size:11,color:C["ink-soft"]});
+   panelBox(380,10,410,480);levelTag(392,26,"data");const G=graph({x:440,y:70,w:320,h:330,x0:0,x1:60,y0:0,y1:1.1,xt:[0,20,40,60],xf:v=>v+" cm",yt:[0,.5,1],grid:true,title:"Sap from stylets",xl:"distance below source leaves"});
+   const fr=d=>1.05-.0117*d,sc=d=>.92-.005*d;curve(G,fr,0,60,C.sucrose,2.8);curve(G,sc,0,60,C.accent,2.6,[7,4]);[5,20,40,60].forEach(d=>{gdot(G,d,fr(d),C.sucrose,null,{r:4.5});gdot(G,d,sc(d),C.accent,null,{r:4.5})});
+   txt(G.x+G.w-4,G.Y(fr(60))+18,"flow rate (relative)",{size:11.5,weight:700,align:"right",color:C["phloem-ink"]});txt(G.x+G.w-4,G.Y(sc(60))-14,"sucrose (M), dashed",{size:11.5,weight:700,align:"right",color:C["accent-ink"]})},
+ qs:[{q:"Read the graph. How do sap flow rate and sucrose concentration change as the stylet gets farther from the source leaves?",opts:[["Both rise",0,"Both lines slope down to the right."],["Flow rises but sucrose falls",0,"Flow rate also falls with distance."],["Both stay the same",0,"Both lines clearly fall from 5 to 60 cm."],["Both fall",1,"Correct. Sap is fastest and sweetest closest to the source."]]},
+  {q:"How do these results support the pressure-flow hypothesis?",opts:[["They show that phloem sap is pulled by tension like xylem sap",0,"Sap flowing out of a cut stylet shows positive pressure, not tension."],["Pressure and sugar are highest near the source, so sap is pushed from source toward sink",1,"Right. Loading sugar at the source draws in water and builds pressure, which falls toward the sink."],["They show that aphids pump sap into the plant",0,"The aphids were removed; the sap flowed on its own."],["They show sugar moves only by diffusion",0,"Diffusion could not push sap out of a stylet for hours."]]},
+  {q:"Predict: the source leaves are covered with dark cloth for a day. What happens to sap flow from the stylets?",opts:[["It falls, because less sugar is made and loaded, so less water enters and pressure drops",1,"Right. Less loading at the source means a smaller pressure difference to drive flow."],["It rises, because shaded leaves need less sugar",0,"Shaded leaves make less sugar to export, so flow falls."],["It reverses and flows up into the leaves at the same rate",0,"Shaded leaves may become weak sinks, but flow from these stylets would fall, not stay as strong."],["It does not change, because pressure comes from the roots",0,"Phloem pressure comes from sugar loading at the source."]]}]}
+];
+const LS={i:0,ans:{}};
+function lifeUI(){const S=LIFE[LS.i];$("#lifeN").textContent=S.who;$("#lifeTitle").textContent=S.name;$("#lifeStory").textContent=S.story;$("#lifeCap").textContent=S.cap;
+  $("#lifeChips").innerHTML=LIFE.map((s,i)=>`<button type="button" class="casechip" aria-pressed="${i===LS.i}" data-i="${i}">${i+1}. ${s.name}${LS.ans[i+"-0"]&&LS.ans[i+"-1"]&&LS.ans[i+"-2"]?'<span class="ok" aria-label="all answered">✓</span>':""}</button>`).join("");
+  $("#lifeChips").querySelectorAll("button").forEach(b=>b.onclick=()=>{LS.i=+b.dataset.i;lifeUI()});
+  const box=$("#lifeQs");box.innerHTML="";S.qs.forEach((q,qi)=>{const d=document.createElement("div");d.className="qblock lifeq";d.innerHTML=`<p class="qlab" id="lq${qi}">${qi+1}. ${q.q}</p><div class="opts" role="group" aria-labelledby="lq${qi}"></div><div class="fb" role="status"></div>`;
+    const ob=d.querySelector(".opts"),fb=d.querySelector(".fb");shuffle(q.opts).forEach(o=>{const b=document.createElement("button");b.type="button";b.className="opt";b.textContent=o[0];
+      b.onclick=()=>{ob.querySelectorAll(".opt").forEach(x=>x.classList.remove("wrong"));if(o[1]){b.classList.add("right");fb.className="fb show ok";fb.textContent="✓ "+o[2];LS.ans[LS.i+"-"+qi]=1;lifeChipsOnly()}else{b.classList.add("wrong");fb.className="fb show no";fb.textContent="Not quite. "+o[2]}};ob.appendChild(b)});box.appendChild(d)});a11yKey=""}
+function lifeChipsOnly(){const i=LS.i;const b=$("#lifeChips").querySelector(`[data-i="${i}"]`);if(b&&LS.ans[i+"-0"]&&LS.ans[i+"-1"]&&LS.ans[i+"-2"]&&!b.querySelector(".ok"))b.insertAdjacentHTML("beforeend",'<span class="ok" aria-label="all answered">✓</span>')}
+function drawLife(now){use(S4);LIFE[LS.i].draw(now/1000)}
+function lifeA11y(){const S=LIFE[LS.i];return [S.name+". "+S.cap,S.desc]}
+function lifeInit(){$("#lifePrev").onclick=()=>{LS.i=(LS.i+LIFE.length-1)%LIFE.length;lifeUI()};$("#lifeNext").onclick=()=>{LS.i=(LS.i+1)%LIFE.length;lifeUI()}}
+/* ---------------- stages ---------------- */
+const S1=makeStage("cvSim",800,560),S2=makeStage("cvTrain",800,600),S4=makeStage("cvLife",800,500);
+/* ---------------- accessibility: live labels and picture descriptions ---------------- */
+const A11Y={sim:{cv:"#cvSim",f:simA11y},train:{cv:"#cvTrain",f:calcA11y},sort:{cv:null,f:sortA11y},life:{cv:"#cvLife",f:lifeA11y}};
+let a11yKey="",a11yT=0;
+function a11yTick(){if((++a11yT)%20)return;const a=A11Y[curTab];const [lab,d]=a.f();const key=curTab+"|"+lab+"|"+(curTab==="sim"?d.replace(/\d+/g,"#"):d);if(key===a11yKey)return;a11yKey=key;
+  if(a.cv&&lab)$(a.cv).setAttribute("aria-label",lab);if(window.gkDescribe)window.gkDescribe(d);
+  const box=document.getElementById("gk-desc");if(box){const host=a.cv?$(a.cv).closest(".canvas-holder"):$("#sPool");if(host&&host.nextElementSibling!==box)host.after(box);if(a.cv)$(a.cv).setAttribute("aria-describedby","gk-desc")}}
+/* ---------------- tabs / theme / loop ---------------- */
+let curTab="sim";
+const TABS=["sim","train","sort","life"];
+function showTab(k,focus){curTab=k;document.querySelectorAll(".tab").forEach(x=>{const on=x.dataset.tab===k;x.setAttribute("aria-selected",on);x.tabIndex=on?0:-1;if(on&&focus)x.focus()});
+  TABS.forEach(t=>$("#tab-"+t).hidden=t!==k);fitAll();a11yKey="";a11yT=19}
+document.querySelectorAll(".tab").forEach(t=>{t.onclick=()=>showTab(t.dataset.tab);t.onkeydown=e=>{const i=TABS.indexOf(t.dataset.tab);
+  if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();showTab(TABS[(i+(e.key==="ArrowRight"?1:TABS.length-1))%TABS.length],true)}
+  if(e.key==="Home"){e.preventDefault();showTab(TABS[0],true)}if(e.key==="End"){e.preventDefault();showTab(TABS[TABS.length-1],true)}}});
+function fitAll(){[S1,S2,S4].forEach(s=>s.fit())}
+window.addEventListener("resize",fitAll);
+$("#themeBtn").onclick=()=>{const r=document.documentElement;const dark=getComputedStyle(r).getPropertyValue("--ground").trim().toLowerCase()==="#0e1519";r.setAttribute("data-theme",dark?"light":"dark");readColors()};
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>setTimeout(readColors,30));
+let last=performance.now();
+function frame(now){const dt=Math.min(.05,Math.max(0,(now-last)/1000));last=now;DT=dt;
+  try{if(curTab==="sim")drawSim(now);else if(curTab==="train")drawCalc(now);else if(curTab==="life")drawLife(now)}catch(err){console.error(err)}
+  try{a11yTick()}catch(err){console.error(err)}
+  requestAnimationFrame(frame)}
+/* test hooks */
+window.__mb={tab:k=>showTab(k),set:o=>{Object.assign(SIM,o);simUI()},sim:()=>({E:SIM.E,gs:SIM.gs,psiL:SIM.psiL,psiX:SIM.psiX,psiS:SIM.psiS,plc:SIM.plc,Q:SIM.Q,wilt:SIM.wilt,gut:SIM.gut,A:SIM.A,done:[...SIM.done]}),
+  calcTypes:()=>CTYPES.map(c=>c[0]).filter(c=>c!=="mix"),calcSet:t=>{TR.type=t;$("#calcType").value=t;calcNew()},calcProb:()=>({ans:TR.p.ans,choices:TR.p.choices?TR.p.choices.length:0,fmt:TR.p.choices?String(TR.p.ans):fmtAns(TR.p,TR.p.ans),unit:TR.p.unit,kind:TR.p.kind}),
+  gen:t=>{const q=genOne(t);if(q.choices){return {choice:true,ans:q.ans,j1:judge(q,String(q.ans)),j2:judge(q,String((q.ans+1)%q.choices.length)),hints:q.hints.length,rows:q.rows.length,html:q.html}}
+    const good=fmtAns(q,q.ans);const bad=fmtAns(q,q.ans*1.5+(q.ans<0?-1:1));return {ans:q.ans,good,j1:judge(q,good),j1u:judge(q,good+" "+q.unit),j2:judge(q,bad),j3:judge(q,"abc"),hints:q.hints.length,rows:q.rows.length,html:q.html}},
+  sortGo:i=>sLoad(i),sortN:()=>SROUNDS.length,sortShow:()=>$("#sShow").click(),sortState:()=>({placed:Object.keys(SG.placed).length,n:SROUNDS[SG.r].cards.length}),lifeGo:i=>{LS.i=i;lifeUI()},lifeN:()=>LIFE.length};
+readColors();simInit();calcInit();calcNew();updCalcMeter();sLoad(0);lifeInit();lifeUI();fitAll();requestAnimationFrame(frame);
+
+})();
+</script>
+</body>
+</html>

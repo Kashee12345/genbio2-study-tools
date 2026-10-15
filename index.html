@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>General Biology II Study Tools</title>
+<meta name="description" content="Animated walkthroughs, simulators and practice trainers for majors General Biology II: evolution, diversity of life, plants, animals and ecology, Modules 1 to 16. Dr. Akash Garg.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@600&display=swap" rel="stylesheet">
+<script src="bio2-kit.js"></script>
+<style>
+:root{--ground:#EDEFE4;--panel:#FCFDF7;--panel-2:#F2F5E8;--ink:#1A1F0C;--ink-soft:#56603F;--rule:#D2D9BC;--accent:#435B0F;--accent-wash:#E6EFCB;--shadow:0 1px 2px rgba(26,31,12,.08),0 6px 18px -8px rgba(26,31,12,.18)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ground:#0E1519;--panel:#1A1F10;--panel-2:#222916;--ink:#EEF2E2;--ink-soft:#BDC7A2;--rule:#363F22;--accent:#B9D66A;--accent-wash:#2A3409;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -10px rgba(0,0,0,.6)}}
+:root[data-theme="dark"]{--ground:#0E1519;--panel:#1A1F10;--panel-2:#222916;--ink:#EEF2E2;--ink-soft:#BDC7A2;--rule:#363F22;--accent:#B9D66A;--accent-wash:#2A3409}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55}
+header{background:var(--panel);border-bottom:1px solid var(--rule)}
+.in{max-width:1040px;margin:0 auto;padding:22px 16px}
+.k{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:"IBM Plex Serif",Georgia,serif;font-size:32px;margin:4px 0 6px;line-height:1.15}
+.lead{margin:0;color:var(--ink-soft);font-size:16.5px;max-width:740px}
+h2{font-family:"IBM Plex Serif",Georgia,serif;font-size:22px;margin:30px 0 4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;scroll-margin-top:12px}
+h2 i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.sub{margin:0 0 8px;color:var(--ink-soft)}
+.ch{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--ink-soft);font-weight:500}
+.jump{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 4px}.jump a{font-family:"IBM Plex Mono",monospace;font-size:12.5px;padding:5px 9px;border:1px solid var(--rule);border-radius:99px;background:var(--panel);color:var(--ink);text-decoration:none}.jump a:hover,.jump a:focus-visible{border-color:var(--accent)}
+.find{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.find label{font-weight:600}
+.find input{font:inherit;padding:8px 12px;border:1px solid var(--rule);border-radius:6px;background:var(--panel);color:var(--ink);min-width:0;flex:1 1 260px;max-width:440px}
+.find input:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+#count{color:var(--ink-soft);font-size:14px}
+.dz{list-style:none;padding:0;margin:0 0 12px;display:flex;flex-wrap:wrap;gap:5px}
+.dz li{font-size:13px;padding:2px 9px;border-radius:99px;background:var(--panel-2);border:1px solid var(--rule);color:var(--ink)}
+.dz li.hit{background:var(--accent-wash);border-color:var(--accent);font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+a.card{display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:16px 18px;box-shadow:var(--shadow);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s}
+a.card:hover,a.card:focus-visible{border-color:var(--accent);transform:translateY(-2px)}
+.type{font-family:"IBM Plex Mono",monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+.card b{font-size:18px}
+.card span.d{color:var(--ink-soft);font-size:14.5px}
+.tip{background:var(--accent-wash);border-left:4px solid var(--accent);border-radius:4px;padding:12px 14px;margin-top:22px;font-size:15px}
+footer{max-width:1040px;margin:0 auto;padding:24px 16px 36px;font-size:13px;color:var(--ink-soft)}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <div class="k">General Biology II &middot; Modules 1 to 16</div>
+  <h1>General Biology II Study Tools</h1>
+  <p class="lead">See evolution, diversity and ecology happen. Each module has an animated walkthrough that links the ecosystem, the organism and the cell, with worked examples for every calculation, and a Lab with simulators, a practice trainer, a sorting game and real-world data scenarios. Everything runs in your browser on a computer, tablet or phone. No login, nothing graded.</p>
+</div></header>
+<main class="in" id="top" style="padding-top:4px">
+  <div class="find" role="search">
+    <label for="q">Find a topic</label>
+    <input id="q" type="search" placeholder="Try: Hardy-Weinberg, fern, stomata, gastrulation, carbon cycle" autocomplete="off">
+    <span id="count" role="status" aria-live="polite"></span>
+  </div>
+  <nav class="jump" aria-label="Jump to module"><a href="#m1">M1</a><a href="#m2">M2</a><a href="#m3">M3</a><a href="#m4">M4</a><a href="#m5">M5</a><a href="#m6">M6</a><a href="#m7">M7</a><a href="#m8">M8</a><a href="#m9">M9</a><a href="#m10">M10</a><a href="#m11">M11</a><a href="#m12">M12</a><a href="#m13">M13</a><a href="#m14">M14</a><a href="#m15">M15</a><a href="#m16">M16</a></nav>
+  <p class="tip"><b>How to use this:</b> open the walkthrough first and go at your own pace with the arrow keys or Next. Then open the Lab: run the simulator, practice in the trainer with its hints and worked solutions, and try the real-world scenarios. Use the tools bar at the top of each page to pause the animations, slow them down, have the text read aloud, or get a written description of each picture. Nothing here is graded.</p>
+  <section class="mod" id="m1" data-search="evolution and natural selection lamarck vs darwin natural selection heritability r = h2 s artificial selection antibiotic resistance homology fossils and whales biogeography ideas before darwin, how natural selection works, measuring selection, evolution we can watch, and the evidence from homology, fossils and biogeography.">
+  <h2><i style="background:#2F7FC1" aria-hidden="true"></i><span class="ch">Module 1</span> Evolution and natural selection</h2>
+  <p class="sub">Ideas before Darwin, how natural selection works, measuring selection, evolution we can watch, and the evidence from homology, fossils and biogeography.</p>
+  <ul class="dz" aria-label="Topics in module 1"><li>Lamarck vs Darwin</li><li>Natural selection</li><li>Heritability</li><li>R = h2 S</li><li>Artificial selection</li><li>Antibiotic resistance</li><li>Homology</li><li>Fossils and whales</li><li>Biogeography</li></ul>
+  <div class="grid">
+    <a class="card" href="Selection-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Evolution and natural selection Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="Selection-Lab.html"><span class="type">Simulators + practice</span><b>Module 1 Lab</b><span class="d">Selection island simulator, selection trainer, evidence sorting, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m2" data-search="population genetics allele frequencies hardy-weinberg chi square test genetic drift bottlenecks gene flow relative fitness sexual selection heterozygote advantage genetic variation, allele frequencies, hardy-weinberg, genetic drift, founder effects and bottlenecks, gene flow, modes of selection and balancing selection.">
+  <h2><i style="background:#C2410C" aria-hidden="true"></i><span class="ch">Module 2</span> Population genetics</h2>
+  <p class="sub">Genetic variation, allele frequencies, Hardy-Weinberg, genetic drift, founder effects and bottlenecks, gene flow, modes of selection and balancing selection.</p>
+  <ul class="dz" aria-label="Topics in module 2"><li>Allele frequencies</li><li>Hardy-Weinberg</li><li>Chi square test</li><li>Genetic drift</li><li>Bottlenecks</li><li>Gene flow</li><li>Relative fitness</li><li>Sexual selection</li><li>Heterozygote advantage</li></ul>
+  <div class="grid">
+    <a class="card" href="PopGen-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Population genetics Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="PopGen-Lab.html"><span class="type">Simulators + practice</span><b>Module 2 Lab</b><span class="d">Allele frequency simulator, Hardy-Weinberg trainer, matching rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m3" data-search="speciation species concepts prezygotic barriers postzygotic barriers allopatric speciation sympatric speciation polyploidy hybrid zones reinforcement punctuated equilibrium species concepts, prezygotic and postzygotic barriers, allopatric and sympatric speciation, polyploidy, hybrid zones and the tempo of speciation.">
+  <h2><i style="background:#15803D" aria-hidden="true"></i><span class="ch">Module 3</span> Speciation</h2>
+  <p class="sub">Species concepts, prezygotic and postzygotic barriers, allopatric and sympatric speciation, polyploidy, hybrid zones and the tempo of speciation.</p>
+  <ul class="dz" aria-label="Topics in module 3"><li>Species concepts</li><li>Prezygotic barriers</li><li>Postzygotic barriers</li><li>Allopatric speciation</li><li>Sympatric speciation</li><li>Polyploidy</li><li>Hybrid zones</li><li>Reinforcement</li><li>Punctuated equilibrium</li></ul>
+  <div class="grid">
+    <a class="card" href="Speciation-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Speciation Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="Speciation-Lab.html"><span class="type">Simulators + practice</span><b>Module 3 Lab</b><span class="d">Speciation island bench, barrier and chromosome trainer, sorting rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m4" data-search="phylogeny and the history of life origin of life radiometric dating geologic time mass extinctions reading trees monophyletic groups cladograms parsimony molecular clocks three domains origin of life, fossils and radiometric dating, the geologic time scale, mass extinctions, reading and building trees, parsimony, molecular clocks and the three domains.">
+  <h2><i style="background:#B8860B" aria-hidden="true"></i><span class="ch">Module 4</span> Phylogeny and the history of life</h2>
+  <p class="sub">Origin of life, fossils and radiometric dating, the geologic time scale, mass extinctions, reading and building trees, parsimony, molecular clocks and the three domains.</p>
+  <ul class="dz" aria-label="Topics in module 4"><li>Origin of life</li><li>Radiometric dating</li><li>Geologic time</li><li>Mass extinctions</li><li>Reading trees</li><li>Monophyletic groups</li><li>Cladograms</li><li>Parsimony</li><li>Molecular clocks</li><li>Three domains</li></ul>
+  <div class="grid">
+    <a class="card" href="Phylogeny-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Phylogeny and the history of life Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="Phylogeny-Lab.html"><span class="type">Simulators + practice</span><b>Module 4 Lab</b><span class="d">Tree builder, deep time machine, phylogeny trainer, order and sort games, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m5" data-search="bacteria, archaea and viruses gram stain endospores bacterial growth conjugation nutritional modes nitrogen fixation archaea lytic vs lysogenic retroviruses prions prokaryote structure, growth and horizontal gene transfer, nutritional modes, bacteria vs archaea, ecological roles, and virus structure and life cycles.">
+  <h2><i style="background:#7C3AED" aria-hidden="true"></i><span class="ch">Module 5</span> Bacteria, archaea and viruses</h2>
+  <p class="sub">Prokaryote structure, growth and horizontal gene transfer, nutritional modes, bacteria vs archaea, ecological roles, and virus structure and life cycles.</p>
+  <ul class="dz" aria-label="Topics in module 5"><li>Gram stain</li><li>Endospores</li><li>Bacterial growth</li><li>Conjugation</li><li>Nutritional modes</li><li>Nitrogen fixation</li><li>Archaea</li><li>Lytic vs lysogenic</li><li>Retroviruses</li><li>Prions</li></ul>
+  <div class="grid">
+    <a class="card" href="Prokaryotes-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Bacteria, archaea and viruses Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="Prokaryotes-Lab.html"><span class="type">Simulators + practice</span><b>Module 5 Lab</b><span class="d">Culture, phage and plasmid bench, microbe trainer, feature sorter, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m6" data-search="protists endosymbiosis supergroups euglenozoans diatoms dinoflagellates plasmodium ciliates green and red algae slime molds carbon pump what protists are, endosymbiosis, the eukaryotic supergroups, malaria and other life cycles, and the ecological roles of protists.">
+  <h2><i style="background:#DC2626" aria-hidden="true"></i><span class="ch">Module 6</span> Protists</h2>
+  <p class="sub">What protists are, endosymbiosis, the eukaryotic supergroups, malaria and other life cycles, and the ecological roles of protists.</p>
+  <ul class="dz" aria-label="Topics in module 6"><li>Endosymbiosis</li><li>Supergroups</li><li>Euglenozoans</li><li>Diatoms</li><li>Dinoflagellates</li><li>Plasmodium</li><li>Ciliates</li><li>Green and red algae</li><li>Slime molds</li><li>Carbon pump</li></ul>
+  <div class="grid">
+    <a class="card" href="Protists-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Protists Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="Protists-Lab.html"><span class="type">Simulators + practice</span><b>Module 6 Lab</b><span class="d">Pond microscope, malaria explorer, protist trainer, sorting rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m7" data-search="plant diversity charophytes alternation of generations mosses ferns vascular tissue seeds and pollen conifers flowers and fruits double fertilization monocots vs eudicots moving onto land, traits of land plants, bryophytes, seedless vascular plants, gymnosperms and angiosperms, and the shrinking gametophyte.">
+  <h2><i style="background:#0E7490" aria-hidden="true"></i><span class="ch">Module 7</span> Plant diversity</h2>
+  <p class="sub">Moving onto land, traits of land plants, bryophytes, seedless vascular plants, gymnosperms and angiosperms, and the shrinking gametophyte.</p>
+  <ul class="dz" aria-label="Topics in module 7"><li>Charophytes</li><li>Alternation of generations</li><li>Mosses</li><li>Ferns</li><li>Vascular tissue</li><li>Seeds and pollen</li><li>Conifers</li><li>Flowers and fruits</li><li>Double fertilization</li><li>Monocots vs eudicots</li></ul>
+  <div class="grid">
+    <a class="card" href="PlantDiversity-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Plant diversity Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="PlantDiversity-Lab.html"><span class="type">Simulators + practice</span><b>Module 7 Lab</b><span class="d">Life cycle explorer, ploidy trainer, matching rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m8" data-search="plant structure and growth roots, stems, leaves tissue systems xylem and phloem cells meristems root tip zones casparian strip vascular bundles leaf anatomy secondary growth tree rings roots, stems and leaves, tissue systems and cell types, meristems, primary growth of roots and shoots, leaf anatomy and secondary growth.">
+  <h2><i style="background:#9D174D" aria-hidden="true"></i><span class="ch">Module 8</span> Plant structure and growth</h2>
+  <p class="sub">Roots, stems and leaves, tissue systems and cell types, meristems, primary growth of roots and shoots, leaf anatomy and secondary growth.</p>
+  <ul class="dz" aria-label="Topics in module 8"><li>Roots, stems, leaves</li><li>Tissue systems</li><li>Xylem and phloem cells</li><li>Meristems</li><li>Root tip zones</li><li>Casparian strip</li><li>Vascular bundles</li><li>Leaf anatomy</li><li>Secondary growth</li><li>Tree rings</li></ul>
+  <div class="grid">
+    <a class="card" href="PlantStructure-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Plant structure and growth Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="PlantStructure-Lab.html"><span class="type">Simulators + practice</span><b>Module 8 Lab</b><span class="d">Growing plant and tree ring bench, plant anatomy trainer, sorting rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m9" data-search="plant transport and nutrition water potential apoplast and symplast cohesion tension transpiration stomata and aba pressure flow sources and sinks essential nutrients root nodules mycorrhizae water potential, routes through the root, cohesion tension in the xylem, stomata and transpiration, phloem pressure flow, and soil nutrients and partners.">
+  <h2><i style="background:#4D7C0F" aria-hidden="true"></i><span class="ch">Module 9</span> Plant transport and nutrition</h2>
+  <p class="sub">Water potential, routes through the root, cohesion tension in the xylem, stomata and transpiration, phloem pressure flow, and soil nutrients and partners.</p>
+  <ul class="dz" aria-label="Topics in module 9"><li>Water potential</li><li>Apoplast and symplast</li><li>Cohesion tension</li><li>Transpiration</li><li>Stomata and ABA</li><li>Pressure flow</li><li>Sources and sinks</li><li>Essential nutrients</li><li>Root nodules</li><li>Mycorrhizae</li></ul>
+  <div class="grid">
+    <a class="card" href="PlantTransport-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Plant transport and nutrition Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="PlantTransport-Lab.html"><span class="type">Simulators + practice</span><b>Module 9 Lab</b><span class="d">Whole plant water and sugar bench, water potential trainer, matching rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m10" data-search="plant reproduction and responses flower structure pollination double fertilization seeds and germination fruits auxin and phototropism gibberellins ethylene phytochrome photoperiodism flowers and gametophytes, pollination, double fertilization, seeds and fruits, asexual reproduction, plant hormones, light and timing, and tropisms.">
+  <h2><i style="background:#1D4ED8" aria-hidden="true"></i><span class="ch">Module 10</span> Plant reproduction and responses</h2>
+  <p class="sub">Flowers and gametophytes, pollination, double fertilization, seeds and fruits, asexual reproduction, plant hormones, light and timing, and tropisms.</p>
+  <ul class="dz" aria-label="Topics in module 10"><li>Flower structure</li><li>Pollination</li><li>Double fertilization</li><li>Seeds and germination</li><li>Fruits</li><li>Auxin and phototropism</li><li>Gibberellins</li><li>Ethylene</li><li>Phytochrome</li><li>Photoperiodism</li></ul>
+  <div class="grid">
+    <a class="card" href="PlantRepro-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Plant reproduction and responses Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="PlantRepro-Lab.html"><span class="type">Simulators + practice</span><b>Module 10 Lab</b><span class="d">Plant response bench, prediction trainer, matching rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m11" data-search="fungi hyphae and mycelium mycorrhizae plasmogamy and karyogamy chytrids zygomycetes ascomycetes basidiomycetes lichens fungal pathogens fermentation hyphae and mycelium, mycorrhizae, fungal life cycles, the major fungal groups, decomposers, mutualists and pathogens, and fungi in people&#x27;s lives.">
+  <h2><i style="background:#A16207" aria-hidden="true"></i><span class="ch">Module 11</span> Fungi</h2>
+  <p class="sub">Hyphae and mycelium, mycorrhizae, fungal life cycles, the major fungal groups, decomposers, mutualists and pathogens, and fungi in people&#x27;s lives.</p>
+  <ul class="dz" aria-label="Topics in module 11"><li>Hyphae and mycelium</li><li>Mycorrhizae</li><li>Plasmogamy and karyogamy</li><li>Chytrids</li><li>Zygomycetes</li><li>Ascomycetes</li><li>Basidiomycetes</li><li>Lichens</li><li>Fungal pathogens</li><li>Fermentation</li></ul>
+  <div class="grid">
+    <a class="card" href="Fungi-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Fungi Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="Fungi-Lab.html"><span class="type">Simulators + practice</span><b>Module 11 Lab</b><span class="d">Fungus bench, fungi trainer, sorting rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m12" data-search="animal diversity symmetry germ layers body cavities protostome vs deuterostome sponges and cnidarians mollusks arthropods echinoderms chordates vertebrates body plans, germ layers and body cavities, protostomes and deuterostomes, the invertebrate phyla, chordates, vertebrate innovations, and primates.">
+  <h2><i style="background:#BE185D" aria-hidden="true"></i><span class="ch">Module 12</span> Animal diversity</h2>
+  <p class="sub">Body plans, germ layers and body cavities, protostomes and deuterostomes, the invertebrate phyla, chordates, vertebrate innovations, and primates.</p>
+  <ul class="dz" aria-label="Topics in module 12"><li>Symmetry</li><li>Germ layers</li><li>Body cavities</li><li>Protostome vs deuterostome</li><li>Sponges and cnidarians</li><li>Mollusks</li><li>Arthropods</li><li>Echinoderms</li><li>Chordates</li><li>Vertebrates</li></ul>
+  <div class="grid">
+    <a class="card" href="AnimalDiversity-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Animal diversity Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="AnimalDiversity-Lab.html"><span class="type">Simulators + practice</span><b>Module 12 Lab</b><span class="d">Body plan builder, embryo viewer, key and tree trainer, matching rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m13" data-search="animal form, function and homeostasis surface area to volume homeostasis feedback loops thermoregulation countercurrent exchange metabolic scaling open vs closed circulation gills, tracheae, lungs osmoregulation nitrogen wastes size and exchange, tissues, feedback, thermoregulation, metabolic rate and scaling, and how digestion, circulation, gas exchange and excretion compare across animals.">
+  <h2><i style="background:#047857" aria-hidden="true"></i><span class="ch">Module 13</span> Animal form, function and homeostasis</h2>
+  <p class="sub">Size and exchange, tissues, feedback, thermoregulation, metabolic rate and scaling, and how digestion, circulation, gas exchange and excretion compare across animals.</p>
+  <ul class="dz" aria-label="Topics in module 13"><li>Surface area to volume</li><li>Homeostasis</li><li>Feedback loops</li><li>Thermoregulation</li><li>Countercurrent exchange</li><li>Metabolic scaling</li><li>Open vs closed circulation</li><li>Gills, tracheae, lungs</li><li>Osmoregulation</li><li>Nitrogen wastes</li></ul>
+  <div class="grid">
+    <a class="card" href="AnimalSystems-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Animal form, function and homeostasis Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="AnimalSystems-Lab.html"><span class="type">Simulators + practice</span><b>Module 13 Lab</b><span class="d">Comparative physiology bench, physiology trainer, matching rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m14" data-search="animal reproduction and development asexual reproduction gametogenesis hormone cycles pregnancy and hcg fertilization cleavage gastrulation neurulation spemann organizer hox genes asexual and sexual reproduction, gametogenesis, the ovarian and uterine cycles, pregnancy and birth, fertilization, cleavage, gastrulation, organogenesis and developmental signals.">
+  <h2><i style="background:#6D28D9" aria-hidden="true"></i><span class="ch">Module 14</span> Animal reproduction and development</h2>
+  <p class="sub">Asexual and sexual reproduction, gametogenesis, the ovarian and uterine cycles, pregnancy and birth, fertilization, cleavage, gastrulation, organogenesis and developmental signals.</p>
+  <ul class="dz" aria-label="Topics in module 14"><li>Asexual reproduction</li><li>Gametogenesis</li><li>Hormone cycles</li><li>Pregnancy and hCG</li><li>Fertilization</li><li>Cleavage</li><li>Gastrulation</li><li>Neurulation</li><li>Spemann organizer</li><li>Hox genes</li></ul>
+  <div class="grid">
+    <a class="card" href="Development-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Animal reproduction and development Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="Development-Lab.html"><span class="type">Simulators + practice</span><b>Module 14 Lab</b><span class="d">Embryo and hormone bench, development trainer, order and match games, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m15" data-search="population and community ecology mark recapture survivorship curves exponential growth logistic growth predator prey cycles competitive exclusion niches shannon diversity keystone species succession density and dispersion, demography, exponential and logistic growth, population cycles, species interactions, diversity, food webs, keystone species and succession.">
+  <h2><i style="background:#B45309" aria-hidden="true"></i><span class="ch">Module 15</span> Population and community ecology</h2>
+  <p class="sub">Density and dispersion, demography, exponential and logistic growth, population cycles, species interactions, diversity, food webs, keystone species and succession.</p>
+  <ul class="dz" aria-label="Topics in module 15"><li>Mark recapture</li><li>Survivorship curves</li><li>Exponential growth</li><li>Logistic growth</li><li>Predator prey cycles</li><li>Competitive exclusion</li><li>Niches</li><li>Shannon diversity</li><li>Keystone species</li><li>Succession</li></ul>
+  <div class="grid">
+    <a class="card" href="Populations-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Population and community ecology Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="Populations-Lab.html"><span class="type">Simulators + practice</span><b>Module 15 Lab</b><span class="d">Population bench, ecology math trainer, matching rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+  <section class="mod" id="m16" data-search="ecosystems, biomes and conservation energy flow trophic efficiency primary productivity carbon cycle nitrogen cycle biomes biodiversity threats conservation climate change energy flow and trophic efficiency, productivity, biogeochemical cycles, climate and biomes, biodiversity threats, conservation biology and global change.">
+  <h2><i style="background:#0369A1" aria-hidden="true"></i><span class="ch">Module 16</span> Ecosystems, biomes and conservation</h2>
+  <p class="sub">Energy flow and trophic efficiency, productivity, biogeochemical cycles, climate and biomes, biodiversity threats, conservation biology and global change.</p>
+  <ul class="dz" aria-label="Topics in module 16"><li>Energy flow</li><li>Trophic efficiency</li><li>Primary productivity</li><li>Carbon cycle</li><li>Nitrogen cycle</li><li>Biomes</li><li>Biodiversity threats</li><li>Conservation</li><li>Climate change</li></ul>
+  <div class="grid">
+    <a class="card" href="Ecosystems-Walkthrough.html"><span class="type">Start here · Animated walkthrough</span><b>Ecosystems, biomes and conservation Walkthrough</b><span class="d">Watch the biology happen step by step, with quick checks and animated worked examples.</span></a>
+    <a class="card" href="Ecosystems-Lab.html"><span class="type">Simulators + practice</span><b>Module 16 Lab</b><span class="d">Ecosystem bench, ecosystem trainer, sorting rounds, and real-world scenarios.</span></a>
+  </div>
+  </section>
+</main>
+<footer>Dr. Akash Garg &middot; General Biology II Study Tools &middot; Drawings are simplified and not to scale. Licensed <a href="LICENSE">CC BY-NC-SA 4.0</a>.</footer>
+<script>
+(function(){
+  var q=document.getElementById('q'),count=document.getElementById('count'),mods=[].slice.call(document.querySelectorAll('.mod'));
+  function run(){
+    var v=q.value.trim().toLowerCase(),shown=0;
+    mods.forEach(function(m){
+      var ok=!v||m.getAttribute('data-search').indexOf(v)>=0;
+      m.hidden=!ok; if(ok)shown++;
+      [].forEach.call(m.querySelectorAll('.dz li'),function(li){li.classList.toggle('hit',!!v&&li.textContent.toLowerCase().indexOf(v)>=0);});
+    });
+    count.textContent=v?(shown?shown+(shown===1?' module matches':' modules match'):'No match. Try a shorter word.'):'';
+  }
+  q.addEventListener('input',run);
+})();
+</script>
+</body>
+</html>
